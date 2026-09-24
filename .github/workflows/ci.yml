@@ -1,0 +1,83 @@
+# CI (Plan §28): typecheck, lint, backend Jest against a service-container Postgres,
+# frontend Vitest, production builds, and the Playwright E2E suite.
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  backend:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_USER: rupeeflow
+          POSTGRES_PASSWORD: rupeeflow
+          POSTGRES_DB: rupeeflow_test
+        ports: ["5433:5432"]
+        options: >-
+          --health-cmd "pg_isready -U rupeeflow" --health-interval 5s --health-timeout 3s --health-retries 10
+    env:
+      TEST_DATABASE_URL: postgresql://rupeeflow:rupeeflow@localhost:5433/rupeeflow_test?schema=public
+      DATABASE_URL: postgresql://rupeeflow:rupeeflow@localhost:5433/rupeeflow_test?schema=public
+      JWT_SECRET: ci-secret-that-is-at-least-thirty-two-characters
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22, cache: npm, cache-dependency-path: backend/package-lock.json }
+      - run: npm ci
+      - run: npx prisma generate
+      - run: npm run typecheck
+      - run: npm run lint
+      - run: npm run test:coverage
+      - run: npm run build
+
+  frontend:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22, cache: npm, cache-dependency-path: frontend/package-lock.json }
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm run lint
+      - run: npm run test:coverage
+      - run: npm run build
+
+  e2e:
+    runs-on: ubuntu-latest
+    needs: [backend, frontend]
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_USER: rupeeflow
+          POSTGRES_PASSWORD: rupeeflow
+          POSTGRES_DB: rupeeflow_test
+        ports: ["5433:5432"]
+        options: >-
+          --health-cmd "pg_isready -U rupeeflow" --health-interval 5s --health-timeout 3s --health-retries 10
+    env:
+      CI: "true"
+      TEST_DATABASE_URL: postgresql://rupeeflow:rupeeflow@localhost:5433/rupeeflow_test?schema=public
+      JWT_SECRET: ci-secret-that-is-at-least-thirty-two-characters
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+      - run: npm ci && npx prisma generate
+        working-directory: backend
+      - run: DATABASE_URL=$TEST_DATABASE_URL npx prisma migrate deploy
+        working-directory: backend
+      - run: npm ci && npx playwright install --with-deps chromium
+        working-directory: frontend
+      - run: npx playwright test
+        working-directory: frontend

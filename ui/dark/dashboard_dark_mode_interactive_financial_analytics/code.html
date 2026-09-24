@@ -1,0 +1,1065 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>
+@layer base{html,body{margin:0;padding:0;background-color:#0B0F17;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}
+::-webkit-scrollbar{width:5px;height:5px;}
+::-webkit-scrollbar-track{background:transparent;}
+::-webkit-scrollbar-thumb{background:#1e293b;border-radius:10px;}
+::-webkit-scrollbar-thumb:hover{background:#334155;}
+.custom-scroll::-webkit-scrollbar{width:4px;}
+.custom-scroll::-webkit-scrollbar-thumb{background:#1e293b;border-radius:4px;}
+.donut-slice{transition:transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), stroke-width 0.2s ease, opacity 0.2s ease;transform-origin:50px 50px;}
+.donut-slice:hover, .donut-slice.active{stroke-width:14.5;filter:drop-shadow(0 2px 10px rgba(0,0,0,0.5));}
+.card-expand-transition{transition:all 0.35s cubic-bezier(0.16, 1, 0.3, 1);}
+</style>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{colors:{"secondary":"#4edea3","inverse-surface":"#dfe2ee","surface-container-highest":"#31353e","on-surface":"#dfe2ee","primary-fixed-dim":"#b4c5ff","on-secondary-fixed-variant":"#005236","on-primary-fixed-variant":"#003ea8","secondary-fixed-dim":"#4edea3","on-tertiary-fixed-variant":"#653e00","outline-variant":"#434655","secondary-container":"#00a572","on-primary-fixed":"#00174b","on-error-container":"#ffdad6","surface-container-low":"#181c24","error":"#ffb4ab","inverse-primary":"#0053db","surface-container-lowest":"#0a0e16","on-surface-variant":"#c3c6d7","on-secondary":"#003824","surface-container-high":"#262a33","inverse-on-surface":"#2c3039","on-tertiary-fixed":"#2a1700","primary":"#b4c5ff","on-background":"#dfe2ee","primary-fixed":"#dbe1ff","surface-bright":"#353942","surface-dim":"#0f131c","tertiary":"#ffb95f","tertiary-container":"#996100","on-tertiary-container":"#ffeedd","on-primary-container":"#eeefff","on-primary":"#002a78","background":"#0f131c","on-secondary-fixed":"#002113","on-tertiary":"#472a00","primary-container":"#2563eb","tertiary-fixed":"#ffddb8","surface-container":"#1c2028","error-container":"#93000a","surface":"#0f131c","surface-tint":"#b4c5ff","on-error":"#690005","tertiary-fixed-dim":"#ffb95f","outline":"#8d90a0","on-secondary-container":"#00311f","secondary-fixed":"#6ffbbe","surface-variant":"#31353e"},borderRadius:{DEFAULT:"0.125rem",lg:"0.25rem",xl:"0.5rem",full:"0.75rem"},spacing:{"space-sm":"0.5rem","space-md":"0.75rem","margin":"1.5rem","space-lg":"1rem","space-xl":"1.5rem","gutter":"1rem","margin-mobile":"1rem","gutter-mobile":"0.75rem","space-xs":"0.25rem"},fontFamily:{"body-md":["Inter"],"numeric-metric":["Inter"],"display":["Inter"],"headline-sm":["Inter"],"body-lg":["Inter"],"numeric-table":["Inter"],"label-sm":["Inter"],"headline-md":["Inter"],"headline-lg":["Inter"],"label-md":["Inter"],"body-sm":["Inter"],"tabular-data":["Inter"],"currency-stat":["Inter"]},fontSize:{"body-md":["13px",{lineHeight:"18px",letterSpacing:"0em",fontWeight:"400"}],"numeric-metric":["28px",{lineHeight:"34px",letterSpacing:"-0.02em",fontWeight:"700"}],"display":["32px",{lineHeight:"40px",letterSpacing:"-0.02em",fontWeight:"700"}],"headline-sm":["16px",{lineHeight:"24px",letterSpacing:"-0.005em",fontWeight:"600"}],"body-lg":["15px",{lineHeight:"22px",letterSpacing:"0em",fontWeight:"400"}],"numeric-table":["13px",{lineHeight:"18px",letterSpacing:"0em",fontWeight:"500"}],"label-sm":["11px",{lineHeight:"14px",letterSpacing:"0.04em",fontWeight:"600"}],"headline-md":["20px",{lineHeight:"28px",letterSpacing:"-0.01em",fontWeight:"600"}],"headline-lg":["24px",{lineHeight:"32px",letterSpacing:"-0.015em",fontWeight:"600"}],"label-md":["12px",{lineHeight:"16px",letterSpacing:"0.02em",fontWeight:"500"}],"body-sm":["12px",{lineHeight:"16px",letterSpacing:"0.01em",fontWeight:"400"}],"currency-stat":["28px",{lineHeight:"34px",letterSpacing:"-0.02em",fontWeight:"700"}],"tabular-data":["13px",{lineHeight:"18px",letterSpacing:"-0.01em",fontWeight:"500"}]}}}}</script></head><body class="bg-[#0B0F17] font-body-md text-body-md text-[#CBD5E1] antialiased"><aside class="fixed left-0 top-0 h-full w-64 bg-[#0F172A] border-r border-[#1E293B] shadow-2xl z-50 flex flex-col justify-between"><div class="flex flex-col"><div class="h-16 px-space-lg flex items-center gap-space-sm border-b border-[#1E293B]"><img alt="RupeeFlow Brand Logo" class="h-8 w-8 object-contain rounded-lg" src="https://lh3.googleusercontent.com/aida/AEtjO1W5nph4x0o4Br954IEySEW74bPg7jA54dIg3a3YAvVTr4_XWr1ZOZroPd-z1Tz5zDPmm_JVYobj1DpTvJLUprNerEGyHIUCGlSjfD8HUWkH-2UxFP8EnlLzysPfBW08ONDURUhHZO1xiQFK7EFGnf5-96TJEr5ZW_rd_ddhyhrOLK0Rr17dQzQrNzYC8feyFoIx75VhrmRUBLgKyiLoHmEA-uqxXAnEc5A4JKMzi0MIpPvIGtJHeXojQok"/><span class="font-headline-sm text-headline-sm text-[#F8FAFC] tracking-tight">RupeeFlow</span></div><nav class="flex flex-col gap-1 px-3 mt-4" data-active-classes="bg-primary-container text-white font-medium rounded-lg"><a aria-current="page" class="flex items-center gap-3 px-3 py-2.5 transition-colors bg-primary-container text-white font-medium rounded-lg shadow-sm" data-path="dashboard" href="#"><span class="material-symbols-outlined text-[20px]">dashboard</span><span>Dashboard</span></a><a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#94A3B8] font-medium hover:bg-[#1E293B] hover:text-[#F8FAFC] transition-colors" data-path="expenses" href="#"><span class="material-symbols-outlined text-[20px]">receipt_long</span><span>Expenses</span></a><a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#94A3B8] font-medium hover:bg-[#1E293B] hover:text-[#F8FAFC] transition-colors" data-path="budgets" href="#"><span class="material-symbols-outlined text-[20px]">account_balance_wallet</span><span>Budgets</span></a><a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#94A3B8] font-medium hover:bg-[#1E293B] hover:text-[#F8FAFC] transition-colors" data-path="categories" href="#"><span class="material-symbols-outlined text-[20px]">grid_view</span><span>Categories</span></a><a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#94A3B8] font-medium hover:bg-[#1E293B] hover:text-[#F8FAFC] transition-colors" data-path="reports" href="#"><span class="material-symbols-outlined text-[20px]">bar_chart</span><span>Reports</span></a></nav></div><div class="p-3 m-3 rounded-xl bg-[#131C2E] border border-[#1E293B] flex flex-col gap-2.5"><div class="flex items-center gap-3"><img alt="Krishna Sharma" class="w-8 h-8 rounded-full object-cover ring-2 ring-primary-container/40" src="https://lh3.googleusercontent.com/aida/AEtjO1WA7Z4-PK4j5ulhQNaAsUHR28mH-9FGOUUfRRS1TFnyeAXIyNilDIPrVvQBppkGic1-F5nEUctITU5YNw2R5G0c4t__Q2ULO_YIp3s_FO9UvlezV6FxbQxeFwfbT8rd22C8eVIxZoHTLMRKi2EioPFjAzaFAVEGeZOsmHhjSrCOBv4432SI9dPJG-J8uv9aeYUTkK1vVe_OoouRdZx-1uhr272J1mQalq0Oi6OUmRR4NMxDs4bI_lqFxaE"/><div class="flex flex-col min-w-0 flex-1"><span class="font-medium text-xs text-[#F8FAFC] truncate">Krishna Sharma</span><span class="text-[11px] text-[#64748B] truncate">Individual Plan</span></div></div><a class="flex items-center gap-1.5 pt-1 text-xs text-[#ffb4ab] hover:text-[#ffdad6] transition-colors" data-path="login" href="#"><span class="material-symbols-outlined text-[16px]">logout</span><span>Logout</span></a></div></aside><div class="pl-64"><header class="fixed top-0 left-64 right-0 h-16 bg-[#0F172A]/90 backdrop-blur-xl border-b border-[#1E293B] z-40"><div class="h-16 w-full px-6 flex items-center justify-between gap-4"><div class="flex items-center gap-3 flex-1 max-w-xl"><button class="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-[#131C2E] border border-[#1E293B] text-xs font-medium text-[#F1F5F9] hover:bg-[#1E293B] hover:border-[#334155] transition-colors" type="button"><span class="material-symbols-outlined text-[18px] text-primary">calendar_month</span><span>September 2026</span><span class="material-symbols-outlined text-[16px] text-[#64748B]">arrow_drop_down</span></button><div class="relative flex-1"><span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-[#64748B] text-[18px]">search</span><input class="w-full pl-9 pr-3 py-1.5 h-9 rounded-lg bg-[#131C2E] border border-[#1E293B] text-xs text-[#F8FAFC] placeholder:text-[#64748B] focus:outline-none focus:border-primary-container focus:ring-1 focus:ring-primary-container transition-all" placeholder="Search transactions, budgets, vendors..." type="search"/></div></div><div class="flex items-center gap-3"><button class="relative p-2 rounded-lg text-[#94A3B8] hover:bg-[#1E293B] hover:text-[#F8FAFC] transition-colors" type="button"><span class="material-symbols-outlined text-[20px]">notifications</span><span class="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-error"></span></button><button class="flex items-center gap-1.5 px-3.5 h-9 rounded-lg bg-primary-container text-white text-xs font-semibold shadow-sm hover:bg-blue-600 transition-colors" onclick="document.getElementById('expenseQuickDrawer').classList.remove('hidden')" type="button"><span class="material-symbols-outlined text-[18px]">add</span><span>Add Expense</span></button><img alt="Krishna Sharma" class="w-8 h-8 rounded-full object-cover ring-2 ring-primary-container/40" src="https://lh3.googleusercontent.com/aida/AEtjO1WA7Z4-PK4j5ulhQNaAsUHR28mH-9FGOUUfRRS1TFnyeAXIyNilDIPrVvQBppkGic1-F5nEUctITU5YNw2R5G0c4t__Q2ULO_YIp3s_FO9UvlezV6FxbQxeFwfbT8rd22C8eVIxZoHTLMRKi2EioPFjAzaFAVEGeZOsmHhjSrCOBv4432SI9dPJG-J8uv9aeYUTkK1vVe_OoouRdZx-1uhr272J1mQalq0Oi6OUmRR4NMxDs4bI_lqFxaE"/></div></div></header><main class="relative pt-16 bg-[#0B0F17] w-full px-6 py-6"><div class="flex flex-col w-full gap-6">
+<!-- Top Greeting & Header Bar -->
+<section class="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+<div class="flex flex-col">
+<div class="flex items-center gap-2 text-secondary text-xs uppercase tracking-wider font-semibold">
+<span>Portfolio Vault</span>
+<span>•</span>
+<span>ID: RF-9082-KS</span>
+</div>
+<h1 class="text-2xl font-bold text-[#F8FAFC] tracking-tight mt-1">Good evening, Krishna</h1>
+<p class="text-sm text-[#94A3B8]">Here's your consolidated financial surveillance for September 2026.</p>
+</div>
+<div class="flex flex-wrap items-center gap-2.5">
+<div class="relative">
+<button class="flex items-center gap-2 px-3.5 h-9 rounded-lg bg-[#131C2E] border border-[#1E293B] text-xs font-medium text-[#F1F5F9] hover:bg-[#1E293B] hover:border-[#334155] transition-colors" id="periodBtn" type="button">
+<span class="material-symbols-outlined text-[18px] text-primary">calendar_today</span>
+<span>September 2026</span>
+<span class="material-symbols-outlined text-[16px] text-[#64748B]">expand_more</span>
+</button>
+</div>
+<button class="flex items-center gap-1.5 px-3.5 h-9 rounded-lg bg-[#131C2E] border border-[#1E293B] text-primary text-xs font-semibold hover:bg-[#1E293B] hover:border-[#334155] transition-colors" onclick="document.getElementById('budgetModal').classList.toggle('hidden')" type="button">
+<span class="material-symbols-outlined text-[18px]">account_balance_wallet</span>
+<span>Set Budget</span>
+</button>
+<button class="flex items-center gap-1.5 px-3.5 h-9 rounded-lg bg-primary-container text-white text-xs font-semibold shadow-sm hover:bg-blue-600 transition-all active:scale-[0.98]" onclick="document.getElementById('expenseQuickDrawer').classList.toggle('hidden')" type="button">
+<span class="material-symbols-outlined text-[18px]">add</span>
+<span>Add Expense</span>
+</button>
+</div>
+</section>
+<!-- 4 Primary KPI Metric Cards -->
+<section class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
+<!-- Card 1: Total Expenses -->
+<div class="rounded-xl bg-[#0F172A] border border-[#1E293B] p-5 shadow-sm flex flex-col justify-between relative overflow-hidden group hover:border-[#334155] hover:shadow-lg transition-all">
+<div class="absolute -right-4 -top-4 w-24 h-24 bg-primary-container/10 rounded-full blur-xl group-hover:bg-primary-container/20 transition-all"></div>
+<div class="flex items-center justify-between text-[#94A3B8]">
+<span class="text-xs uppercase tracking-wider font-medium">Total Expenses</span>
+<span class="p-2 rounded-lg bg-[#131C2E] border border-[#1E293B] text-primary material-symbols-outlined text-[20px]">trending_down</span>
+</div>
+<div class="mt-4">
+<div class="text-3xl font-bold text-[#F8FAFC]">₹42,500</div>
+<div class="flex items-center gap-1.5 mt-2">
+<span class="inline-flex items-center gap-0.5 px-2 py-0.5 rounded-full text-xs font-semibold bg-secondary/15 text-secondary border border-secondary/20">
+<span class="material-symbols-outlined text-[14px]">arrow_downward</span>
+            8.2% vs last month
+          </span>
+<span class="text-xs text-[#94A3B8]">₹3,800 saved</span>
+</div>
+</div>
+<div class="w-full bg-[#1E293B] h-1.5 rounded-full mt-4 overflow-hidden">
+<div class="bg-primary-container h-full rounded-full shadow-[0_0_8px_rgba(37,99,235,0.6)]" style="width: 71%"></div>
+</div>
+</div>
+<!-- Card 2: Total Budget -->
+<div class="rounded-xl bg-[#0F172A] border border-[#1E293B] p-5 shadow-sm flex flex-col justify-between relative overflow-hidden group hover:border-[#334155] hover:shadow-lg transition-all">
+<div class="flex items-center justify-between text-[#94A3B8]">
+<span class="text-xs uppercase tracking-wider font-medium">Total Budget</span>
+<span class="p-2 rounded-lg bg-[#131C2E] border border-[#1E293B] text-secondary material-symbols-outlined text-[20px]">savings</span>
+</div>
+<div class="mt-4">
+<div class="text-3xl font-bold text-[#F8FAFC]">₹60,000</div>
+<p class="text-xs text-[#94A3B8] mt-2">Monthly allocation across 8 active envelopes</p>
+</div>
+<div class="flex items-center gap-2 mt-4 text-secondary text-xs font-medium">
+<span class="w-2 h-2 rounded-full bg-secondary shadow-[0_0_6px_rgba(78,222,163,0.8)]"></span>
+<span>Reconciled on Sep 1, 2026</span>
+</div>
+</div>
+<!-- Card 3: Remaining Balance -->
+<div class="rounded-xl bg-[#0F172A] border border-[#1E293B] p-5 shadow-sm flex flex-col justify-between relative overflow-hidden group hover:border-[#334155] hover:shadow-lg transition-all">
+<div class="flex items-center justify-between text-[#94A3B8]">
+<span class="text-xs uppercase tracking-wider font-medium">Remaining</span>
+<span class="p-2 rounded-lg bg-[#131C2E] border border-[#1E293B] text-tertiary material-symbols-outlined text-[20px]">lock_open</span>
+</div>
+<div class="mt-4">
+<div class="text-3xl font-bold text-[#F8FAFC]">₹17,500</div>
+<div class="flex items-center gap-1.5 mt-2">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold bg-primary/10 text-primary border border-primary/20">
+            29.2% unallocated
+          </span>
+<span class="text-xs text-[#94A3B8]">7 days remain</span>
+</div>
+</div>
+<div class="flex items-center justify-between text-xs text-[#94A3B8] mt-4 font-mono">
+<span>Burn rate: ₹1,847 / day</span>
+<span class="text-secondary font-semibold">Safe zone</span>
+</div>
+</div>
+<!-- Card 4: Budget Usage -->
+<div class="rounded-xl bg-[#0F172A] border border-[#1E293B] p-5 shadow-sm flex flex-col justify-between relative overflow-hidden group hover:border-[#334155] hover:shadow-lg transition-all">
+<div class="flex items-center justify-between text-[#94A3B8]">
+<span class="text-xs uppercase tracking-wider font-medium">Budget Usage</span>
+<span class="p-2 rounded-lg bg-[#131C2E] border border-[#1E293B] text-error material-symbols-outlined text-[20px]">pie_chart</span>
+</div>
+<div class="mt-4">
+<div class="flex items-baseline justify-between">
+<div class="text-3xl font-bold text-[#F8FAFC]">70.8%</div>
+<span class="text-xs text-secondary font-medium font-mono">₹17.5k left</span>
+</div>
+<div class="w-full bg-[#1E293B] h-2.5 rounded-full mt-2.5 overflow-hidden flex">
+<div class="bg-primary-container h-full" style="width: 32%" title="Food: 32%"></div>
+<div class="bg-secondary h-full" style="width: 24%" title="Travel: 24%"></div>
+<div class="bg-error h-full" style="width: 20%" title="Shopping: 20%"></div>
+<div class="bg-[#1E293B] h-full flex-1" title="Remaining: 29.2%"></div>
+</div>
+<p class="text-xs text-[#94A3B8] mt-2 truncate">₹17,500 left of ₹60,000 allowance</p>
+</div>
+</div>
+</section>
+<!-- Middle Section: Interactive Data Visualizations (60/40 Split) -->
+<section class="grid grid-cols-1 lg:grid-cols-12 gap-4 items-start">
+<!-- Left Column: Expense Trend Card (Interactive Expandable on Hover & Click) -->
+<div class="lg:col-span-7 xl:col-span-8 rounded-xl bg-[#0F172A] border border-[#1E293B] p-5 shadow-sm card-expand-transition hover:shadow-xl hover:border-[#334155] group relative" id="expenseTrendCard">
+<!-- Card Header with Zoom Controls -->
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
+<div>
+<div class="flex items-center gap-2">
+<h2 class="text-base font-semibold text-[#F8FAFC]">Expense Trend</h2>
+<span class="px-2 py-0.5 rounded text-[11px] bg-[#131C2E] border border-[#1E293B] text-[#94A3B8] font-medium">Sep 1 - Sep 30</span>
+<span class="hidden group-hover:inline-flex items-center gap-1 text-[11px] font-semibold text-primary bg-primary/10 border border-primary/20 px-2 py-0.5 rounded-full transition-all">
+<span class="material-symbols-outlined text-[13px]">insights</span> Live Deep-Dive
+</span>
+</div>
+<p class="text-xs text-[#94A3B8]">Daily expenditures with peak volatility &amp; dynamic averages</p>
+</div>
+<div class="flex flex-wrap items-center gap-2">
+<!-- Interactive Filter / Toggle Pills -->
+<div class="inline-flex rounded-lg bg-[#131C2E] p-0.5 text-xs border border-[#1E293B]">
+<button class="px-2.5 py-1 rounded-md bg-[#1E293B] text-primary font-semibold transition-all hover:text-white" id="btnZoomDaily" type="button">Daily</button>
+<button class="px-2.5 py-1 rounded-md text-[#94A3B8] hover:text-[#F8FAFC] transition-all" id="btnZoomWeekly" type="button">Weekly</button>
+</div>
+<button class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg border border-[#1E293B] bg-[#131C2E] text-xs text-[#94A3B8] hover:border-primary-container hover:text-primary transition-all active:scale-95" id="btnBenchmarkToggle" type="button">
+<span class="material-symbols-outlined text-[14px]">show_chart</span>
+<span id="benchmarkLabel">Show Benchmark</span>
+</button>
+<button class="p-1 rounded-lg text-[#94A3B8] hover:bg-[#1E293B] hover:text-[#F8FAFC] transition-colors" id="expandTrendManualBtn" title="Toggle full breakdown" type="button">
+<span class="material-symbols-outlined text-[20px] transition-transform duration-300" id="trendExpandChevron">expand_more</span>
+</button>
+</div>
+</div>
+<!-- Graph Legend / Indicators -->
+<div class="flex items-center gap-4 text-xs font-medium text-[#94A3B8] pb-2 border-b border-[#1E293B]">
+<span class="inline-flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-primary-container shadow-[0_0_6px_rgba(37,99,235,0.7)]"></span> Actual Spend</span>
+<span class="inline-flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-[#60a5fa]"></span> 7-Day Moving Avg</span>
+<span class="inline-flex items-center gap-1.5 opacity-60"><span class="w-2.5 h-2.5 rounded-sm bg-[#334155]"></span> Daily Distribution</span>
+<span class="hidden sm:inline-flex items-center gap-1.5 text-tertiary ml-auto"><span class="material-symbols-outlined text-[14px]">bolt</span> Hover on data points for merchant records</span>
+</div>
+<!-- Interactive SVG Area Chart -->
+<div class="relative w-full h-72 flex flex-col justify-end pt-4" id="trendChartWrapper">
+<svg class="w-full h-full overflow-visible" id="trendSvg" preserveaspectratio="none" viewbox="0 0 700 240">
+<defs>
+<lineargradient id="areaGradient" x1="0" x2="0" y1="0" y2="1">
+<stop offset="0%" stop-color="#3b82f6" stop-opacity="0.4"></stop>
+<stop offset="100%" stop-color="#3b82f6" stop-opacity="0.0"></stop>
+</lineargradient>
+<lineargradient id="barGradient" x1="0" x2="0" y1="0" y2="1">
+<stop offset="0%" stop-color="#3b82f6" stop-opacity="0.8"></stop>
+<stop offset="100%" stop-color="#1e3a8a" stop-opacity="0.3"></stop>
+</lineargradient>
+</defs>
+<!-- Horizontal Gridlines & Y-Axis Scale -->
+<g class="text-xs fill-[#64748B] font-mono">
+<line stroke="#1E293B" stroke-dasharray="3 3" stroke-width="1" x1="45" x2="690" y1="20" y2="20"></line>
+<text text-anchor="end" x="35" y="24">₹4k</text>
+<line stroke="#1E293B" stroke-dasharray="3 3" stroke-width="1" x1="45" x2="690" y1="70" y2="70"></line>
+<text text-anchor="end" x="35" y="74">₹3k</text>
+<line stroke="#1E293B" stroke-dasharray="3 3" stroke-width="1" x1="45" x2="690" y1="120" y2="120"></line>
+<text text-anchor="end" x="35" y="124">₹2k</text>
+<line stroke="#1E293B" stroke-dasharray="3 3" stroke-width="1" x1="45" x2="690" y1="170" y2="170"></line>
+<text text-anchor="end" x="35" y="174">₹1k</text>
+<line stroke="#334155" stroke-width="1.5" x1="45" x2="690" y1="220" y2="220"></line>
+<text text-anchor="end" x="35" y="224">₹0</text>
+</g>
+<!-- Optional Benchmark Target Line (Toggled via JS) -->
+<g class="hidden transition-opacity duration-300" id="benchmarkLineGroup">
+<line opacity="0.8" stroke="#4edea3" stroke-dasharray="4 4" stroke-width="2" x1="45" x2="690" y1="128" y2="128"></line>
+<rect fill="#00a572" height="18" rx="4" width="130" x="555" y="119"></rect>
+<text fill="#ffffff" font-size="10" font-weight="600" x="562" y="132">Daily Cap ₹1,847</text>
+</g>
+<!-- Background Daily Spend Bars (Interactive) -->
+<g fill="url(#barGradient)" id="svgBarsGroup">
+<rect class="cursor-pointer hover:opacity-100 transition-opacity" data-amount="₹1,200" data-cat="Grocery &amp; Supplies" data-date="Sep 01, 2026" height="60" rx="3" width="10" x="65" y="160"></rect>
+<rect class="cursor-pointer hover:opacity-100 transition-opacity" data-amount="₹1,600" data-cat="Fuel &amp; FastTag" data-date="Sep 03, 2026" height="80" rx="3" width="10" x="105" y="140"></rect>
+<rect class="cursor-pointer hover:opacity-100 transition-opacity" data-amount="₹800" data-cat="Cafe &amp; Refreshment" data-date="Sep 05, 2026" height="40" rx="3" width="10" x="145" y="180"></rect>
+<rect class="cursor-pointer hover:opacity-100 transition-opacity" data-amount="₹2,200" data-cat="Home Utilities" data-date="Sep 07, 2026" height="110" rx="3" width="10" x="185" y="110"></rect>
+<rect class="cursor-pointer hover:opacity-100 transition-opacity" data-amount="₹2,600" data-cat="Weekend Dinner &amp; Club" data-date="Sep 09, 2026" height="130" rx="3" width="10" x="225" y="90"></rect>
+<rect class="cursor-pointer hover:opacity-100 transition-opacity" data-amount="₹1,000" data-cat="Health Pharmacy" data-date="Sep 12, 2026" height="50" rx="3" width="10" x="265" y="170"></rect>
+<rect class="cursor-pointer hover:opacity-100 transition-opacity" data-amount="₹1,800" data-cat="Online Subscriptions" data-date="Sep 14, 2026" height="90" rx="3" width="10" x="305" y="130"></rect>
+<rect class="cursor-pointer hover:opacity-100 transition-opacity" data-amount="₹1,400" data-cat="Food Delivery (Swiggy)" data-date="Sep 16, 2026" height="70" rx="3" width="10" x="345" y="150"></rect>
+<rect class="cursor-pointer hover:opacity-100 transition-opacity" data-amount="₹2,800" data-cat="Gadgets &amp; Cables" data-date="Sep 18, 2026" height="140" rx="3" width="10" x="385" y="80"></rect>
+<rect class="cursor-pointer hover:opacity-100 transition-opacity" data-amount="₹600" data-cat="Quick Snacks" data-date="Sep 20, 2026" height="30" rx="3" width="10" x="425" y="190"></rect>
+<rect class="cursor-pointer hover:opacity-100 transition-opacity" data-amount="₹2,400" data-cat="Festival Preparation" data-date="Sep 21, 2026" height="120" rx="3" width="10" x="465" y="100"></rect>
+<rect class="cursor-pointer hover:opacity-100 transition-opacity" data-amount="₹2,400" data-cat="Shopping • Woodland Shoes" data-date="Sep 21, 2026" fill="#3b82f6" height="120" opacity="0.95" rx="3" width="12" x="505" y="100"></rect>
+<rect class="cursor-pointer hover:opacity-100 transition-opacity" data-amount="₹1,500" data-cat="Fuel IOCL" data-date="Sep 23, 2026" height="75" rx="3" width="10" x="545" y="145"></rect>
+<rect class="cursor-pointer hover:opacity-100 transition-opacity" data-amount="₹900" data-cat="Books &amp; Stationeries" data-date="Sep 25, 2026" height="45" rx="3" width="10" x="585" y="175"></rect>
+<rect class="cursor-pointer hover:opacity-100 transition-opacity" data-amount="₹1,200" data-cat="Gourmet Dining" data-date="Sep 27, 2026" height="60" rx="3" width="10" x="625" y="160"></rect>
+<rect class="cursor-pointer hover:opacity-100 transition-opacity" data-amount="₹800" data-cat="Miscellaneous" data-date="Sep 30, 2026" height="40" rx="3" width="10" x="665" y="180"></rect>
+</g>
+<!-- Smooth Line Area Shade -->
+<path d="M 65 170 C 120 130, 180 180, 230 85 C 280 170, 340 140, 390 75 C 440 185, 470 120, 511 100 C 550 140, 600 170, 670 180 L 670 220 L 65 220 Z" fill="url(#areaGradient)"></path>
+<!-- High-definition Trend Stroke -->
+<path d="M 65 170 C 120 130, 180 180, 230 85 C 280 170, 340 140, 390 75 C 440 185, 470 120, 511 100 C 550 140, 600 170, 670 180" fill="none" stroke="#3b82f6" stroke-linecap="round" stroke-width="2.5"></path>
+<!-- Moving Average Dashed Line -->
+<path d="M 65 160 C 150 140, 250 130, 350 135 C 450 138, 550 125, 670 140" fill="none" opacity="0.8" stroke="#60a5fa" stroke-dasharray="4 3" stroke-width="2"></path>
+<!-- Active Marker on Sep 21 -->
+<circle class="cursor-pointer" cx="511" cy="100" fill="#0F172A" r="5" stroke="#3b82f6" stroke-width="3"></circle>
+<line opacity="0.7" stroke="#3b82f6" stroke-dasharray="2 2" stroke-width="1.5" x1="511" x2="511" y1="100" y2="220"></line>
+<!-- Weekend Dinner Peak Marker -->
+<circle class="cursor-pointer" cx="230" cy="85" fill="#0F172A" r="3.5" stroke="#3b82f6" stroke-width="2"></circle>
+</svg>
+<!-- Dynamic Floating Precision Tooltip for Sep 21 & Other Interactive Points -->
+<div class="absolute left-[68%] top-[14%] -translate-x-1/2 bg-[#0B0F17] border border-[#334155] text-[#CBD5E1] p-2.5 rounded-lg shadow-2xl text-xs z-10 pointer-events-none flex flex-col gap-1 min-w-[170px] transition-all" id="trendChartTooltip">
+<div class="flex items-center justify-between text-[#94A3B8] text-[11px]">
+<span id="trendTooltipDate">Sep 21, 2026</span>
+<span class="text-[10px] px-1.5 py-0.5 rounded bg-primary-container text-white font-medium" id="trendTooltipBadge">Sunday Peak</span>
+</div>
+<div class="text-sm font-bold text-white font-mono" id="trendTooltipAmount">₹2,400</div>
+<div class="text-[11px] text-[#94A3B8] truncate" id="trendTooltipDesc">Shopping • Woodland Shoes</div>
+</div>
+<!-- X Axis Labels -->
+<div class="flex items-center justify-between text-xs text-[#64748B] pt-2 pl-12 pr-4 font-mono">
+<span>Sep 01</span>
+<span>Sep 06</span>
+<span>Sep 11</span>
+<span>Sep 16</span>
+<span class="font-bold text-primary">Sep 21</span>
+<span>Sep 26</span>
+<span>Sep 30</span>
+</div>
+</div>
+<!-- Expandable "Meaningful Insights" Panel (Unfolds smoothly on Hover / Manual Click) -->
+<div class="mt-4 pt-4 border-t border-[#1E293B] overflow-hidden transition-all duration-300 max-h-0 opacity-0 group-hover:max-h-[320px] group-hover:opacity-100" id="trendInsightsPanel">
+<div class="flex items-center justify-between mb-3">
+<div class="flex items-center gap-2">
+<span class="p-1 rounded-md bg-primary-container/20 text-primary material-symbols-outlined text-[18px]">psychology</span>
+<h3 class="text-xs font-semibold text-[#F8FAFC]">Meaningful Financial Insights</h3>
+</div>
+<span class="text-[11px] text-primary font-medium bg-[#131C2E] border border-[#1E293B] px-2 py-0.5 rounded">AI Analytics • 4 Signals</span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-2.5 text-xs">
+<div class="p-2.5 rounded-lg bg-[#131C2E] border-l-2 border-primary border-t border-r border-b border-[#1E293B] flex items-start gap-2 hover:bg-[#1E293B] transition-colors">
+<span class="material-symbols-outlined text-[16px] text-primary mt-0.5">priority_high</span>
+<div>
+<span class="font-semibold text-[#F8FAFC]">Peak Spending Spike on Sunday Sep 21 (₹2,400)</span>
+<p class="text-[#94A3B8] mt-0.5">Driven by apparel shopping and early festive preparations at Woodland &amp; Indiranagar.</p>
+</div>
+</div>
+<div class="p-2.5 rounded-lg bg-[#131C2E] border-l-2 border-tertiary border-t border-r border-b border-[#1E293B] flex items-start gap-2 hover:bg-[#1E293B] transition-colors">
+<span class="material-symbols-outlined text-[16px] text-tertiary mt-0.5">trending_down</span>
+<div>
+<span class="font-semibold text-[#F8FAFC]">Discretionary Spend Dropped 18%</span>
+<p class="text-[#94A3B8] mt-0.5">Mid-month cooling (Sep 10-16) across dining and delivery services reduced daily burn pace.</p>
+</div>
+</div>
+<div class="p-2.5 rounded-lg bg-[#131C2E] border-l-2 border-secondary border-t border-r border-b border-[#1E293B] flex items-start gap-2 hover:bg-[#1E293B] transition-colors">
+<span class="material-symbols-outlined text-[16px] text-secondary mt-0.5">savings</span>
+<div>
+<span class="font-semibold text-[#F8FAFC]">Daily Burn Pace ₹1,847 Remains Safe</span>
+<p class="text-[#94A3B8] mt-0.5">Current velocity tracks toward ending the month approximately ₹3,800 under overall cap.</p>
+</div>
+</div>
+<div class="p-2.5 rounded-lg bg-[#131C2E] border-l-2 border-[#f59e0b] border-t border-r border-b border-[#1E293B] flex items-start gap-2 hover:bg-[#1E293B] transition-colors">
+<span class="material-symbols-outlined text-[16px] text-[#f59e0b] mt-0.5">weekend</span>
+<div>
+<span class="font-semibold text-[#F8FAFC]">Weekend vs Weekday Spend Ratio: +42%</span>
+<p class="text-[#94A3B8] mt-0.5">Average Saturday/Sunday spend reached ₹2,650 vs ₹1,520 for Monday through Thursday.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Column: Category Breakdown Card (Interactive Pop-out Donut & Expanded Allocation List) -->
+<div class="lg:col-span-5 xl:col-span-4 rounded-xl bg-[#0F172A] border border-[#1E293B] p-5 shadow-sm card-expand-transition hover:shadow-xl hover:border-[#334155] group relative" id="categoryBreakdownCard">
+<div class="flex items-center justify-between mb-1">
+<div class="flex items-center gap-2">
+<h2 class="text-base font-semibold text-[#F8FAFC]">Category Breakdown</h2>
+<span class="hidden group-hover:inline-block w-2 h-2 rounded-full bg-primary animate-ping"></span>
+</div>
+<span class="text-xs font-semibold text-primary hover:underline cursor-pointer" onclick="document.getElementById('budgetModal').classList.remove('hidden')">Rebalance</span>
+</div>
+<p class="text-xs text-[#94A3B8] mb-2">Hover over chart segments or legend items to inspect share</p>
+<!-- Interactive Donut Chart Container -->
+<div class="flex items-center justify-center my-3 relative">
+<svg class="w-52 h-52 -rotate-90 transform overflow-visible" id="categoryDonutSvg" viewbox="0 0 100 100">
+<!-- Food: 32% (dasharray 32, gap 68) offset 0 -->
+<circle class="donut-slice cursor-pointer" cx="50" cy="50" data-cat="Food &amp; Dining" data-pct="32%" data-val="₹13,600" fill="transparent" id="slice-food" r="38" stroke="#2563eb" stroke-dasharray="32 68" stroke-dashoffset="0" stroke-width="12"></circle>
+<!-- Travel: 24% (dasharray 24, gap 76) offset -32 -->
+<circle class="donut-slice cursor-pointer" cx="50" cy="50" data-cat="Travel &amp; Fuel" data-pct="24%" data-val="₹10,200" fill="transparent" id="slice-travel" r="38" stroke="#4edea3" stroke-dasharray="24 76" stroke-dashoffset="-32" stroke-width="12"></circle>
+<!-- Shopping: 20% (dasharray 20, gap 80) offset -56 -->
+<circle class="donut-slice cursor-pointer" cx="50" cy="50" data-cat="Shopping &amp; Lifestyle" data-pct="20%" data-val="₹8,500" fill="transparent" id="slice-shopping" r="38" stroke="#ef4444" stroke-dasharray="20 80" stroke-dashoffset="-56" stroke-width="12"></circle>
+<!-- Entertainment: 12% (dasharray 12, gap 88) offset -76 -->
+<circle class="donut-slice cursor-pointer" cx="50" cy="50" data-cat="Entertainment" data-pct="12%" data-val="₹5,100" fill="transparent" id="slice-entertainment" r="38" stroke="#ffb95f" stroke-dasharray="12 88" stroke-dashoffset="-76" stroke-width="12"></circle>
+<!-- Healthcare: 8% (dasharray 8, gap 92) offset -88 -->
+<circle class="donut-slice cursor-pointer" cx="50" cy="50" data-cat="Healthcare &amp; Wellness" data-pct="8%" data-val="₹3,400" fill="transparent" id="slice-health" r="38" stroke="#818cf8" stroke-dasharray="8 92" stroke-dashoffset="-88" stroke-width="12"></circle>
+<!-- Utilities: 4% (dasharray 4, gap 96) offset -96 -->
+<circle class="donut-slice cursor-pointer" cx="50" cy="50" data-cat="Utilities &amp; Subscriptions" data-pct="4%" data-val="₹1,700" fill="transparent" id="slice-utilities" r="38" stroke="#64748b" stroke-dasharray="4 96" stroke-dashoffset="-96" stroke-width="12"></circle>
+</svg>
+<!-- Center Dynamic Stats Display -->
+<div class="absolute inset-0 flex flex-col items-center justify-center pointer-events-none text-center transition-all duration-200" id="donutCenterInfo">
+<span class="text-xs text-[#94A3B8]" id="donutLabel">Aggregate</span>
+<span class="text-xl font-bold text-[#F8FAFC] tracking-tight" id="donutAmount">₹42,500</span>
+<span class="text-[10px] text-[#64748B] uppercase tracking-wider font-semibold" id="donutSubtext">Allocated</span>
+</div>
+</div>
+<!-- Interactive Interactive Expanded Breakdown Listing -->
+<div class="flex flex-col gap-1.5 pt-2 text-xs" id="categoryLegendList">
+<div class="flex items-center justify-between p-2 rounded-lg bg-[#131C2E] border border-[#1E293B] hover:bg-[#1E293B] hover:scale-[1.01] transition-all cursor-pointer hover:border-primary-container" data-target="slice-food">
+<div class="flex items-center gap-2 truncate">
+<span class="w-2.5 h-2.5 rounded-full bg-[#2563eb] flex-shrink-0 shadow-[0_0_6px_rgba(37,99,235,0.7)]"></span>
+<span class="font-medium text-[#F1F5F9] truncate">Food &amp; Dining</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="font-mono text-[#F8FAFC] font-semibold">₹13,600</span>
+<span class="text-[11px] px-1.5 py-0.5 rounded bg-primary-container/20 text-primary font-bold">32%</span>
+</div>
+</div>
+<div class="flex items-center justify-between p-2 rounded-lg bg-[#131C2E] border border-[#1E293B] hover:bg-[#1E293B] hover:scale-[1.01] transition-all cursor-pointer hover:border-secondary" data-target="slice-travel">
+<div class="flex items-center gap-2 truncate">
+<span class="w-2.5 h-2.5 rounded-full bg-[#4edea3] flex-shrink-0 shadow-[0_0_6px_rgba(78,222,163,0.7)]"></span>
+<span class="font-medium text-[#F1F5F9] truncate">Travel &amp; Fuel</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="font-mono text-[#F8FAFC] font-semibold">₹10,200</span>
+<span class="text-[11px] px-1.5 py-0.5 rounded bg-secondary/15 text-secondary font-bold">24%</span>
+</div>
+</div>
+<div class="flex items-center justify-between p-2 rounded-lg bg-[#131C2E] border border-[#1E293B] hover:bg-[#1E293B] hover:scale-[1.01] transition-all cursor-pointer hover:border-error" data-target="slice-shopping">
+<div class="flex items-center gap-2 truncate">
+<span class="w-2.5 h-2.5 rounded-full bg-[#ef4444] flex-shrink-0 shadow-[0_0_6px_rgba(239,68,68,0.7)]"></span>
+<span class="font-medium text-[#F1F5F9] truncate">Shopping &amp; Lifestyle</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="font-mono text-[#F8FAFC] font-semibold">₹8,500</span>
+<span class="text-[11px] px-1.5 py-0.5 rounded bg-error-container/30 text-error font-bold">20%</span>
+</div>
+</div>
+<div class="flex items-center justify-between p-2 rounded-lg bg-[#131C2E] border border-[#1E293B] hover:bg-[#1E293B] hover:scale-[1.01] transition-all cursor-pointer hover:border-tertiary" data-target="slice-entertainment">
+<div class="flex items-center gap-2 truncate">
+<span class="w-2.5 h-2.5 rounded-full bg-[#ffb95f] flex-shrink-0 shadow-[0_0_6px_rgba(255,185,95,0.7)]"></span>
+<span class="font-medium text-[#F1F5F9] truncate">Entertainment</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="font-mono text-[#F8FAFC] font-semibold">₹5,100</span>
+<span class="text-[11px] px-1.5 py-0.5 rounded bg-tertiary/15 text-tertiary font-bold">12%</span>
+</div>
+</div>
+<div class="flex items-center justify-between p-2 rounded-lg bg-[#131C2E] border border-[#1E293B] hover:bg-[#1E293B] hover:scale-[1.01] transition-all cursor-pointer hover:border-indigo-400" data-target="slice-health">
+<div class="flex items-center gap-2 truncate">
+<span class="w-2.5 h-2.5 rounded-full bg-[#818cf8] flex-shrink-0"></span>
+<span class="font-medium text-[#F1F5F9] truncate">Healthcare &amp; Wellness</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="font-mono text-[#F8FAFC] font-semibold">₹3,400</span>
+<span class="text-[11px] px-1.5 py-0.5 rounded bg-[#1E293B] text-[#94A3B8] font-bold">8%</span>
+</div>
+</div>
+<div class="flex items-center justify-between p-2 rounded-lg bg-[#131C2E] border border-[#1E293B] hover:bg-[#1E293B] hover:scale-[1.01] transition-all cursor-pointer hover:border-slate-500" data-target="slice-utilities">
+<div class="flex items-center gap-2 truncate">
+<span class="w-2.5 h-2.5 rounded-full bg-[#64748b] flex-shrink-0"></span>
+<span class="font-medium text-[#F1F5F9] truncate">Utilities &amp; Subscriptions</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="font-mono text-[#F8FAFC] font-semibold">₹1,700</span>
+<span class="text-[11px] px-1.5 py-0.5 rounded bg-[#1E293B] text-[#94A3B8] font-bold">4%</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Bottom Section: Category Utilization & Recent Expenses Ledger -->
+<section class="grid grid-cols-1 lg:grid-cols-2 gap-4 items-start">
+<!-- Left Column: Category Budget Utilization (Smooth Expansion to ALL 8 Envelopes) -->
+<div class="rounded-xl bg-[#0F172A] border border-[#1E293B] p-5 shadow-sm card-expand-transition hover:shadow-xl hover:border-[#334155] group relative" id="budgetUtilizationCard">
+<div class="flex items-center justify-between mb-2">
+<div>
+<div class="flex items-center gap-2">
+<h2 class="text-base font-semibold text-[#F8FAFC]">Category Budget Utilization</h2>
+<span class="text-[11px] font-semibold text-primary bg-primary/10 border border-primary/20 px-2 py-0.5 rounded-full transition-all group-hover:hidden">Top 5 Envelopes</span>
+<span class="text-[11px] font-semibold text-secondary bg-secondary/15 border border-secondary/20 px-2 py-0.5 rounded-full hidden group-hover:inline-flex items-center gap-1 animate-pulse">
+<span class="material-symbols-outlined text-[12px]">done_all</span> Hovered: Showing all 8 budget envelopes
+</span>
+</div>
+<p class="text-xs text-[#94A3B8] mt-0.5">Real-time depletion against set monthly caps</p>
+</div>
+<button class="text-xs font-semibold text-primary hover:underline" onclick="document.getElementById('budgetModal').classList.remove('hidden')" type="button">Adjust Limits</button>
+</div>
+<div class="flex flex-col gap-3 mt-4">
+<!-- 1. Food & Dining -->
+<div class="flex flex-col gap-1.5 p-2.5 rounded-lg bg-[#131C2E]/60 border border-[#1E293B] hover:bg-[#131C2E] transition-colors">
+<div class="flex items-center justify-between text-xs">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-primary">restaurant</span>
+<span class="font-medium text-[#F8FAFC]">Food &amp; Dining</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="font-mono font-semibold text-[#F8FAFC]">₹7,500 <span class="text-[#64748B] font-normal">/ ₹10,000</span></span>
+<span class="px-2 py-0.5 rounded text-[10px] font-semibold bg-secondary/15 text-secondary border border-secondary/20">On Track</span>
+</div>
+</div>
+<div class="w-full bg-[#1E293B] h-2 rounded-full overflow-hidden">
+<div class="bg-primary-container h-full rounded-full transition-all duration-500 group-hover:scale-x-[1.01] shadow-[0_0_6px_rgba(37,99,235,0.6)]" style="width: 75%"></div>
+</div>
+<div class="flex justify-between text-[11px] text-[#94A3B8]">
+<span>75% spent</span>
+<span class="font-medium text-secondary">₹2,500 remaining</span>
+</div>
+</div>
+<!-- 2. Travel & Fuel -->
+<div class="flex flex-col gap-1.5 p-2.5 rounded-lg bg-[#131C2E]/60 border border-[#1E293B] hover:bg-[#131C2E] transition-colors">
+<div class="flex items-center justify-between text-xs">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-secondary">commute</span>
+<span class="font-medium text-[#F8FAFC]">Travel &amp; Fuel</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="font-mono font-semibold text-[#F8FAFC]">₹12,000 <span class="text-[#64748B] font-normal">/ ₹15,000</span></span>
+<span class="px-2 py-0.5 rounded text-[10px] font-semibold bg-secondary-container/20 text-secondary border border-secondary-container/30">Near Limit</span>
+</div>
+</div>
+<div class="w-full bg-[#1E293B] h-2 rounded-full overflow-hidden">
+<div class="bg-secondary h-full rounded-full transition-all duration-500 shadow-[0_0_6px_rgba(78,222,163,0.6)]" style="width: 80%"></div>
+</div>
+<div class="flex justify-between text-[11px] text-[#94A3B8]">
+<span>80% spent</span>
+<span class="font-medium text-secondary">₹3,000 remaining</span>
+</div>
+</div>
+<!-- 3. Shopping & Lifestyle -->
+<div class="flex flex-col gap-1.5 p-2.5 rounded-lg bg-[#131C2E]/60 border border-[#1E293B] hover:bg-[#131C2E] transition-colors">
+<div class="flex items-center justify-between text-xs">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-error">shopping_bag</span>
+<span class="font-medium text-[#F8FAFC]">Shopping &amp; Lifestyle</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="font-mono font-semibold text-error">₹9,200 <span class="text-[#64748B] font-normal">/ ₹8,000</span></span>
+<span class="px-2 py-0.5 rounded text-[10px] font-semibold bg-error-container/30 text-error border border-error/20">Over Budget</span>
+</div>
+</div>
+<div class="w-full bg-[#1E293B] h-2 rounded-full overflow-hidden">
+<div class="bg-error h-full rounded-full transition-all duration-500 shadow-[0_0_6px_rgba(255,180,171,0.6)]" style="width: 100%"></div>
+</div>
+<div class="flex justify-between text-[11px] text-error font-medium">
+<span>115% spent (+15%)</span>
+<span>₹1,200 deficit</span>
+</div>
+</div>
+<!-- 4. Entertainment & Leisure -->
+<div class="flex flex-col gap-1.5 p-2.5 rounded-lg bg-[#131C2E]/60 border border-[#1E293B] hover:bg-[#131C2E] transition-colors">
+<div class="flex items-center justify-between text-xs">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-tertiary">theater_comedy</span>
+<span class="font-medium text-[#F8FAFC]">Entertainment &amp; Leisure</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="font-mono font-semibold text-[#F8FAFC]">₹3,400 <span class="text-[#64748B] font-normal">/ ₹5,000</span></span>
+<span class="px-2 py-0.5 rounded text-[10px] font-semibold bg-tertiary/15 text-tertiary border border-tertiary/20">On Track</span>
+</div>
+</div>
+<div class="w-full bg-[#1E293B] h-2 rounded-full overflow-hidden">
+<div class="bg-tertiary h-full rounded-full transition-all duration-500 shadow-[0_0_6px_rgba(255,185,95,0.6)]" style="width: 68%"></div>
+</div>
+<div class="flex justify-between text-[11px] text-[#94A3B8]">
+<span>68% spent</span>
+<span class="font-medium text-tertiary">₹1,600 remaining</span>
+</div>
+</div>
+<!-- 5. Healthcare & Wellness -->
+<div class="flex flex-col gap-1.5 p-2.5 rounded-lg bg-[#131C2E]/60 border border-[#1E293B] hover:bg-[#131C2E] transition-colors">
+<div class="flex items-center justify-between text-xs">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-primary">local_hospital</span>
+<span class="font-medium text-[#F8FAFC]">Healthcare &amp; Wellness</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="font-mono font-semibold text-[#F8FAFC]">₹2,100 <span class="text-[#64748B] font-normal">/ ₹4,000</span></span>
+<span class="px-2 py-0.5 rounded text-[10px] font-semibold bg-secondary/15 text-secondary border border-secondary/20">On Track</span>
+</div>
+</div>
+<div class="w-full bg-[#1E293B] h-2 rounded-full overflow-hidden">
+<div class="bg-primary-container h-full rounded-full transition-all duration-500 shadow-[0_0_6px_rgba(37,99,235,0.6)]" style="width: 52.5%"></div>
+</div>
+<div class="flex justify-between text-[11px] text-[#94A3B8]">
+<span>52.5% spent</span>
+<span class="font-medium text-secondary">₹1,900 remaining</span>
+</div>
+</div>
+<!-- Additional Categories 6, 7, 8 (Smoothly Expands on Hover or Toggle) -->
+<div class="flex flex-col gap-3 overflow-hidden transition-all duration-500 max-h-0 opacity-0 group-hover:max-h-[500px] group-hover:opacity-100 border-t border-[#1E293B] pt-2" id="extraEnvelopesContainer">
+<!-- 6. Utilities & Bills -->
+<div class="flex flex-col gap-1.5 p-2.5 rounded-lg bg-[#131C2E]/60 border border-[#1E293B] hover:bg-[#131C2E] transition-colors">
+<div class="flex items-center justify-between text-xs">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-[#f59e0b]">bolt</span>
+<span class="font-medium text-[#F8FAFC]">Utilities &amp; Bills</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="font-mono font-semibold text-[#F8FAFC]">₹4,800 <span class="text-[#64748B] font-normal">/ ₹5,000</span></span>
+<span class="px-2 py-0.5 rounded text-[10px] font-semibold bg-[#f59e0b]/15 text-[#f59e0b] border border-[#f59e0b]/20">Near Limit</span>
+</div>
+</div>
+<div class="w-full bg-[#1E293B] h-2 rounded-full overflow-hidden">
+<div class="bg-[#f59e0b] h-full rounded-full" style="width: 96%"></div>
+</div>
+<div class="flex justify-between text-[11px] text-[#94A3B8]">
+<span>96% spent</span>
+<span class="font-medium text-[#f59e0b]">₹200 remaining</span>
+</div>
+</div>
+<!-- 7. Education & Courses -->
+<div class="flex flex-col gap-1.5 p-2.5 rounded-lg bg-[#131C2E]/60 border border-[#1E293B] hover:bg-[#131C2E] transition-colors">
+<div class="flex items-center justify-between text-xs">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-primary">school</span>
+<span class="font-medium text-[#F8FAFC]">Education &amp; Courses</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="font-mono font-semibold text-[#F8FAFC]">₹1,500 <span class="text-[#64748B] font-normal">/ ₹3,000</span></span>
+<span class="px-2 py-0.5 rounded text-[10px] font-semibold bg-secondary/15 text-secondary border border-secondary/20">On Track</span>
+</div>
+</div>
+<div class="w-full bg-[#1E293B] h-2 rounded-full overflow-hidden">
+<div class="bg-primary-container h-full rounded-full" style="width: 50%"></div>
+</div>
+<div class="flex justify-between text-[11px] text-[#94A3B8]">
+<span>50% spent</span>
+<span class="font-medium text-secondary">₹1,500 remaining</span>
+</div>
+</div>
+<!-- 8. Personal Care & Subscriptions -->
+<div class="flex flex-col gap-1.5 p-2.5 rounded-lg bg-[#131C2E]/60 border border-[#1E293B] hover:bg-[#131C2E] transition-colors">
+<div class="flex items-center justify-between text-xs">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-secondary">spa</span>
+<span class="font-medium text-[#F8FAFC]">Personal Care &amp; Subscriptions</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="font-mono font-semibold text-[#F8FAFC]">₹1,000 <span class="text-[#64748B] font-normal">/ ₹2,000</span></span>
+<span class="px-2 py-0.5 rounded text-[10px] font-semibold bg-secondary/15 text-secondary border border-secondary/20">On Track</span>
+</div>
+</div>
+<div class="w-full bg-[#1E293B] h-2 rounded-full overflow-hidden">
+<div class="bg-secondary h-full rounded-full" style="width: 50%"></div>
+</div>
+<div class="flex justify-between text-[11px] text-[#94A3B8]">
+<span>50% spent</span>
+<span class="font-medium text-secondary">₹1,000 remaining</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Bottom Prompt / Interactive Hint -->
+<div class="mt-4 pt-3 border-t border-[#1E293B] flex items-center justify-between text-xs text-[#94A3B8]">
+<span class="inline-flex items-center gap-1"><span class="material-symbols-outlined text-[15px] text-primary">touch_app</span> Hover card or click to keep expanded</span>
+<button class="text-primary font-medium hover:underline flex items-center gap-0.5" id="toggleAllEnvelopesBtn" type="button">
+<span>Toggle All 8 Envelopes</span>
+<span class="material-symbols-outlined text-[16px]">unfold_more</span>
+</button>
+</div>
+</div>
+<!-- Right Column: Recent Expenses Ledger (Interactive Hover Expansion with 10 Comprehensive Items) -->
+<div class="rounded-xl bg-[#0F172A] border border-[#1E293B] p-5 shadow-sm card-expand-transition hover:shadow-xl hover:border-[#334155] group relative flex flex-col justify-between" id="recentExpensesCard">
+<div>
+<div class="flex items-center justify-between mb-2">
+<div>
+<div class="flex items-center gap-2">
+<h2 class="text-base font-semibold text-[#F8FAFC]">Recent Expenses</h2>
+<span class="text-[11px] font-semibold text-primary bg-primary/10 border border-primary/20 px-2 py-0.5 rounded-full">10 Items Cleared</span>
+</div>
+<p class="text-xs text-[#94A3B8] mt-0.5">Real-time ledger synced across UPI &amp; bank accounts</p>
+</div>
+<div class="flex items-center gap-1 text-[#94A3B8]">
+<button class="p-1 rounded-md hover:bg-[#1E293B] hover:text-[#F8FAFC] transition-colors" title="Filter ledger" type="button">
+<span class="material-symbols-outlined text-[20px]">filter_list</span>
+</button>
+<button class="p-1 rounded-md hover:bg-[#1E293B] hover:text-[#F8FAFC] transition-colors" id="btnToggleAllExpenses" title="Expand list" type="button">
+<span class="material-symbols-outlined text-[20px]">fullscreen</span>
+</button>
+</div>
+</div>
+<!-- Transaction List Container with smooth max-height expansion on hover and custom smooth scroll -->
+<div class="flex flex-col divide-y divide-[#1E293B] overflow-y-auto max-h-[380px] group-hover:max-h-[580px] transition-all duration-500 pr-1 custom-scroll" id="recentExpensesListContainer">
+<!-- Item 1 -->
+<div class="flex items-center justify-between py-2.5 hover:bg-[#131C2E] px-2 rounded-lg transition-colors group/item">
+<div class="flex items-center gap-3 min-w-0">
+<div class="w-9 h-9 rounded-full bg-[#131C2E] border border-[#1E293B] flex items-center justify-center text-primary flex-shrink-0 group-hover/item:bg-primary-container group-hover/item:text-white transition-colors">
+<span class="material-symbols-outlined text-[18px]">restaurant</span>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="text-xs font-semibold text-[#F8FAFC] truncate">Dinner with friends</span>
+<span class="text-[11px] text-[#94A3B8] truncate">Smoke House Deli, Indiranagar • Food</span>
+</div>
+</div>
+<div class="flex flex-col items-end flex-shrink-0 ml-3">
+<span class="font-mono text-[#F8FAFC] font-semibold text-xs">-₹850</span>
+<span class="text-[10px] px-1.5 py-0.5 rounded bg-[#131C2E] border border-[#1E293B] text-primary font-medium">UPI (GPay)</span>
+</div>
+</div>
+<!-- Item 2 -->
+<div class="flex items-center justify-between py-2.5 hover:bg-[#131C2E] px-2 rounded-lg transition-colors group/item">
+<div class="flex items-center gap-3 min-w-0">
+<div class="w-9 h-9 rounded-full bg-[#131C2E] border border-[#1E293B] flex items-center justify-center text-secondary flex-shrink-0 group-hover/item:bg-secondary group-hover/item:text-black transition-colors">
+<span class="material-symbols-outlined text-[18px]">local_taxi</span>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="text-xs font-semibold text-[#F8FAFC] truncate">Uber to HSR Layout</span>
+<span class="text-[11px] text-[#94A3B8] truncate">Airport Premier Ride • Transport</span>
+</div>
+</div>
+<div class="flex flex-col items-end flex-shrink-0 ml-3">
+<span class="font-mono text-[#F8FAFC] font-semibold text-xs">-₹420</span>
+<span class="text-[10px] px-1.5 py-0.5 rounded bg-[#131C2E] border border-[#1E293B] text-[#94A3B8] font-medium">Card</span>
+</div>
+</div>
+<!-- Item 3 -->
+<div class="flex items-center justify-between py-2.5 hover:bg-[#131C2E] px-2 rounded-lg transition-colors group/item">
+<div class="flex items-center gap-3 min-w-0">
+<div class="w-9 h-9 rounded-full bg-error-container/20 border border-error/30 flex items-center justify-center text-error flex-shrink-0 group-hover/item:bg-error group-hover/item:text-black transition-colors">
+<span class="material-symbols-outlined text-[18px]">checkroom</span>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="text-xs font-semibold text-[#F8FAFC] truncate">Woodland Shoes</span>
+<span class="text-[11px] text-[#94A3B8] truncate">Apparel &amp; Footwear • Shopping</span>
+</div>
+</div>
+<div class="flex flex-col items-end flex-shrink-0 ml-3">
+<span class="font-mono text-error font-semibold text-xs">-₹2,400</span>
+<span class="text-[10px] px-1.5 py-0.5 rounded bg-[#131C2E] border border-[#1E293B] text-[#94A3B8] font-medium">Card</span>
+</div>
+</div>
+<!-- Item 4 -->
+<div class="flex items-center justify-between py-2.5 hover:bg-[#131C2E] px-2 rounded-lg transition-colors group/item">
+<div class="flex items-center gap-3 min-w-0">
+<div class="w-9 h-9 rounded-full bg-[#131C2E] border border-[#1E293B] flex items-center justify-center text-[#f59e0b] flex-shrink-0 group-hover/item:bg-[#f59e0b] group-hover/item:text-black transition-colors">
+<span class="material-symbols-outlined text-[18px]">bolt</span>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="text-xs font-semibold text-[#F8FAFC] truncate">Electricity Bill</span>
+<span class="text-[11px] text-[#94A3B8] truncate">BESCOM Bangalore • Utilities</span>
+</div>
+</div>
+<div class="flex flex-col items-end flex-shrink-0 ml-3">
+<span class="font-mono text-[#F8FAFC] font-semibold text-xs">-₹1,850</span>
+<span class="text-[10px] px-1.5 py-0.5 rounded bg-[#131C2E] border border-[#1E293B] text-[#94A3B8] font-medium">NetBanking</span>
+</div>
+</div>
+<!-- Item 5 -->
+<div class="flex items-center justify-between py-2.5 hover:bg-[#131C2E] px-2 rounded-lg transition-colors group/item">
+<div class="flex items-center gap-3 min-w-0">
+<div class="w-9 h-9 rounded-full bg-[#131C2E] border border-[#1E293B] flex items-center justify-center text-tertiary flex-shrink-0 group-hover/item:bg-tertiary group-hover/item:text-black transition-colors">
+<span class="material-symbols-outlined text-[18px]">movie</span>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="text-xs font-semibold text-[#F8FAFC] truncate">Movie IMAX tickets</span>
+<span class="text-[11px] text-[#94A3B8] truncate">PVR Forum Koramangala • Entertainment</span>
+</div>
+</div>
+<div class="flex flex-col items-end flex-shrink-0 ml-3">
+<span class="font-mono text-[#F8FAFC] font-semibold text-xs">-₹960</span>
+<span class="text-[10px] px-1.5 py-0.5 rounded bg-[#131C2E] border border-[#1E293B] text-[#94A3B8] font-medium">UPI</span>
+</div>
+</div>
+<!-- Item 6: Petrol Refuel -->
+<div class="flex items-center justify-between py-2.5 hover:bg-[#131C2E] px-2 rounded-lg transition-colors group/item">
+<div class="flex items-center gap-3 min-w-0">
+<div class="w-9 h-9 rounded-full bg-[#131C2E] border border-[#1E293B] flex items-center justify-center text-secondary flex-shrink-0 group-hover/item:bg-secondary group-hover/item:text-black transition-colors">
+<span class="material-symbols-outlined text-[18px]">local_gas_station</span>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="text-xs font-semibold text-[#F8FAFC] truncate">Petrol Refuel</span>
+<span class="text-[11px] text-[#94A3B8] truncate">Indian Oil Corp • Transport</span>
+</div>
+</div>
+<div class="flex flex-col items-end flex-shrink-0 ml-3">
+<span class="font-mono text-[#F8FAFC] font-semibold text-xs">-₹420</span>
+<span class="text-[10px] px-1.5 py-0.5 rounded bg-[#131C2E] border border-[#1E293B] text-[#94A3B8] font-medium">Cash</span>
+</div>
+</div>
+<!-- Item 7: Gourmet Salad Bowls -->
+<div class="flex items-center justify-between py-2.5 hover:bg-[#131C2E] px-2 rounded-lg transition-colors group/item">
+<div class="flex items-center gap-3 min-w-0">
+<div class="w-9 h-9 rounded-full bg-[#131C2E] border border-[#1E293B] flex items-center justify-center text-primary flex-shrink-0 group-hover/item:bg-primary-container group-hover/item:text-white transition-colors">
+<span class="material-symbols-outlined text-[18px]">lunch_dining</span>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="text-xs font-semibold text-[#F8FAFC] truncate">Gourmet Salad Bowls</span>
+<span class="text-[11px] text-[#94A3B8] truncate">FreshMenu Express • Food</span>
+</div>
+</div>
+<div class="flex flex-col items-end flex-shrink-0 ml-3">
+<span class="font-mono text-[#F8FAFC] font-semibold text-xs">-₹450</span>
+<span class="text-[10px] px-1.5 py-0.5 rounded bg-[#131C2E] border border-[#1E293B] text-primary font-medium">UPI</span>
+</div>
+</div>
+<!-- Item 8: Uniqlo Apparel & Linen -->
+<div class="flex items-center justify-between py-2.5 hover:bg-[#131C2E] px-2 rounded-lg transition-colors group/item">
+<div class="flex items-center gap-3 min-w-0">
+<div class="w-9 h-9 rounded-full bg-error-container/20 border border-error/30 flex items-center justify-center text-error flex-shrink-0 group-hover/item:bg-error group-hover/item:text-black transition-colors">
+<span class="material-symbols-outlined text-[18px]">shopping_bag</span>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="text-xs font-semibold text-[#F8FAFC] truncate">Uniqlo Apparel &amp; Linen</span>
+<span class="text-[11px] text-[#94A3B8] truncate">Phoenix Marketcity • Shopping</span>
+</div>
+</div>
+<div class="flex flex-col items-end flex-shrink-0 ml-3">
+<span class="font-mono text-error font-semibold text-xs">-₹3,200</span>
+<span class="text-[10px] px-1.5 py-0.5 rounded bg-[#131C2E] border border-[#1E293B] text-[#94A3B8] font-medium">ICICI Debit</span>
+</div>
+</div>
+<!-- Item 9: Groceries & Daily Needs -->
+<div class="flex items-center justify-between py-2.5 hover:bg-[#131C2E] px-2 rounded-lg transition-colors group/item">
+<div class="flex items-center gap-3 min-w-0">
+<div class="w-9 h-9 rounded-full bg-[#131C2E] border border-[#1E293B] flex items-center justify-center text-primary flex-shrink-0 group-hover/item:bg-primary-container group-hover/item:text-white transition-colors">
+<span class="material-symbols-outlined text-[18px]">shopping_cart</span>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="text-xs font-semibold text-[#F8FAFC] truncate">Groceries &amp; Daily Needs</span>
+<span class="text-[11px] text-[#94A3B8] truncate">Blinkit • Food</span>
+</div>
+</div>
+<div class="flex flex-col items-end flex-shrink-0 ml-3">
+<span class="font-mono text-[#F8FAFC] font-semibold text-xs">-₹1,120</span>
+<span class="text-[10px] px-1.5 py-0.5 rounded bg-[#131C2E] border border-[#1E293B] text-primary font-medium">UPI</span>
+</div>
+</div>
+<!-- Item 10: Swiggy Late Night -->
+<div class="flex items-center justify-between py-2.5 hover:bg-[#131C2E] px-2 rounded-lg transition-colors group/item">
+<div class="flex items-center gap-3 min-w-0">
+<div class="w-9 h-9 rounded-full bg-[#131C2E] border border-[#1E293B] flex items-center justify-center text-primary flex-shrink-0 group-hover/item:bg-primary-container group-hover/item:text-white transition-colors">
+<span class="material-symbols-outlined text-[18px]">icecream</span>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="text-xs font-semibold text-[#F8FAFC] truncate">Swiggy Late Night</span>
+<span class="text-[11px] text-[#94A3B8] truncate">Corner House • Food</span>
+</div>
+</div>
+<div class="flex flex-col items-end flex-shrink-0 ml-3">
+<span class="font-mono text-[#F8FAFC] font-semibold text-xs">-₹380</span>
+<span class="text-[10px] px-1.5 py-0.5 rounded bg-[#131C2E] border border-[#1E293B] text-primary font-medium">UPI</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Action Anchor -->
+<a class="w-full mt-3 flex items-center justify-center gap-1.5 py-2 rounded-lg bg-[#131C2E] border border-[#1E293B] text-primary text-xs font-semibold hover:bg-[#1E293B] hover:border-[#334155] transition-colors" href="#">
+<span>View All Expenses in Ledger</span>
+<span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</a>
+</div>
+</section>
+<!-- Interactive Mockup: Smart Budget Alert Toast (Floating corner badge) -->
+<aside class="fixed bottom-6 right-6 z-50 max-w-sm w-full bg-[#0F172A] border border-[#1E293B] p-4 rounded-xl shadow-2xl border-l-4 border-l-secondary flex items-start gap-3 transition-all" id="smartToast">
+<span class="text-secondary text-xl">💡</span>
+<div class="flex flex-col flex-1">
+<div class="flex items-center justify-between">
+<span class="text-xs text-[#F8FAFC] font-semibold">Budget Warning</span>
+<button class="text-[#94A3B8] hover:text-[#F8FAFC]" onclick="document.getElementById('smartToast').classList.add('hidden')" type="button">
+<span class="material-symbols-outlined text-[18px]">close</span>
+</button>
+</div>
+<p class="text-xs text-[#94A3B8] mt-1">You're approaching your <strong>Travel</strong> budget limit (80% used). Consider slowing discretionary fuel &amp; cab spending.</p>
+</div>
+</aside>
+<!-- Interactive Mockup: Set Budget Modal Preview (Hidden by default) -->
+<div class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm p-4" id="budgetModal">
+<div class="bg-[#0F172A] border border-[#1E293B] max-w-md w-full rounded-2xl p-6 shadow-2xl flex flex-col gap-4">
+<div class="flex items-center justify-between">
+<h3 class="text-base font-semibold text-[#F8FAFC]">Configure Monthly Cap</h3>
+<button class="p-1 rounded text-[#94A3B8] hover:bg-[#1E293B] hover:text-white" onclick="document.getElementById('budgetModal').classList.add('hidden')" type="button">
+<span class="material-symbols-outlined text-[20px]">close</span>
+</button>
+</div>
+<div class="flex flex-col gap-2">
+<label class="text-xs font-semibold text-secondary uppercase tracking-wider">Target Category</label>
+<select class="h-10 px-3 rounded-lg bg-[#131C2E] border border-[#1E293B] text-[#F8FAFC] text-xs focus:outline-none focus:border-primary-container">
+<option>Food &amp; Dining</option>
+<option>Travel &amp; Fuel</option>
+<option selected="">Shopping &amp; Lifestyle</option>
+<option>Entertainment</option>
+<option>Healthcare &amp; Wellness</option>
+<option>Utilities &amp; Bills</option>
+</select>
+</div>
+<div class="flex flex-col gap-2">
+<label class="text-xs font-semibold text-secondary uppercase tracking-wider">New Monthly Cap (INR)</label>
+<div class="relative">
+<span class="absolute left-3 top-1/2 -translate-y-1/2 text-[#64748B] font-medium text-xs">₹</span>
+<input class="w-full h-10 pl-8 pr-4 rounded-lg bg-[#131C2E] border border-[#1E293B] text-[#F8FAFC] text-xs focus:outline-none focus:border-primary-container" type="number" value="10000"/>
+</div>
+</div>
+<div class="flex items-center justify-end gap-2 pt-2">
+<button class="px-4 py-2 rounded-lg text-[#94A3B8] text-xs hover:bg-[#1E293B]" onclick="document.getElementById('budgetModal').classList.add('hidden')" type="button">Cancel</button>
+<button class="px-4 py-2 rounded-lg bg-primary-container text-white text-xs font-semibold hover:bg-blue-600 shadow-sm" onclick="document.getElementById('budgetModal').classList.add('hidden')" type="button">Save Allocation</button>
+</div>
+</div>
+</div>
+<!-- Interactive Mockup: Quick Add Expense Drawer (Hidden by default) -->
+<div class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm p-4" id="expenseQuickDrawer">
+<div class="bg-[#0F172A] border border-[#1E293B] max-w-lg w-full rounded-2xl p-6 shadow-2xl flex flex-col gap-4">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<div class="p-1.5 rounded-lg bg-primary-container/20 text-primary">
+<span class="material-symbols-outlined text-[20px]">post_add</span>
+</div>
+<h3 class="text-base font-semibold text-[#F8FAFC]">Record Expense</h3>
+</div>
+<button class="p-1 rounded text-[#94A3B8] hover:bg-[#1E293B] hover:text-white" onclick="document.getElementById('expenseQuickDrawer').classList.add('hidden')" type="button">
+<span class="material-symbols-outlined text-[20px]">close</span>
+</button>
+</div>
+<div class="grid grid-cols-2 gap-3">
+<div class="flex flex-col gap-1">
+<label class="text-xs font-semibold text-secondary uppercase">Amount (₹)</label>
+<input class="h-10 px-3 rounded-lg bg-[#131C2E] border border-[#1E293B] text-[#F8FAFC] text-xs focus:outline-none focus:border-primary-container" placeholder="e.g. 1,450" type="text"/>
+</div>
+<div class="flex flex-col gap-1">
+<label class="text-xs font-semibold text-secondary uppercase">Category</label>
+<select class="h-10 px-3 rounded-lg bg-[#131C2E] border border-[#1E293B] text-[#F8FAFC] text-xs focus:outline-none focus:border-primary-container">
+<option>Food &amp; Dining</option>
+<option>Travel &amp; Fuel</option>
+<option>Shopping &amp; Lifestyle</option>
+<option>Bills &amp; Utilities</option>
+<option>Entertainment</option>
+<option>Healthcare</option>
+</select>
+</div>
+</div>
+<div class="flex flex-col gap-1">
+<label class="text-xs font-semibold text-secondary uppercase">Description / Vendor</label>
+<input class="h-10 px-3 rounded-lg bg-[#131C2E] border border-[#1E293B] text-[#F8FAFC] text-xs focus:outline-none focus:border-primary-container" placeholder="e.g. Starbucks Indiranagar" type="text"/>
+</div>
+<div class="grid grid-cols-2 gap-3">
+<div class="flex flex-col gap-1">
+<label class="text-xs font-semibold text-secondary uppercase">Date</label>
+<input class="h-10 px-3 rounded-lg bg-[#131C2E] border border-[#1E293B] text-[#F8FAFC] text-xs focus:outline-none focus:border-primary-container" type="date" value="2026-09-23"/>
+</div>
+<div class="flex flex-col gap-1">
+<label class="text-xs font-semibold text-secondary uppercase">Payment Mode</label>
+<select class="h-10 px-3 rounded-lg bg-[#131C2E] border border-[#1E293B] text-[#F8FAFC] text-xs focus:outline-none focus:border-primary-container">
+<option>UPI (GPay / PhonePe)</option>
+<option>Credit Card (HDFC)</option>
+<option>Debit Card</option>
+<option>Cash</option>
+</select>
+</div>
+</div>
+<div class="flex items-center justify-end gap-2 pt-2">
+<button class="px-4 py-2 rounded-lg text-[#94A3B8] text-xs hover:bg-[#1E293B]" onclick="document.getElementById('expenseQuickDrawer').classList.add('hidden')" type="button">Dismiss</button>
+<button class="px-5 py-2 rounded-lg bg-primary-container text-white text-xs font-semibold hover:bg-blue-600 shadow-sm" onclick="document.getElementById('expenseQuickDrawer').classList.add('hidden')" type="button">Submit Record</button>
+</div>
+</div>
+</div>
+</div></main></div>
+<!-- Interactive Client Scripts for Cards Hover/Click Expansions -->
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  // 1. Expense Trend Card Interactions
+  const trendCard = document.getElementById('expenseTrendCard');
+  const trendInsightsPanel = document.getElementById('trendInsightsPanel');
+  const trendChevron = document.getElementById('trendExpandChevron');
+  const btnZoomDaily = document.getElementById('btnZoomDaily');
+  const btnZoomWeekly = document.getElementById('btnZoomWeekly');
+  const btnBenchmark = document.getElementById('btnBenchmarkToggle');
+  const benchmarkLineGroup = document.getElementById('benchmarkLineGroup');
+  const benchmarkLabel = document.getElementById('benchmarkLabel');
+  const trendTooltip = document.getElementById('trendChartTooltip');
+  const tooltipDate = document.getElementById('trendTooltipDate');
+  const tooltipBadge = document.getElementById('trendTooltipBadge');
+  const tooltipAmount = document.getElementById('trendTooltipAmount');
+  const tooltipDesc = document.getElementById('trendTooltipDesc');
+
+  let trendExpanded = false;
+  const toggleTrendInsights = () => {
+    trendExpanded = !trendExpanded;
+    if (trendExpanded) {
+      trendInsightsPanel.classList.remove('max-h-0', 'opacity-0');
+      trendInsightsPanel.classList.add('max-h-[360px]', 'opacity-100');
+      if (trendChevron) trendChevron.classList.add('rotate-180');
+    } else {
+      trendInsightsPanel.classList.remove('max-h-[360px]', 'opacity-100');
+      trendInsightsPanel.classList.add('max-h-0', 'opacity-0');
+      if (trendChevron) trendChevron.classList.remove('rotate-180');
+    }
+  };
+
+  document.getElementById('expandTrendManualBtn')?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    toggleTrendInsights();
+  });
+
+  // Zoom toggles
+  btnZoomDaily?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    btnZoomDaily.className = "px-2.5 py-1 rounded-md bg-[#1E293B] text-primary font-semibold transition-all";
+    btnZoomWeekly.className = "px-2.5 py-1 rounded-md text-[#94A3B8] hover:text-[#F8FAFC] transition-all";
+  });
+  btnZoomWeekly?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    btnZoomWeekly.className = "px-2.5 py-1 rounded-md bg-[#1E293B] text-primary font-semibold transition-all";
+    btnZoomDaily.className = "px-2.5 py-1 rounded-md text-[#94A3B8] hover:text-[#F8FAFC] transition-all";
+  });
+
+  // Benchmark toggle
+  let showBenchmark = false;
+  btnBenchmark?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    showBenchmark = !showBenchmark;
+    if (showBenchmark) {
+      benchmarkLineGroup.classList.remove('hidden');
+      benchmarkLabel.textContent = "Hide Benchmark";
+      btnBenchmark.classList.add('bg-secondary/20', 'text-secondary', 'border-secondary/40');
+    } else {
+      benchmarkLineGroup.classList.add('hidden');
+      benchmarkLabel.textContent = "Show Benchmark";
+      btnBenchmark.classList.remove('bg-secondary/20', 'text-secondary', 'border-secondary/40');
+    }
+  });
+
+  // Hover over graph bars to update tooltip dynamically
+  const svgBars = document.querySelectorAll('#svgBarsGroup rect');
+  svgBars.forEach(bar => {
+    bar.addEventListener('mouseenter', () => {
+      const date = bar.getAttribute('data-date') || 'Sep 21, 2026';
+      const amount = bar.getAttribute('data-amount') || '₹2,400';
+      const cat = bar.getAttribute('data-cat') || 'Expense';
+      
+      tooltipDate.textContent = date;
+      tooltipAmount.textContent = amount;
+      tooltipDesc.textContent = cat;
+      tooltipBadge.textContent = date.includes('21') ? 'Sunday Peak' : 'Cleared';
+
+      // adjust positioning relative to bar X
+      const barX = parseFloat(bar.getAttribute('x')) || 505;
+      const pct = (barX / 700) * 100;
+      trendTooltip.style.left = `${pct}%`;
+    });
+  });
+
+  // 2. Category Breakdown Donut & Legend Synchronization
+  const donutSlices = document.querySelectorAll('.donut-slice');
+  const legendRows = document.querySelectorAll('#categoryLegendList > div');
+  const donutLabel = document.getElementById('donutLabel');
+  const donutAmount = document.getElementById('donutAmount');
+  const donutSubtext = document.getElementById('donutSubtext');
+
+  function setDonutHighlight(catName, val, pct) {
+    donutLabel.textContent = catName;
+    donutAmount.textContent = val;
+    donutSubtext.textContent = pct + " OF MONTHLY";
+    donutSubtext.className = "text-[10px] text-primary uppercase tracking-wider font-bold";
+  }
+
+  function resetDonutHighlight() {
+    donutLabel.textContent = "Aggregate";
+    donutAmount.textContent = "₹42,500";
+    donutSubtext.textContent = "ALLOCATED";
+    donutSubtext.className = "text-[10px] text-[#64748B] uppercase tracking-wider font-semibold";
+    donutSlices.forEach(s => s.classList.remove('active'));
+    legendRows.forEach(r => r.classList.remove('bg-[#1E293B]', 'scale-[1.02]'));
+  }
+
+  donutSlices.forEach(slice => {
+    slice.addEventListener('mouseenter', () => {
+      const cat = slice.getAttribute('data-cat');
+      const val = slice.getAttribute('data-val');
+      const pct = slice.getAttribute('data-pct');
+      donutSlices.forEach(s => s.style.opacity = '0.35');
+      slice.style.opacity = '1';
+      slice.classList.add('active');
+      setDonutHighlight(cat, val, pct);
+
+      // highlight matching legend
+      const targetId = slice.id;
+      legendRows.forEach(row => {
+        if (row.getAttribute('data-target') === targetId) {
+          row.classList.add('bg-[#1E293B]', 'scale-[1.02]');
+        } else {
+          row.classList.remove('bg-[#1E293B]', 'scale-[1.02]');
+        }
+      });
+    });
+
+    slice.addEventListener('mouseleave', () => {
+      donutSlices.forEach(s => s.style.opacity = '1');
+      resetDonutHighlight();
+    });
+  });
+
+  legendRows.forEach(row => {
+    row.addEventListener('mouseenter', () => {
+      const targetId = row.getAttribute('data-target');
+      const targetSlice = document.getElementById(targetId);
+      if (targetSlice) {
+        donutSlices.forEach(s => s.style.opacity = '0.35');
+        targetSlice.style.opacity = '1';
+        targetSlice.classList.add('active');
+        const cat = targetSlice.getAttribute('data-cat');
+        const val = targetSlice.getAttribute('data-val');
+        const pct = targetSlice.getAttribute('data-pct');
+        setDonutHighlight(cat, val, pct);
+      }
+    });
+
+    row.addEventListener('mouseleave', () => {
+      donutSlices.forEach(s => s.style.opacity = '1');
+      resetDonutHighlight();
+    });
+  });
+
+  // 3. Category Budget Utilization (Toggle All 8 Envelopes)
+  const extraEnvelopes = document.getElementById('extraEnvelopesContainer');
+  const toggleAllEnvelopesBtn = document.getElementById('toggleAllEnvelopesBtn');
+  let envelopesPinned = false;
+
+  toggleAllEnvelopesBtn?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    envelopesPinned = !envelopesPinned;
+    if (envelopesPinned) {
+      extraEnvelopes.classList.remove('max-h-0', 'opacity-0');
+      extraEnvelopes.classList.add('max-h-[500px]', 'opacity-100');
+      toggleAllEnvelopesBtn.querySelector('span').textContent = "Collapse Envelopes";
+    } else {
+      extraEnvelopes.classList.remove('max-h-[500px]', 'opacity-100');
+      extraEnvelopes.classList.add('max-h-0', 'opacity-0');
+      toggleAllEnvelopesBtn.querySelector('span').textContent = "Toggle All 8 Envelopes";
+    }
+  });
+
+  // 4. Recent Expenses Card Expansion
+  const expensesListContainer = document.getElementById('recentExpensesListContainer');
+  const btnToggleAllExpenses = document.getElementById('btnToggleAllExpenses');
+  let expensesPinned = false;
+
+  btnToggleAllExpenses?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    expensesPinned = !expensesPinned;
+    if (expensesPinned) {
+      expensesListContainer.classList.remove('max-h-[380px]');
+      expensesListContainer.classList.add('max-h-[680px]');
+      btnToggleAllExpenses.classList.add('text-primary');
+    } else {
+      expensesListContainer.classList.remove('max-h-[680px]');
+      expensesListContainer.classList.add('max-h-[380px]');
+      btnToggleAllExpenses.classList.remove('text-primary');
+    }
+  });
+});
+</script>
+</body></html>

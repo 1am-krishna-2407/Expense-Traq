@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script><script id="tailwind-config">
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        "colors": {
+          "secondary": "#4edea3",
+          "inverse-surface": "#dfe2ee",
+          "surface-container-highest": "#31353e",
+          "on-surface": "#dfe2ee",
+          "primary-fixed-dim": "#b4c5ff",
+          "on-secondary-fixed-variant": "#005236",
+          "on-primary-fixed-variant": "#003ea8",
+          "secondary-fixed-dim": "#4edea3",
+          "on-tertiary-fixed-variant": "#653e00",
+          "outline-variant": "#434655",
+          "secondary-container": "#00a572",
+          "on-primary-fixed": "#00174b",
+          "on-error-container": "#ffdad6",
+          "surface-container-low": "#181c24",
+          "error": "#ffb4ab",
+          "inverse-primary": "#0053db",
+          "surface-container-lowest": "#0a0e16",
+          "on-surface-variant": "#c3c6d7",
+          "on-secondary": "#003824",
+          "surface-container-high": "#262a33",
+          "inverse-on-surface": "#2c3039",
+          "on-tertiary-fixed": "#2a1700",
+          "primary": "#b4c5ff",
+          "on-background": "#dfe2ee",
+          "primary-fixed": "#dbe1ff",
+          "surface-bright": "#353942",
+          "surface-dim": "#0f131c",
+          "tertiary": "#ffb95f",
+          "tertiary-container": "#996100",
+          "on-tertiary-container": "#ffeedd",
+          "on-primary-container": "#eeefff",
+          "on-primary": "#002a78",
+          "background": "#0B0F17",
+          "on-secondary-fixed": "#002113",
+          "on-tertiary": "#472a00",
+          "primary-container": "#2563eb",
+          "tertiary-fixed": "#ffddb8",
+          "surface-container": "#131C2E",
+          "error-container": "#93000a",
+          "surface": "#0B0F17",
+          "surface-tint": "#b4c5ff",
+          "on-error": "#690005",
+          "tertiary-fixed-dim": "#ffb95f",
+          "outline": "#8d90a0",
+          "on-secondary-container": "#00311f",
+          "secondary-fixed": "#6ffbbe",
+          "surface-variant": "#31353e",
+          "card-dark": "#131C2E",
+          "card-border": "#1E293B"
+        },
+        "borderRadius": {
+          "DEFAULT": "0.25rem",
+          "lg": "0.5rem",
+          "xl": "0.75rem",
+          "full": "9999px"
+        },
+        "spacing": {
+          "space-sm": "0.5rem",
+          "space-md": "0.75rem",
+          "margin": "1.5rem",
+          "space-lg": "1rem",
+          "space-xl": "1.5rem",
+          "gutter": "1rem",
+          "margin-mobile": "1rem",
+          "gutter-mobile": "0.75rem",
+          "space-xs": "0.25rem"
+        },
+        "fontFamily": {
+          "body-md": ["Inter"],
+          "numeric-metric": ["Inter"],
+          "display": ["Inter"],
+          "headline-sm": ["Inter"],
+          "body-lg": ["Inter"],
+          "numeric-table": ["Inter"],
+          "label-sm": ["Inter"],
+          "headline-md": ["Inter"],
+          "headline-lg": ["Inter"],
+          "label-md": ["Inter"],
+          "body-sm": ["Inter"],
+          "currency-stat": ["Inter"]
+        },
+        "fontSize": {
+          "body-md": ["13px", {"lineHeight": "18px", "letterSpacing": "0em", "fontWeight": "400"}],
+          "numeric-metric": ["28px", {"lineHeight": "34px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+          "display": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+          "headline-sm": ["16px", {"lineHeight": "24px", "letterSpacing": "-0.005em", "fontWeight": "600"}],
+          "body-lg": ["15px", {"lineHeight": "22px", "letterSpacing": "0em", "fontWeight": "400"}],
+          "numeric-table": ["13px", {"lineHeight": "18px", "letterSpacing": "0em", "fontWeight": "500"}],
+          "label-sm": ["11px", {"lineHeight": "14px", "letterSpacing": "0.04em", "fontWeight": "600"}],
+          "headline-md": ["20px", {"lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+          "headline-lg": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.015em", "fontWeight": "600"}],
+          "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "500"}],
+          "body-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.01em", "fontWeight": "400"}],
+          "currency-stat": ["26px", {"lineHeight": "32px", "letterSpacing": "-0.02em", "fontWeight": "700"}]
+        }
+      }
+    }
+  };
+</script></head><body class="bg-[#0B0F17] font-body-md text-body-md text-on-surface antialiased selection:bg-primary/20 selection:text-primary"><aside class="fixed left-0 top-0 h-full w-64 bg-[#0F172A] border-r border-[#1E293B] z-50 flex flex-col justify-between shadow-xl"><div class="flex flex-col"><div class="h-16 px-space-lg flex items-center gap-space-sm border-b border-[#1E293B]/60"><img alt="RupeeFlow Brand Logo" class="h-8 w-8 object-contain rounded-lg" src="https://lh3.googleusercontent.com/aida/AEtjO1W5nph4x0o4Br954IEySEW74bPg7jA54dIg3a3YAvVTr4_XWr1ZOZroPd-z1Tz5zDPmm_JVYobj1DpTvJLUprNerEGyHIUCGlSjfD8HUWkH-2UxFP8EnlLzysPfBW08ONDURUhHZO1xiQFK7EFGnf5-96TJEr5ZW_rd_ddhyhrOLK0Rr17dQzQrNzYC8feyFoIx75VhrmRUBLgKyiLoHmEA-uqxXAnEc5A4JKMzi0MIpPvIGtJHeXojQok"/><span class="font-headline-sm text-headline-sm text-white tracking-tight font-bold">RupeeFlow</span></div><nav class="flex flex-col gap-1 px-space-md mt-space-md" data-active-classes="bg-primary-container text-white font-label-md rounded-lg shadow-sm"><a class="flex items-center px-space-md py-2 rounded-lg text-slate-300 font-label-md hover:bg-[#1E293B] hover:text-white transition-colors" data-path="dashboard" href="#">Dashboard</a><a class="flex items-center px-space-md py-2 rounded-lg text-slate-300 font-label-md hover:bg-[#1E293B] hover:text-white transition-colors" data-path="expenses" href="#">Expenses</a><a class="flex items-center px-space-md py-2 rounded-lg text-slate-300 font-label-md hover:bg-[#1E293B] hover:text-white transition-colors" data-path="budgets" href="#">Budgets</a><a aria-current="page" class="flex items-center px-space-md py-2 transition-colors bg-primary-container text-white font-label-md rounded-lg shadow-sm" data-path="categories" href="#">Categories</a><a class="flex items-center px-space-md py-2 rounded-lg text-slate-300 font-label-md hover:bg-[#1E293B] hover:text-white transition-colors" data-path="reports" href="#">Reports</a></nav></div><div class="p-space-md m-space-sm rounded-xl bg-[#131C2E] border border-[#1E293B] flex flex-col gap-space-sm"><div class="flex items-center gap-space-sm"><img alt="Profile" class="w-8 h-8 rounded-full object-cover ring-1 ring-primary/40" src="https://lh3.googleusercontent.com/aida/AEtjO1WA7Z4-PK4j5ulhQNaAsUHR28mH-9FGOUUfRRS1TFnyeAXIyNilDIPrVvQBppkGic1-F5nEUctITU5YNw2R5G0c4t__Q2ULO_YIp3s_FO9UvlezV6FxbQxeFwfbT8rd22C8eVIxZoHTLMRKi2EioPFjAzaFAVEGeZOsmHhjSrCOBv4432SI9dPJG-J8uv9aeYUTkK1vVe_OoouRdZx-1uhr272J1mQalq0Oi6OUmRR4NMxDs4bI_lqFxaE"/><div class="flex flex-col min-w-0 flex-1"><span class="font-label-md text-label-md text-white font-medium truncate">Good evening, Krishna</span><span class="font-body-sm text-body-sm text-slate-400 truncate">Individual Plan</span></div></div><a class="flex items-center gap-space-xs pt-space-xs font-label-md text-label-md text-rose-400 hover:text-rose-300 transition-colors" data-path="login" href="#"><span class="material-symbols-outlined text-[18px]">logout</span><span>Logout</span></a></div></aside><div class="pl-64"><header class="fixed top-0 left-64 right-0 h-16 bg-[#0B0F17]/85 backdrop-blur-xl border-b border-[#1E293B] z-40"><div class="h-16 w-full px-space-lg flex items-center justify-between gap-space-md"><div class="flex items-center gap-space-md flex-1 max-w-xl"><button class="flex items-center gap-space-xs px-space-md py-1.5 rounded-lg bg-[#131C2E] border border-[#1E293B] font-label-md text-slate-200 hover:bg-[#1E293B] transition-colors" type="button"><span class="material-symbols-outlined text-[18px] text-primary">calendar_month</span><span>September 2026</span><span class="material-symbols-outlined text-[16px] text-slate-400">arrow_drop_down</span></button><div class="relative flex-1"><span class="material-symbols-outlined absolute left-space-md top-1/2 -translate-y-1/2 text-slate-400 text-[18px]">search</span><input class="w-full pl-9 pr-space-md py-1.5 h-9 rounded-lg bg-[#131C2E] border border-[#1E293B] font-body-sm text-white placeholder:text-slate-400 focus:outline-none focus:border-primary-container focus:ring-1 focus:ring-primary-container transition-all" placeholder="Quick search transactions, budgets, vendors..." type="search"/></div></div><div class="flex items-center gap-space-md"><button aria-label="Notifications" class="relative p-2 rounded-lg text-slate-300 hover:bg-[#131C2E] hover:text-white border border-transparent hover:border-[#1E293B] transition-colors" type="button"><span class="material-symbols-outlined text-[20px]">notifications</span><span class="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-rose-500"></span></button><button class="flex items-center gap-space-xs px-space-md h-9 rounded-lg bg-primary-container text-white font-label-md text-label-md hover:bg-blue-600 transition-colors shadow-sm" type="button"><span class="material-symbols-outlined text-[18px]">add</span><span>+ Add Expense</span></button><img alt="Profile" class="w-8 h-8 rounded-full object-cover ring-1 ring-[#1E293B]" src="https://lh3.googleusercontent.com/aida/AEtjO1WA7Z4-PK4j5ulhQNaAsUHR28mH-9FGOUUfRRS1TFnyeAXIyNilDIPrVvQBppkGic1-F5nEUctITU5YNw2R5G0c4t__Q2ULO_YIp3s_FO9UvlezV6FxbQxeFwfbT8rd22C8eVIxZoHTLMRKi2EioPFjAzaFAVEGeZOsmHhjSrCOBv4432SI9dPJG-J8uv9aeYUTkK1vVe_OoouRdZx-1uhr272J1mQalq0Oi6OUmRR4NMxDs4bI_lqFxaE"/></div></div></header><main class="relative pt-16 bg-[#0B0F17] min-h-screen w-full px-space-lg py-space-lg"><div class="flex flex-col w-full gap-space-xl">
+<!-- Top Banner / Title Header Area -->
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-space-md">
+<div class="flex flex-col gap-1">
+<div class="flex items-center gap-space-sm flex-wrap">
+<h1 class="font-headline-lg text-headline-lg text-white font-bold">Categories</h1>
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full bg-[#131C2E] border border-[#1E293B] text-primary font-label-sm text-label-sm">
+          12 Categories Total
+        </span>
+</div>
+<p class="font-body-md text-body-md text-slate-400 max-w-2xl">
+        Organize your expenses and budgets into meaningful spending groups with custom rules, visual markers, and dynamic ledger limits.
+      </p>
+</div>
+<div class="flex items-center gap-space-sm self-start md:self-auto">
+<button class="flex items-center gap-space-xs px-4 h-9 rounded-lg bg-primary-container text-white font-label-md text-label-md shadow-sm hover:bg-blue-600 transition-all cursor-pointer font-semibold" onclick="document.getElementById('category-drawer').classList.remove('translate-x-full'); document.getElementById('drawer-backdrop').classList.remove('hidden');">
+<span class="material-symbols-outlined text-[18px]">add_circle</span>
+<span>Add Category</span>
+</button>
+</div>
+</div>
+<!-- KPI Analytics Grid -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-space-md">
+<!-- Tile 1 -->
+<div class="p-space-lg rounded-xl bg-[#131C2E] border border-[#1E293B] flex flex-col justify-between relative overflow-hidden group hover:border-slate-600 transition-colors">
+<div class="flex items-start justify-between">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-slate-400">Category Footprint</span>
+<div class="w-8 h-8 rounded-lg bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[18px]">folder_copy</span>
+</div>
+</div>
+<div class="mt-space-md">
+<div class="font-currency-stat text-currency-stat text-white tracking-tight">12</div>
+<div class="flex items-center gap-1.5 mt-1 text-slate-400 font-body-sm text-body-sm">
+<span class="inline-block w-2 h-2 rounded-full bg-secondary"></span>
+<span class="text-slate-200 font-label-sm">8 Active</span>
+<span class="text-slate-600">·</span>
+<span>4 Inactive / Archived</span>
+</div>
+</div>
+<div class="absolute -right-4 -bottom-4 w-20 h-20 bg-blue-500/10 rounded-full blur-xl pointer-events-none"></div>
+</div>
+<!-- Tile 2 -->
+<div class="p-space-lg rounded-xl bg-[#131C2E] border border-[#1E293B] flex flex-col justify-between relative overflow-hidden group hover:border-slate-600 transition-colors">
+<div class="flex items-start justify-between">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-slate-400">Most Active Pool</span>
+<div class="w-8 h-8 rounded-lg bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-400">
+<span class="material-symbols-outlined text-[18px]">bolt</span>
+</div>
+</div>
+<div class="mt-space-md">
+<div class="font-headline-md text-headline-md text-white truncate">Food &amp; Dining</div>
+<div class="flex items-center gap-1.5 mt-1 text-slate-400 font-body-sm text-body-sm">
+<span class="material-symbols-outlined text-[14px] text-secondary">swap_horiz</span>
+<span class="font-label-sm text-slate-200">14 transactions</span>
+<span>this month</span>
+</div>
+</div>
+<div class="absolute -right-4 -bottom-4 w-20 h-20 bg-emerald-500/10 rounded-full blur-xl pointer-events-none"></div>
+</div>
+<!-- Tile 3 -->
+<div class="p-space-lg rounded-xl bg-[#131C2E] border border-[#1E293B] flex flex-col justify-between relative overflow-hidden group hover:border-slate-600 transition-colors">
+<div class="flex items-start justify-between">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-slate-400">Highest Outflow</span>
+<div class="w-8 h-8 rounded-lg bg-rose-500/10 border border-rose-500/20 flex items-center justify-center text-rose-400">
+<span class="material-symbols-outlined text-[18px]">trending_up</span>
+</div>
+</div>
+<div class="mt-space-md">
+<div class="font-currency-stat text-currency-stat text-white tracking-tight">₹12,000</div>
+<div class="flex items-center gap-1.5 mt-1 text-slate-400 font-body-sm text-body-sm">
+<span class="font-label-sm text-slate-200">Travel &amp; Fuel</span>
+<span class="text-slate-600">·</span>
+<span>80% of limit</span>
+</div>
+</div>
+<div class="absolute -right-4 -bottom-4 w-20 h-20 bg-rose-500/10 rounded-full blur-xl pointer-events-none"></div>
+</div>
+<!-- Tile 4 -->
+<div class="p-space-lg rounded-xl bg-[#131C2E] border border-[#1E293B] flex flex-col justify-between relative overflow-hidden group hover:border-slate-600 transition-colors">
+<div class="flex items-start justify-between">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-slate-400">Unbudgeted Alerts</span>
+<div class="w-8 h-8 rounded-lg bg-rose-500/15 border border-rose-500/30 flex items-center justify-center text-rose-300">
+<span class="material-symbols-outlined text-[18px]">warning</span>
+</div>
+</div>
+<div class="mt-space-md">
+<div class="font-currency-stat text-currency-stat text-white tracking-tight">2 Groups</div>
+<div class="flex items-center gap-1.5 mt-1 text-slate-400 font-body-sm text-body-sm">
+<span class="text-rose-400 font-label-sm">Missing caps</span>
+<span class="text-slate-600">·</span>
+<span>Uncapped expense risk</span>
+</div>
+</div>
+<div class="absolute -right-4 -bottom-4 w-20 h-20 bg-rose-950/20 rounded-full blur-xl pointer-events-none"></div>
+</div>
+</div>
+<!-- Category Matrix Main Section -->
+<div class="flex flex-col gap-space-md">
+<!-- Filters and Segmented Control Toolbar -->
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-md p-space-sm sm:p-3 bg-[#131C2E] border border-[#1E293B] rounded-xl">
+<div class="flex items-center gap-1.5 overflow-x-auto pb-1 sm:pb-0">
+<button class="px-3 py-1.5 rounded-lg bg-primary-container text-white font-label-md text-label-md font-medium shadow-sm">All (12)</button>
+<button class="px-3 py-1.5 rounded-lg text-slate-300 hover:bg-[#1E293B] hover:text-white transition-colors font-label-md text-label-md">Active (8)</button>
+<button class="px-3 py-1.5 rounded-lg text-slate-300 hover:bg-[#1E293B] hover:text-white transition-colors font-label-md text-label-md">Unbudgeted (2)</button>
+<button class="px-3 py-1.5 rounded-lg text-slate-300 hover:bg-[#1E293B] hover:text-white transition-colors font-label-md text-label-md">Archived (4)</button>
+</div>
+<div class="flex items-center gap-space-sm">
+<div class="relative w-full sm:w-64">
+<span class="material-symbols-outlined absolute left-2.5 top-1/2 -translate-y-1/2 text-slate-400 text-[18px]">search</span>
+<input class="w-full pl-8 pr-3 py-1.5 h-8 rounded-lg bg-[#0B0F17] border border-[#1E293B] text-slate-200 font-body-sm text-body-sm placeholder:text-slate-500 focus:outline-none focus:border-primary-container transition-all" placeholder="Filter categories..." type="text"/>
+</div>
+<div class="flex items-center bg-[#0B0F17] border border-[#1E293B] rounded-lg p-0.5">
+<button class="p-1 rounded bg-[#131C2E] text-primary shadow-sm" title="Grid View">
+<span class="material-symbols-outlined text-[18px]">grid_view</span>
+</button>
+<button class="p-1 rounded text-slate-400 hover:text-slate-200" title="List View">
+<span class="material-symbols-outlined text-[18px]">view_agenda</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Category Cards Mosaic Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-space-md">
+<!-- Card 1: Food & Dining -->
+<div class="bg-[#131C2E] border border-[#1E293B] rounded-xl p-space-lg flex flex-col justify-between hover:border-slate-600 transition-all group relative">
+<div>
+<div class="flex items-start justify-between">
+<div class="flex items-center gap-3">
+<div class="w-11 h-11 rounded-xl bg-amber-500/15 border border-amber-500/25 flex items-center justify-center text-2xl shadow-inner">
+                🍔
+              </div>
+<div class="flex flex-col">
+<span class="font-headline-sm text-headline-sm text-white group-hover:text-primary transition-colors font-semibold">Food &amp; Dining</span>
+<span class="font-body-sm text-body-sm text-slate-400">14 transactions this cycle</span>
+</div>
+</div>
+<div class="flex items-center gap-1">
+<button class="p-1 rounded text-slate-400 hover:text-slate-200 hover:bg-[#1E293B] transition-colors" title="Edit">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+</button>
+<button class="p-1 rounded text-slate-400 hover:text-slate-200 hover:bg-[#1E293B] transition-colors" title="Archive">
+<span class="material-symbols-outlined text-[18px]">archive</span>
+</button>
+</div>
+</div>
+<div class="mt-space-lg">
+<div class="flex items-baseline justify-between">
+<span class="font-currency-stat text-currency-stat text-white">₹7,500</span>
+<span class="font-label-md text-label-md text-slate-400">Budget: ₹10,000</span>
+</div>
+<!-- Progress Bar -->
+<div class="w-full bg-[#0B0F17] border border-[#1E293B]/70 h-2 rounded-full mt-2 overflow-hidden">
+<div class="bg-primary-container h-full rounded-full shadow-[0_0_8px_rgba(37,99,235,0.6)]" style="width: 75%;"></div>
+</div>
+<div class="flex justify-between items-center mt-2 font-label-md text-label-md">
+<span class="text-secondary font-medium">75% utilized</span>
+<span class="text-slate-400 font-body-sm text-body-sm">₹2,500 remaining</span>
+</div>
+</div>
+</div>
+<div class="pt-space-md mt-space-md flex items-center justify-between border-t border-[#1E293B] -mx-space-lg -mb-space-lg px-space-lg py-2.5 rounded-b-xl bg-[#0F172A]/50">
+<span class="inline-flex items-center gap-1.5 font-label-sm text-label-sm text-secondary">
+<span class="material-symbols-outlined text-[15px]">check_circle</span> Budget Active
+          </span>
+<span class="font-body-sm text-body-sm text-slate-400">UPI / Auto-deduct</span>
+</div>
+</div>
+<!-- Card 2: Travel & Fuel -->
+<div class="bg-[#131C2E] border border-[#1E293B] rounded-xl p-space-lg flex flex-col justify-between hover:border-slate-600 transition-all group relative">
+<div>
+<div class="flex items-start justify-between">
+<div class="flex items-center gap-3">
+<div class="w-11 h-11 rounded-xl bg-blue-500/15 border border-blue-500/25 flex items-center justify-center text-2xl shadow-inner">
+                🚗
+              </div>
+<div class="flex flex-col">
+<span class="font-headline-sm text-headline-sm text-white group-hover:text-primary transition-colors font-semibold">Travel &amp; Fuel</span>
+<span class="font-body-sm text-body-sm text-slate-400">8 transactions this cycle</span>
+</div>
+</div>
+<div class="flex items-center gap-1">
+<button class="p-1 rounded text-slate-400 hover:text-slate-200 hover:bg-[#1E293B] transition-colors" title="Edit">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+</button>
+<button class="p-1 rounded text-slate-400 hover:text-slate-200 hover:bg-[#1E293B] transition-colors" title="Archive">
+<span class="material-symbols-outlined text-[18px]">archive</span>
+</button>
+</div>
+</div>
+<div class="mt-space-lg">
+<div class="flex items-baseline justify-between">
+<span class="font-currency-stat text-currency-stat text-white">₹12,000</span>
+<span class="font-label-md text-label-md text-slate-400">Budget: ₹15,000</span>
+</div>
+<!-- Progress Bar -->
+<div class="w-full bg-[#0B0F17] border border-[#1E293B]/70 h-2 rounded-full mt-2 overflow-hidden">
+<div class="bg-primary-container h-full rounded-full shadow-[0_0_8px_rgba(37,99,235,0.6)]" style="width: 80%;"></div>
+</div>
+<div class="flex justify-between items-center mt-2 font-label-md text-label-md">
+<span class="text-secondary font-medium">80% utilized</span>
+<span class="text-slate-400 font-body-sm text-body-sm">₹3,000 remaining</span>
+</div>
+</div>
+</div>
+<div class="pt-space-md mt-space-md flex items-center justify-between border-t border-[#1E293B] -mx-space-lg -mb-space-lg px-space-lg py-2.5 rounded-b-xl bg-[#0F172A]/50">
+<span class="inline-flex items-center gap-1.5 font-label-sm text-label-sm text-secondary">
+<span class="material-symbols-outlined text-[15px]">check_circle</span> Budget Active
+          </span>
+<span class="font-body-sm text-body-sm text-slate-400">Fastag / Fuel Card</span>
+</div>
+</div>
+<!-- Card 3: Shopping & Lifestyle -->
+<div class="bg-[#131C2E] border border-rose-500/30 rounded-xl p-space-lg flex flex-col justify-between hover:border-rose-400 transition-all group relative">
+<div>
+<div class="flex items-start justify-between">
+<div class="flex items-center gap-3">
+<div class="w-11 h-11 rounded-xl bg-rose-500/15 border border-rose-500/25 flex items-center justify-center text-2xl shadow-inner">
+                🛍️
+              </div>
+<div class="flex flex-col">
+<span class="font-headline-sm text-headline-sm text-white group-hover:text-primary transition-colors font-semibold">Shopping &amp; Lifestyle</span>
+<span class="font-body-sm text-body-sm text-slate-400">5 transactions this cycle</span>
+</div>
+</div>
+<div class="flex items-center gap-1">
+<button class="p-1 rounded text-slate-400 hover:text-slate-200 hover:bg-[#1E293B] transition-colors" title="Edit">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+</button>
+<button class="p-1 rounded text-slate-400 hover:text-slate-200 hover:bg-[#1E293B] transition-colors" title="Archive">
+<span class="material-symbols-outlined text-[18px]">archive</span>
+</button>
+</div>
+</div>
+<div class="mt-space-lg">
+<div class="flex items-baseline justify-between">
+<span class="font-currency-stat text-currency-stat text-rose-400">₹9,200</span>
+<span class="font-label-md text-label-md text-slate-400">Budget: ₹8,000</span>
+</div>
+<!-- Progress Bar (Over budget) -->
+<div class="w-full bg-[#0B0F17] border border-[#1E293B]/70 h-2 rounded-full mt-2 overflow-hidden">
+<div class="bg-rose-500 h-full rounded-full shadow-[0_0_8px_rgba(244,63,94,0.6)]" style="width: 100%;"></div>
+</div>
+<div class="flex justify-between items-center mt-2 font-label-md text-label-md">
+<span class="text-rose-400 font-semibold">115% Exceeded</span>
+<span class="text-rose-400 font-body-sm text-body-sm">₹1,200 Over</span>
+</div>
+</div>
+</div>
+<div class="pt-space-md mt-space-md flex items-center justify-between border-t border-rose-900/40 -mx-space-lg -mb-space-lg px-space-lg py-2.5 rounded-b-xl bg-rose-950/20">
+<span class="inline-flex items-center gap-1.5 font-label-sm text-label-sm text-rose-400 font-medium">
+<span class="material-symbols-outlined text-[15px]">error</span> Limit Breached
+          </span>
+<span class="font-body-sm text-body-sm text-slate-400">Credit Card</span>
+</div>
+</div>
+<!-- Card 4: Entertainment & Leisure -->
+<div class="bg-[#131C2E] border border-[#1E293B] rounded-xl p-space-lg flex flex-col justify-between hover:border-slate-600 transition-all group relative">
+<div>
+<div class="flex items-start justify-between">
+<div class="flex items-center gap-3">
+<div class="w-11 h-11 rounded-xl bg-purple-500/15 border border-purple-500/25 flex items-center justify-center text-2xl shadow-inner">
+                🎬
+              </div>
+<div class="flex flex-col">
+<span class="font-headline-sm text-headline-sm text-white group-hover:text-primary transition-colors font-semibold">Entertainment &amp; Leisure</span>
+<span class="font-body-sm text-body-sm text-slate-400">4 transactions this cycle</span>
+</div>
+</div>
+<div class="flex items-center gap-1">
+<button class="p-1 rounded text-slate-400 hover:text-slate-200 hover:bg-[#1E293B] transition-colors" title="Edit">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+</button>
+<button class="p-1 rounded text-slate-400 hover:text-slate-200 hover:bg-[#1E293B] transition-colors" title="Archive">
+<span class="material-symbols-outlined text-[18px]">archive</span>
+</button>
+</div>
+</div>
+<div class="mt-space-lg">
+<div class="flex items-baseline justify-between">
+<span class="font-currency-stat text-currency-stat text-white">₹3,400</span>
+<span class="font-label-md text-label-md text-slate-400">Budget: ₹5,000</span>
+</div>
+<!-- Progress Bar -->
+<div class="w-full bg-[#0B0F17] border border-[#1E293B]/70 h-2 rounded-full mt-2 overflow-hidden">
+<div class="bg-primary-container h-full rounded-full shadow-[0_0_8px_rgba(37,99,235,0.6)]" style="width: 68%;"></div>
+</div>
+<div class="flex justify-between items-center mt-2 font-label-md text-label-md">
+<span class="text-secondary font-medium">68% utilized</span>
+<span class="text-slate-400 font-body-sm text-body-sm">₹1,600 remaining</span>
+</div>
+</div>
+</div>
+<div class="pt-space-md mt-space-md flex items-center justify-between border-t border-[#1E293B] -mx-space-lg -mb-space-lg px-space-lg py-2.5 rounded-b-xl bg-[#0F172A]/50">
+<span class="inline-flex items-center gap-1.5 font-label-sm text-label-sm text-secondary">
+<span class="material-symbols-outlined text-[15px]">check_circle</span> Budget Active
+          </span>
+<span class="font-body-sm text-body-sm text-slate-400">Debit / NetBanking</span>
+</div>
+</div>
+<!-- Card 5: Healthcare & Wellness -->
+<div class="bg-[#131C2E] border border-[#1E293B] rounded-xl p-space-lg flex flex-col justify-between hover:border-slate-600 transition-all group relative">
+<div>
+<div class="flex items-start justify-between">
+<div class="flex items-center gap-3">
+<div class="w-11 h-11 rounded-xl bg-emerald-500/15 border border-emerald-500/25 flex items-center justify-center text-2xl shadow-inner">
+                🏥
+              </div>
+<div class="flex flex-col">
+<span class="font-headline-sm text-headline-sm text-white group-hover:text-primary transition-colors font-semibold">Healthcare &amp; Wellness</span>
+<span class="font-body-sm text-body-sm text-slate-400">2 transactions this cycle</span>
+</div>
+</div>
+<div class="flex items-center gap-1">
+<button class="p-1 rounded text-slate-400 hover:text-slate-200 hover:bg-[#1E293B] transition-colors" title="Edit">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+</button>
+<button class="p-1 rounded text-slate-400 hover:text-slate-200 hover:bg-[#1E293B] transition-colors" title="Archive">
+<span class="material-symbols-outlined text-[18px]">archive</span>
+</button>
+</div>
+</div>
+<div class="mt-space-lg">
+<div class="flex items-baseline justify-between">
+<span class="font-currency-stat text-currency-stat text-white">₹2,100</span>
+<span class="font-label-md text-label-md text-slate-400">Budget: ₹4,000</span>
+</div>
+<!-- Progress Bar -->
+<div class="w-full bg-[#0B0F17] border border-[#1E293B]/70 h-2 rounded-full mt-2 overflow-hidden">
+<div class="bg-secondary h-full rounded-full shadow-[0_0_8px_rgba(78,222,163,0.5)]" style="width: 52%;"></div>
+</div>
+<div class="flex justify-between items-center mt-2 font-label-md text-label-md">
+<span class="text-secondary font-medium">52% utilized</span>
+<span class="text-slate-400 font-body-sm text-body-sm">₹1,900 remaining</span>
+</div>
+</div>
+</div>
+<div class="pt-space-md mt-space-md flex items-center justify-between border-t border-[#1E293B] -mx-space-lg -mb-space-lg px-space-lg py-2.5 rounded-b-xl bg-[#0F172A]/50">
+<span class="inline-flex items-center gap-1.5 font-label-sm text-label-sm text-secondary">
+<span class="material-symbols-outlined text-[15px]">check_circle</span> Budget Active
+          </span>
+<span class="font-body-sm text-body-sm text-slate-400">Health Card</span>
+</div>
+</div>
+<!-- Card 6: Utilities & Bills -->
+<div class="bg-[#131C2E] border border-[#1E293B] rounded-xl p-space-lg flex flex-col justify-between hover:border-slate-600 transition-all group relative">
+<div>
+<div class="flex items-start justify-between">
+<div class="flex items-center gap-3">
+<div class="w-11 h-11 rounded-xl bg-indigo-500/15 border border-indigo-500/25 flex items-center justify-center text-2xl shadow-inner">
+                ⚡
+              </div>
+<div class="flex flex-col">
+<span class="font-headline-sm text-headline-sm text-white group-hover:text-primary transition-colors font-semibold">Utilities &amp; Bills</span>
+<span class="font-body-sm text-body-sm text-slate-400">3 transactions this cycle</span>
+</div>
+</div>
+<div class="flex items-center gap-1">
+<button class="p-1 rounded text-slate-400 hover:text-slate-200 hover:bg-[#1E293B] transition-colors" title="Edit">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+</button>
+<button class="p-1 rounded text-slate-400 hover:text-slate-200 hover:bg-[#1E293B] transition-colors" title="Archive">
+<span class="material-symbols-outlined text-[18px]">archive</span>
+</button>
+</div>
+</div>
+<div class="mt-space-lg">
+<div class="flex items-baseline justify-between">
+<span class="font-currency-stat text-currency-stat text-white">₹4,250</span>
+<span class="font-label-md text-label-md text-slate-400">Budget: ₹6,000</span>
+</div>
+<!-- Progress Bar -->
+<div class="w-full bg-[#0B0F17] border border-[#1E293B]/70 h-2 rounded-full mt-2 overflow-hidden">
+<div class="bg-primary-container h-full rounded-full shadow-[0_0_8px_rgba(37,99,235,0.6)]" style="width: 70%;"></div>
+</div>
+<div class="flex justify-between items-center mt-2 font-label-md text-label-md">
+<span class="text-secondary font-medium">70% utilized</span>
+<span class="text-slate-400 font-body-sm text-body-sm">₹1,750 remaining</span>
+</div>
+</div>
+</div>
+<div class="pt-space-md mt-space-md flex items-center justify-between border-t border-[#1E293B] -mx-space-lg -mb-space-lg px-space-lg py-2.5 rounded-b-xl bg-[#0F172A]/50">
+<span class="inline-flex items-center gap-1.5 font-label-sm text-label-sm text-secondary">
+<span class="material-symbols-outlined text-[15px]">check_circle</span> Budget Active
+          </span>
+<span class="font-body-sm text-body-sm text-slate-400">Auto-pay / BBPS</span>
+</div>
+</div>
+<!-- Card 7: Education & Skills -->
+<div class="bg-[#131C2E] border border-[#1E293B] rounded-xl p-space-lg flex flex-col justify-between hover:border-slate-600 transition-all group relative">
+<div>
+<div class="flex items-start justify-between">
+<div class="flex items-center gap-3">
+<div class="w-11 h-11 rounded-xl bg-cyan-500/15 border border-cyan-500/25 flex items-center justify-center text-2xl shadow-inner">
+                📚
+              </div>
+<div class="flex flex-col">
+<span class="font-headline-sm text-headline-sm text-white group-hover:text-primary transition-colors font-semibold">Education &amp; Skills</span>
+<span class="font-body-sm text-body-sm text-slate-400">1 txn this cycle</span>
+</div>
+</div>
+<div class="flex items-center gap-1">
+<button class="p-1 rounded text-slate-400 hover:text-slate-200 hover:bg-[#1E293B] transition-colors" title="Edit">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+</button>
+<button class="p-1 rounded text-slate-400 hover:text-slate-200 hover:bg-[#1E293B] transition-colors" title="Archive">
+<span class="material-symbols-outlined text-[18px]">archive</span>
+</button>
+</div>
+</div>
+<div class="mt-space-lg">
+<div class="flex items-baseline justify-between">
+<span class="font-currency-stat text-currency-stat text-white">₹1,200</span>
+<span class="font-label-md text-label-md text-slate-400">Budget: ₹7,000</span>
+</div>
+<!-- Progress Bar -->
+<div class="w-full bg-[#0B0F17] border border-[#1E293B]/70 h-2 rounded-full mt-2 overflow-hidden">
+<div class="bg-secondary h-full rounded-full shadow-[0_0_8px_rgba(78,222,163,0.5)]" style="width: 17%;"></div>
+</div>
+<div class="flex justify-between items-center mt-2 font-label-md text-label-md">
+<span class="text-secondary font-medium">17% utilized</span>
+<span class="text-slate-400 font-body-sm text-body-sm">₹5,800 remaining</span>
+</div>
+</div>
+</div>
+<div class="pt-space-md mt-space-md flex items-center justify-between border-t border-[#1E293B] -mx-space-lg -mb-space-lg px-space-lg py-2.5 rounded-b-xl bg-[#0F172A]/50">
+<span class="inline-flex items-center gap-1.5 font-label-sm text-label-sm text-secondary">
+<span class="material-symbols-outlined text-[15px]">check_circle</span> Budget Active
+          </span>
+<span class="font-body-sm text-body-sm text-slate-400">Debit Card</span>
+</div>
+</div>
+<!-- Card 8: Groceries -->
+<div class="bg-[#131C2E] border border-[#1E293B] rounded-xl p-space-lg flex flex-col justify-between hover:border-slate-600 transition-all group relative">
+<div>
+<div class="flex items-start justify-between">
+<div class="flex items-center gap-3">
+<div class="w-11 h-11 rounded-xl bg-emerald-500/15 border border-emerald-500/25 flex items-center justify-center text-2xl shadow-inner">
+                🛒
+              </div>
+<div class="flex flex-col">
+<span class="font-headline-sm text-headline-sm text-white group-hover:text-primary transition-colors font-semibold">Groceries</span>
+<span class="font-body-sm text-body-sm text-slate-400">6 transactions this cycle</span>
+</div>
+</div>
+<div class="flex items-center gap-1">
+<button class="p-1 rounded text-slate-400 hover:text-slate-200 hover:bg-[#1E293B] transition-colors" title="Edit">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+</button>
+<button class="p-1 rounded text-slate-400 hover:text-slate-200 hover:bg-[#1E293B] transition-colors" title="Archive">
+<span class="material-symbols-outlined text-[18px]">archive</span>
+</button>
+</div>
+</div>
+<div class="mt-space-lg">
+<div class="flex items-baseline justify-between">
+<span class="font-currency-stat text-currency-stat text-white">₹2,350</span>
+<span class="font-label-md text-label-md text-slate-400">Budget: ₹5,000</span>
+</div>
+<!-- Progress Bar -->
+<div class="w-full bg-[#0B0F17] border border-[#1E293B]/70 h-2 rounded-full mt-2 overflow-hidden">
+<div class="bg-secondary h-full rounded-full shadow-[0_0_8px_rgba(78,222,163,0.5)]" style="width: 47%;"></div>
+</div>
+<div class="flex justify-between items-center mt-2 font-label-md text-label-md">
+<span class="text-secondary font-medium">47% utilized</span>
+<span class="text-slate-400 font-body-sm text-body-sm">₹2,650 remaining</span>
+</div>
+</div>
+</div>
+<div class="pt-space-md mt-space-md flex items-center justify-between border-t border-[#1E293B] -mx-space-lg -mb-space-lg px-space-lg py-2.5 rounded-b-xl bg-[#0F172A]/50">
+<span class="inline-flex items-center gap-1.5 font-label-sm text-label-sm text-secondary">
+<span class="material-symbols-outlined text-[15px]">check_circle</span> Budget Active
+          </span>
+<span class="font-body-sm text-body-sm text-slate-400">UPI / Cash</span>
+</div>
+</div>
+<!-- Card 9: Vacation / Travel Fund (Inactive) -->
+<div class="bg-[#131C2E]/60 border border-[#1E293B]/80 rounded-xl p-space-lg flex flex-col justify-between hover:border-slate-600 transition-all group relative opacity-80">
+<div>
+<div class="flex items-start justify-between">
+<div class="flex items-center gap-3">
+<div class="w-11 h-11 rounded-xl bg-[#1E293B] flex items-center justify-center text-2xl grayscale">
+                ✈️
+              </div>
+<div class="flex flex-col">
+<div class="flex items-center gap-2">
+<span class="font-headline-sm text-headline-sm text-slate-300 font-semibold">Vacation / Travel</span>
+<span class="px-2 py-0.5 rounded-full bg-[#1E293B] text-slate-400 font-label-sm text-label-sm border border-[#334155]/50">Inactive</span>
+</div>
+<span class="font-body-sm text-body-sm text-slate-500">0 transactions recorded</span>
+</div>
+</div>
+<div class="flex items-center gap-1">
+<button class="p-1 rounded text-slate-400 hover:text-slate-200 hover:bg-[#1E293B] transition-colors" title="Edit">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+</button>
+<button class="px-2.5 py-1 rounded-lg bg-blue-500/10 border border-blue-500/20 text-primary font-label-sm text-label-sm hover:bg-primary-container hover:text-white transition-all">
+                Activate
+              </button>
+</div>
+</div>
+<div class="mt-space-lg">
+<div class="flex items-baseline justify-between">
+<span class="font-currency-stat text-currency-stat text-slate-500">₹0</span>
+<span class="font-label-md text-label-md text-slate-500">No cap assigned</span>
+</div>
+<!-- Progress Bar (Inactive) -->
+<div class="w-full bg-[#0B0F17] border border-[#1E293B]/40 h-2 rounded-full mt-2"></div>
+<div class="flex justify-between items-center mt-2 font-label-md text-label-md text-slate-500">
+<span>Dormant category</span>
+<span>—</span>
+</div>
+</div>
+</div>
+<div class="pt-space-md mt-space-md flex items-center justify-between border-t border-[#1E293B]/70 -mx-space-lg -mb-space-lg px-space-lg py-2.5 rounded-b-xl bg-[#0F172A]/30">
+<span class="inline-flex items-center gap-1.5 font-label-sm text-label-sm text-slate-400">
+<span class="material-symbols-outlined text-[15px]">pause_circle</span> Paused
+          </span>
+<span class="font-body-sm text-body-sm text-slate-500">Savings Pool</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Decorative Insights Bento Element -->
+<div class="rounded-xl bg-gradient-to-r from-[#131C2E] to-[#0F172A] border border-[#1E293B] p-space-lg shadow-lg flex flex-col md:flex-row items-center justify-between gap-space-lg">
+<div class="flex items-center gap-space-md">
+<div class="w-12 h-12 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center text-primary shadow-inner">
+<span class="material-symbols-outlined text-[26px]">auto_fix_high</span>
+</div>
+<div class="flex flex-col">
+<h4 class="font-headline-sm text-headline-sm text-white font-semibold">Auto-Categorization Rules</h4>
+<p class="font-body-md text-body-md text-slate-400">
+          RupeeFlow uses UPI merchant tags (e.g. Swiggy, Uber, Zomato, Reliance) to automatically assign transactions.
+        </p>
+</div>
+</div>
+<div class="flex items-center gap-space-sm shrink-0">
+<button class="px-space-md py-2 rounded-lg bg-[#1E293B] border border-slate-700/60 text-slate-200 font-label-md text-label-md hover:bg-slate-700 hover:text-white transition-colors">
+        Manage 18 Rules
+      </button>
+</div>
+</div>
+<!-- Drawer Backdrop -->
+<div class="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 hidden transition-opacity" id="drawer-backdrop" onclick="document.getElementById('category-drawer').classList.add('translate-x-full'); document.getElementById('drawer-backdrop').classList.add('hidden');"></div>
+<!-- Visible / Interactive "Add / Edit Category" Slide-over Drawer -->
+<div class="fixed top-0 right-0 h-full w-full max-w-md bg-[#0F172A] border-l border-[#1E293B] shadow-2xl z-50 transform translate-x-full transition-transform duration-300 ease-in-out flex flex-col justify-between overflow-y-auto" id="category-drawer">
+<!-- Drawer Header -->
+<div class="p-space-lg flex items-center justify-between bg-[#131C2E] border-b border-[#1E293B]">
+<div class="flex items-center gap-space-sm">
+<div class="w-8 h-8 rounded-lg bg-primary-container text-white flex items-center justify-center">
+<span class="material-symbols-outlined text-[20px]">category</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-white font-semibold">Create New Category</h3>
+</div>
+<button class="p-1 rounded-lg text-slate-400 hover:text-white hover:bg-[#1E293B] transition-colors" onclick="document.getElementById('category-drawer').classList.add('translate-x-full'); document.getElementById('drawer-backdrop').classList.add('hidden');">
+<span class="material-symbols-outlined text-[22px]">close</span>
+</button>
+</div>
+<!-- Drawer Body Form -->
+<form class="p-space-lg flex flex-col gap-space-lg flex-1">
+<!-- Field 1: Category Name -->
+<div class="flex flex-col gap-space-xs">
+<label class="font-label-md text-label-md text-slate-200 font-medium">Category Name</label>
+<input class="w-full px-space-md py-2 h-10 rounded-lg bg-[#131C2E] border border-[#1E293B] text-white font-body-md text-body-md placeholder:text-slate-500 focus:outline-none focus:border-primary-container focus:ring-1 focus:ring-primary-container transition-all" placeholder="e.g., Home Maintenance &amp; Repair" type="text" value="Home Maintenance"/>
+<span class="font-body-sm text-body-sm text-slate-400">Shown across reports and recurring ledger items.</span>
+</div>
+<!-- Field 2: Icon / Emoji Picker -->
+<div class="flex flex-col gap-space-xs">
+<label class="font-label-md text-label-md text-slate-200 font-medium">Visual Icon / Emoji</label>
+<div class="flex items-center gap-space-sm">
+<div class="w-12 h-12 rounded-xl bg-[#131C2E] border border-[#1E293B] flex items-center justify-center text-2xl shadow-inner cursor-pointer hover:border-slate-500 transition-colors" title="Current selected icon">
+            🛠️
+          </div>
+<div class="grid grid-cols-6 gap-1.5 flex-1 bg-[#131C2E] border border-[#1E293B] p-2 rounded-xl">
+<button class="w-8 h-8 rounded hover:bg-[#1E293B] flex items-center justify-center text-lg" type="button">🍔</button>
+<button class="w-8 h-8 rounded hover:bg-[#1E293B] flex items-center justify-center text-lg" type="button">🚗</button>
+<button class="w-8 h-8 rounded hover:bg-[#1E293B] flex items-center justify-center text-lg" type="button">🛍️</button>
+<button class="w-8 h-8 rounded bg-[#1E293B] ring-1 ring-primary-container shadow-sm flex items-center justify-center text-lg" type="button">🛠️</button>
+<button class="w-8 h-8 rounded hover:bg-[#1E293B] flex items-center justify-center text-lg" type="button">✈️</button>
+<button class="w-8 h-8 rounded hover:bg-[#1E293B] flex items-center justify-center text-lg" type="button">💡</button>
+</div>
+</div>
+</div>
+<!-- Field 3: Color Tag Selector -->
+<div class="flex flex-col gap-space-xs">
+<label class="font-label-md text-label-md text-slate-200 font-medium">Color Palette Tag</label>
+<div class="flex items-center gap-2 py-1">
+<button class="w-7 h-7 rounded-full bg-blue-500 ring-2 ring-offset-2 ring-offset-[#0F172A] ring-primary transition-all" type="button"></button>
+<button class="w-7 h-7 rounded-full bg-amber-500 hover:scale-110 transition-transform" type="button"></button>
+<button class="w-7 h-7 rounded-full bg-emerald-500 hover:scale-110 transition-transform" type="button"></button>
+<button class="w-7 h-7 rounded-full bg-rose-500 hover:scale-110 transition-transform" type="button"></button>
+<button class="w-7 h-7 rounded-full bg-purple-500 hover:scale-110 transition-transform" type="button"></button>
+<button class="w-7 h-7 rounded-full bg-indigo-500 hover:scale-110 transition-transform" type="button"></button>
+<button class="w-7 h-7 rounded-full bg-cyan-500 hover:scale-110 transition-transform" type="button"></button>
+</div>
+</div>
+<!-- Field 4: Budget Linkage Checkbox & Amount -->
+<div class="p-space-md rounded-xl bg-[#131C2E] border border-[#1E293B] flex flex-col gap-space-sm">
+<label class="flex items-start gap-space-sm cursor-pointer">
+<input checked="" class="mt-1 w-4 h-4 rounded bg-[#0B0F17] border-[#1E293B] text-primary-container focus:ring-primary-container" type="checkbox"/>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-white font-medium">Link with Monthly Budget Pool</span>
+<span class="font-body-sm text-body-sm text-slate-400">Include spending against set monthly ceiling thresholds</span>
+</div>
+</label>
+<div class="relative mt-1">
+<span class="absolute left-3 top-1/2 -translate-y-1/2 font-headline-sm text-headline-sm text-slate-400">₹</span>
+<input class="w-full pl-8 pr-space-md py-2 h-10 rounded-lg bg-[#0B0F17] border border-[#1E293B] text-white font-numeric-table text-numeric-table focus:outline-none focus:border-primary-container focus:ring-1 focus:ring-primary-container transition-all" placeholder="Set Monthly Limit (e.g. 5,000)" type="number" value="6000"/>
+</div>
+</div>
+<!-- Field 5: Default Payment Method -->
+<div class="flex flex-col gap-space-xs">
+<label class="font-label-md text-label-md text-slate-200 font-medium">Default Payment Method (Optional)</label>
+<div class="relative">
+<select class="w-full px-space-md py-2 h-10 rounded-lg bg-[#131C2E] border border-[#1E293B] text-white font-body-md text-body-md focus:outline-none focus:border-primary-container focus:ring-1 focus:ring-primary-container transition-all appearance-none cursor-pointer">
+<option class="bg-[#0F172A] text-white">HDFC Bank Credit Card (..8421)</option>
+<option class="bg-[#0F172A] text-white">ICICI Salary Account UPI</option>
+<option class="bg-[#0F172A] text-white">SBI Savings Auto-Debit</option>
+<option class="bg-[#0F172A] text-white">Cash Pocket</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none text-[20px]">expand_more</span>
+</div>
+</div>
+<!-- Safeguard Notice -->
+<div class="p-space-md rounded-xl bg-[#131C2E] border border-[#1E293B] flex items-start gap-space-sm">
+<span class="material-symbols-outlined text-[20px] text-primary shrink-0">shield</span>
+<p class="font-body-sm text-body-sm text-slate-400 leading-relaxed">
+<strong class="text-slate-200">Safety safeguard:</strong> Categories with existing ledger transactions cannot be permanently deleted, but can be safely archived without disrupting historical financial statements.
+        </p>
+</div>
+</form>
+<!-- Drawer Footer Actions -->
+<div class="p-space-lg bg-[#131C2E] border-t border-[#1E293B] flex items-center justify-end gap-space-sm">
+<button class="px-space-md h-9 rounded-lg bg-[#1E293B] text-slate-200 font-label-md text-label-md hover:bg-slate-700 transition-colors" onclick="document.getElementById('category-drawer').classList.add('translate-x-full'); document.getElementById('drawer-backdrop').classList.add('hidden');" type="button">
+        Cancel
+      </button>
+<button class="px-space-md h-9 rounded-lg bg-primary-container text-white font-label-md text-label-md shadow-sm hover:bg-blue-600 transition-all font-semibold" onclick="document.getElementById('category-drawer').classList.add('translate-x-full'); document.getElementById('drawer-backdrop').classList.add('hidden');" type="button">
+        Create Category
+      </button>
+</div>
+</div>
+</div></main></div></body></html>

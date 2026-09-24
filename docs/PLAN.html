@@ -1,0 +1,3186 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}</style><style>:root{color-scheme:light dark;--md-bg:#fff;--md-text:rgba(0,0,0,.8);--md-muted:rgba(0,0,0,.6);--md-fill:rgba(0,0,0,.04);--md-fill-strong:rgba(0,0,0,.06);--md-rule:rgba(0,0,0,.1);--md-rule-strong:rgba(0,0,0,.16);--md-link:hsl(210 100% 45%)}@media (prefers-color-scheme:dark){:root:where(:not([data-theme="light"])){--md-bg:#0d0d0d;--md-text:rgba(255,255,255,.85);--md-muted:rgba(255,255,255,.6);--md-fill:rgba(255,255,255,.06);--md-fill-strong:rgba(255,255,255,.09);--md-rule:rgba(255,255,255,.14);--md-rule-strong:rgba(255,255,255,.22);--md-link:hsl(210 100% 72%)}}:root[data-theme="dark"]{color-scheme:dark;--md-bg:#0d0d0d;--md-text:rgba(255,255,255,.85);--md-muted:rgba(255,255,255,.6);--md-fill:rgba(255,255,255,.06);--md-fill-strong:rgba(255,255,255,.09);--md-rule:rgba(255,255,255,.14);--md-rule-strong:rgba(255,255,255,.22);--md-link:hsl(210 100% 72%)}:root[data-theme="light"]{color-scheme:light}@media print{:root,:root[data-theme="dark"]{color-scheme:light;--md-bg:#fff;--md-text:rgba(0,0,0,.8);--md-muted:rgba(0,0,0,.6);--md-fill:rgba(0,0,0,.04);--md-fill-strong:rgba(0,0,0,.06);--md-rule:rgba(0,0,0,.1);--md-rule-strong:rgba(0,0,0,.16);--md-link:hsl(210 100% 45%)}}body{background:var(--md-bg);color:var(--md-text);max-width:720px;margin:0 auto;padding:32px;display:flex;flex-direction:column;gap:10px;font:14px/1.55 -apple-system,BlinkMacSystemFont,'SF Pro','Segoe UI',sans-serif;overflow-wrap:break-word}body>:first-child{margin-top:0}h1,h2,h3,h4,h5,h6{margin:6px 0 0;line-height:1.25;font-weight:600;text-wrap:balance}h1{font-size:1.35em}h2{font-size:1.15em;color:var(--md-muted)}h3,h4,h5,h6{font-size:1em}p,ul,ol,blockquote,table,pre,hr{margin:0}strong{font-weight:600}a{color:var(--md-link);text-decoration:none}a:hover{text-decoration:underline}ul,ol{display:flex;flex-direction:column;gap:6px;padding-left:22px}ul{list-style:disc}ol{list-style:decimal}:is(li,td,th)>*+:is(p,ul,ol,blockquote){margin-top:6px}blockquote{display:flex;flex-direction:column;gap:10px;border-left:2px solid var(--md-rule);padding-left:10px;color:var(--md-muted)}:not(pre)>code{background:var(--md-fill);padding:1px 3px;border-radius:4px;font:.92em 'SF Mono',ui-monospace,Menlo,Consolas,monospace}a>code{background:none;color:inherit}pre{background:var(--md-fill);padding:10px 12px;border-radius:6px;overflow-x:auto;font:12px/1.5 'SF Mono',ui-monospace,Menlo,Consolas,monospace;margin-block:4px}pre code{background:none;padding:0;font:inherit}table{width:100%;border-collapse:separate;border-spacing:2px;font:inherit}th,td{padding:6px 8px;border-radius:3px;text-align:left;vertical-align:top}th{background:var(--md-fill-strong);font-weight:600}td{background:var(--md-fill)}:is(th,td) :not(pre)>code{background:transparent}hr{border:0;border-top:1px solid var(--md-rule-strong);margin-block:10px}img{max-width:100%;height:auto;border-radius:4px}</style>
+</head><body>
+<h1>Expense Tracker &amp; Budget Management System — Implementation-Ready Project Plan</h1>
+<p><strong>Scope of this document:</strong> Project 1 only (&quot;Expense Tracker and Budget Management System&quot;) from the Earnest Data Analytics Full Stack Developer Assignment. Project 2 (&quot;Task Management System&quot;) is explicitly excluded, per instruction.</p>
+<hr>
+<h2>1. Executive Summary</h2>
+<p>This plan turns the assignment brief into a buildable engineering package: a personal finance web application where a user registers, logs in, records expenses against custom categories, sets monthly per-category budget limits, and reviews spend through a dashboard and downloadable reports.</p>
+<p>The system is a standard three-tier web app: a React + TypeScript SPA, a Node.js + Express + TypeScript REST API, and a PostgreSQL relational database accessed through Prisma ORM. Authentication uses short-lived JWT access tokens plus a rotating, DB-backed refresh token delivered as an httpOnly cookie. All money math (totals, remaining budget, category summaries, reports) is computed in SQL, not pulled to the browser and summed in JavaScript — this is the single biggest correctness/performance decision in the system and is referenced repeatedly below.</p>
+<p>The plan is organized so a developer can start from an empty repository and execute it phase by phase (Section 23), task by task (Section 24), with every assignment line item traced to a concrete deliverable (Section 26) and checked off at the end (Section 31).</p>
+<hr>
+<h2>2. Assignment Requirement Breakdown</h2>
+<p>Every line from the assignment, classified as <strong>R</strong> = Required (explicitly stated), <strong>REC</strong> = Recommended (not explicit, but needed for a credible submission), or <strong>OPT</strong> = Optional (assignment says &quot;optional&quot;).</p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Requirement (as written in assignment)</th>
+<th>Class</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>F1</td>
+<td>Login and registration pages</td>
+<td>R</td>
+</tr>
+<tr>
+<td>F2</td>
+<td>Dashboard: total expenses, remaining budget, category summary</td>
+<td>R</td>
+</tr>
+<tr>
+<td>F3</td>
+<td>Add / edit / delete expense</td>
+<td>R</td>
+</tr>
+<tr>
+<td>F4</td>
+<td>Filter expenses by date, category, amount</td>
+<td>R</td>
+</tr>
+<tr>
+<td>F5</td>
+<td>Set monthly budget limits per category</td>
+<td>R</td>
+</tr>
+<tr>
+<td>F6</td>
+<td>Edit / delete budget limits</td>
+<td>R</td>
+</tr>
+<tr>
+<td>F7</td>
+<td>Monthly and yearly expense reports</td>
+<td>R</td>
+</tr>
+<tr>
+<td>F8</td>
+<td>CSV or Excel report export</td>
+<td>R</td>
+</tr>
+<tr>
+<td>F9</td>
+<td>Charts/graphs visualization</td>
+<td>OPT</td>
+</tr>
+<tr>
+<td>F10</td>
+<td>Responsive design, mobile + desktop (tablet not required)</td>
+<td>R</td>
+</tr>
+<tr>
+<td>B1</td>
+<td>JWT-based authentication</td>
+<td>R</td>
+</tr>
+<tr>
+<td>B2</td>
+<td>Registration and login endpoints</td>
+<td>R</td>
+</tr>
+<tr>
+<td>B3</td>
+<td>Refresh token mechanism for persistent sessions</td>
+<td>R</td>
+</tr>
+<tr>
+<td>B4</td>
+<td>CRUD endpoints for expenses</td>
+<td>R</td>
+</tr>
+<tr>
+<td>B5</td>
+<td>CRUD endpoints for budgets</td>
+<td>R</td>
+</tr>
+<tr>
+<td>B6</td>
+<td>SQL schema: users, expenses, budgets</td>
+<td>R</td>
+</tr>
+<tr>
+<td>B7</td>
+<td>Relational DB (PostgreSQL/MySQL)</td>
+<td>R</td>
+</tr>
+<tr>
+<td>A1</td>
+<td>React Hooks used effectively</td>
+<td>R</td>
+</tr>
+<tr>
+<td>A2</td>
+<td>TypeScript interfaces/types for props and state</td>
+<td>R</td>
+</tr>
+<tr>
+<td>A3</td>
+<td>Charting library integration</td>
+<td>OPT (tied to F9)</td>
+</tr>
+<tr>
+<td>A4</td>
+<td>Request validation and error handling (backend)</td>
+<td>R</td>
+</tr>
+<tr>
+<td>A5</td>
+<td>TypeScript on backend</td>
+<td>R</td>
+</tr>
+<tr>
+<td>A6</td>
+<td>Environment variables for configuration</td>
+<td>R</td>
+</tr>
+<tr>
+<td>A7</td>
+<td>Transactions where necessary</td>
+<td>R</td>
+</tr>
+<tr>
+<td>A8</td>
+<td>Query optimization</td>
+<td>R</td>
+</tr>
+<tr>
+<td>A9</td>
+<td>Indexing for faster retrieval</td>
+<td>OPT (assignment marks this optional)</td>
+</tr>
+<tr>
+<td>A10</td>
+<td>Stored procedures for complex queries</td>
+<td>OPT</td>
+</tr>
+<tr>
+<td>T1</td>
+<td>Unit tests, frontend and backend</td>
+<td>OPT, but explicitly &quot;has weightage when evaluating&quot; → treated as <strong>REC</strong> in this plan</td>
+</tr>
+<tr>
+<td>D1</td>
+<td>Deployment (Heroku/Vercel/Netlify)</td>
+<td>OPT</td>
+</tr>
+<tr>
+<td>D2</td>
+<td>Source code, both frontend and backend</td>
+<td>R (deliverable)</td>
+</tr>
+<tr>
+<td>D3</td>
+<td>README with setup instructions</td>
+<td>R (deliverable)</td>
+</tr>
+<tr>
+<td>D4</td>
+<td>Deployed application URL</td>
+<td>OPT</td>
+</tr>
+</tbody>
+</table>
+<p>Not stated anywhere but structurally required to satisfy F2/F4/F5/B5 (categorizing expenses, per-category budgets, category summary) is a <strong>Category</strong> entity and its minimal CRUD. This is flagged again in Sections 3, 7 and 30 as an engineering decision, not an assignment requirement — it exists only because the stated requirements cannot be met without it.</p>
+<p>Indexing (A9) and stored procedures (A10) are marked optional by the assignment itself, but this plan implements a baseline index set anyway (Section 8/21) because without it, F4 (filtering) and F2/F7 (aggregation) will not perform acceptably even at moderate data volume — this is called out explicitly as &quot;required for correctness of experience, optional in the assignment's letter.&quot;</p>
+<hr>
+<h2>3. Scope</h2>
+<p><strong>Objective.</strong> Let an individual user track personal spending against self-defined monthly budgets, categorized, with historical reporting.</p>
+<p><strong>Problem being solved.</strong> Manual expense tracking (spreadsheets, notes apps) has no budget-vs-actual visibility and no structured reporting. This app gives a single place to log spend, cap it per category per month, and see where money went.</p>
+<p><strong>Target users.</strong> Single individual, self-service, multi-tenant at the data layer (many users, each seeing only their own data) — not shared/family accounts, not multi-currency, not business/accounting-grade.</p>
+<p><strong>Core user journeys</strong></p>
+<ol>
+<li>Register → auto-logged in → land on Dashboard (empty state).</li>
+<li>Create a few categories (or use seeded defaults) → log expenses against them.</li>
+<li>Set a monthly budget per category → Dashboard shows spend vs. limit.</li>
+<li>Filter/search expense history by date range, category, amount range.</li>
+<li>Open Reports → pick month or year → view aggregated numbers → download CSV/Excel.</li>
+<li>Return days later → session persists via refresh token, no re-login needed.</li>
+<li>Edit/delete a past expense or budget; totals recompute automatically.</li>
+</ol>
+<p><strong>Functional scope:</strong> auth (register/login/refresh/logout), category CRUD (minimal), expense CRUD + filtering + pagination, budget CRUD, dashboard summary, monthly/yearly reports with CSV/Excel export, optional charts.</p>
+<p><strong>Non-functional scope:</strong> responsive (mobile + desktop only), input validation client+server, authorization isolation between users, indexed/aggregated queries so dashboard and reports don't degrade as expense count grows, environment-based configuration, automated tests with meaningful coverage of business logic and auth.</p>
+<p><strong>In-scope</strong></p>
+<ul>
+<li>Single currency, no currency conversion.</li>
+<li>Single relational DB, single active schema version at a time (no multi-tenancy beyond row-level <code>user_id</code> scoping).</li>
+<li>Web only (desktop browser + mobile browser, responsive layout).</li>
+<li>Category is per-user (not shared/global taxonomy).</li>
+</ul>
+<p><strong>Explicitly out-of-scope</strong></p>
+<ul>
+<li>Tablet-specific breakpoints (assignment: &quot;tablet not required&quot;).</li>
+<li>Multi-currency, multi-language (i18n).</li>
+<li>Shared/family budgets, multi-user collaboration on one budget.</li>
+<li>Recurring/scheduled expenses, bank account integration/import.</li>
+<li>Push notifications or budget-exceeded alerts (not requested).</li>
+<li>Native mobile app (responsive web only).</li>
+<li>Background job infrastructure (queues/workers) — justified in Section 18 given expected data volume.</li>
+</ul>
+<p><strong>MVP scope (must exist to call the assignment &quot;done&quot;):</strong> F1–F8, F10, B1–B7, A1–A8, D2–D3 from Section 2's table.</p>
+<p><strong>Production-quality enhancements (raise the ceiling, don't block completion):</strong> F9 charts, A9 indexing (built anyway, see above), A10 stored procedures, T1 automated tests, D1/D4 deployment, rate limiting, refresh-token reuse detection, structured logging.</p>
+<p><strong>Required vs. Recommended vs. Optional, restated as build priority</strong></p>
+<table>
+<thead>
+<tr>
+<th>Tier</th>
+<th>Contents</th>
+<th>Consequence if skipped</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Tier 1 — Required</td>
+<td>All &quot;R&quot; rows in Section 2</td>
+<td>Assignment is incomplete/non-compliant</td>
+</tr>
+<tr>
+<td>Tier 2 — Recommended</td>
+<td>Category CRUD, indexing, tests, basic security hardening (rate limiting, CORS, helmet)</td>
+<td>Technically &quot;meets the letter&quot; but would read as a weak, unhardened submission</td>
+</tr>
+<tr>
+<td>Tier 3 — Optional</td>
+<td>Charts, stored procedures, deployment, background jobs</td>
+<td>Nice-to-have; explicitly called optional by the assignment</td>
+</tr>
+</tbody>
+</table>
+<p>Tier 3 items are never allowed to consume time that Tier 1 items need — this ordering is enforced by the phase plan in Section 23 (Tier 3 work is pushed to Phases 10–13, after every Tier 1 item is functionally complete).</p>
+<hr>
+<h2>4. Technology Stack</h2>
+<p><strong>Frontend</strong></p>
+<table>
+<thead>
+<tr>
+<th>Concern</th>
+<th>Choice</th>
+<th>Why (evaluated against assignment)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Framework</td>
+<td>React 18 + TypeScript</td>
+<td>Explicit requirement (A2 needs TS interfaces/props/state)</td>
+</tr>
+<tr>
+<td>Build tool</td>
+<td>Vite</td>
+<td>Fast dev server/HMR, native TS support, no CRA maintenance burden</td>
+</tr>
+<tr>
+<td>Routing</td>
+<td>React Router v6</td>
+<td>Standard, supports protected-route patterns needed for auth gating</td>
+</tr>
+<tr>
+<td>Server state</td>
+<td>TanStack Query</td>
+<td>Assignment doesn't name it, but expense/budget/report data is server-owned; manual <code>useEffect</code> fetch+loading+error+cache handling would violate &quot;use Hooks effectively&quot; by reinventing what a hook library solves — chosen specifically to satisfy A1 well, not just technically</td>
+</tr>
+<tr>
+<td>Forms</td>
+<td>React Hook Form + Zod</td>
+<td>Type-safe form state (A2) with schema validation shared in spirit with backend Zod schemas (A4)</td>
+</tr>
+<tr>
+<td>HTTP client</td>
+<td>Axios</td>
+<td>Interceptor support is used for the silent-refresh flow (Section 13); Fetch would need this hand-rolled</td>
+</tr>
+<tr>
+<td>Charts (optional, F9)</td>
+<td>Recharts</td>
+<td>Declarative, composable with React, sufficient for line/bar/pie budget-vs-actual visuals</td>
+</tr>
+<tr>
+<td>Styling</td>
+<td>Tailwind CSS</td>
+<td>Utility classes make the two required breakpoints (mobile/desktop, Section 14) fast to implement consistently</td>
+</tr>
+<tr>
+<td>Dates</td>
+<td>date-fns</td>
+<td>Lightweight, avoids Moment's bundle cost, needed for month/year boundary logic on both FE display and any client-side formatting</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Backend</strong></p>
+<table>
+<thead>
+<tr>
+<th>Concern</th>
+<th>Choice</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Runtime/framework</td>
+<td>Node.js + Express + TypeScript</td>
+<td>Explicit requirement</td>
+</tr>
+<tr>
+<td>ORM</td>
+<td>Prisma</td>
+<td>Assignment names Sequelize/TypeORM as examples, not mandates. Prisma is chosen over both: generates types directly from the schema (reduces drift between DB and TS types, strengthening A5), has first-class migration tooling (needed for A7 transactions via <code>prisma.$transaction</code>, and for the migration strategy in Section 8), and parameterizes all queries by default (closes the SQL-injection line item in Section 20). This is a deliberate deviation from the &quot;such as&quot; list and is called out here, not silently swapped.</td>
+</tr>
+<tr>
+<td>Validation</td>
+<td>Zod</td>
+<td>Same library family used on the frontend forms — one mental model for &quot;what does valid input look like,&quot; reduces duplicated validation logic (A4)</td>
+</tr>
+<tr>
+<td>Auth tokens</td>
+<td>jsonwebtoken (access) + crypto.randomBytes (refresh)</td>
+<td>Standard, well-audited; refresh token is intentionally <em>not</em> a JWT — see Section 10</td>
+</tr>
+<tr>
+<td>Password hashing</td>
+<td>bcrypt (cost factor 12)</td>
+<td>Industry default for this workload size</td>
+</tr>
+<tr>
+<td>CSV export</td>
+<td>fast-csv</td>
+<td>Streams rows instead of building one giant string in memory</td>
+</tr>
+<tr>
+<td>Excel export</td>
+<td>exceljs</td>
+<td>Streaming workbook writer, avoids loading a full XLSX in memory</td>
+</tr>
+<tr>
+<td>Security middleware</td>
+<td>helmet, cors, express-rate-limit, cookie-parser</td>
+<td>Closes concrete items in Section 20's checklist</td>
+</tr>
+<tr>
+<td>Testing</td>
+<td>Jest + Supertest</td>
+<td>Standard pairing for Express API integration tests</td>
+</tr>
+<tr>
+<td>Dev tooling</td>
+<td>ts-node-dev, dotenv, eslint, prettier</td>
+<td>Fast reload in dev, env var loading (A6), consistent style</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Database</strong></p>
+<table>
+<thead>
+<tr>
+<th>Concern</th>
+<th>Choice</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Engine</td>
+<td>PostgreSQL</td>
+<td>Chosen over MySQL for three concrete reasons tied to this assignment's requirements, not generic preference: (1) native <code>NUMERIC</code> + robust <code>CHECK</code> constraints for money (A7/A8 correctness), (2) window functions (<code>SUM() OVER</code>, <code>date_trunc</code>) make the monthly/yearly report aggregation (Section 18) and dashboard rollups (Section 17) simpler and more indexable than MySQL equivalents, (3) native UUID generation via <code>pgcrypto</code>/<code>gen_random_uuid()</code> supports the ID strategy in Section 8 without an extra library.</td>
+</tr>
+<tr>
+<td>ID strategy</td>
+<td>UUID v4</td>
+<td>See Section 8</td>
+</tr>
+<tr>
+<td>Migrations</td>
+<td>Prisma Migrate</td>
+<td>Versioned, repo-committed SQL migrations</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2>5. System Architecture</h2>
+<p>End-to-end request path, every layer named:</p>
+<pre><code>User (browser/mobile browser)
+  │
+  ▼
+React SPA (pages/components, React Hooks for local UI state)
+  │  TanStack Query (server-state cache) + React Hook Form (form state)
+  ▼
+API client (Axios instance, baseURL, request/response interceptors)
+  │  - attaches Authorization: Bearer &lt;accessToken&gt;
+  │  - on 401, pauses queue, calls /auth/refresh, retries original request
+  ▼
+HTTP/REST over HTTPS (JSON bodies)
+  ▼
+Express app (app.ts)
+  │  Middleware chain (in order):
+  │    1. helmet (security headers)
+  │    2. cors (whitelisted origin, credentials: true)
+  │    3. cookie-parser (reads refresh_token cookie)
+  │    4. express.json() (body parsing)
+  │    5. rate-limiter (auth routes only)
+  │    6. request logger
+  │    7. authenticate (verifies JWT, attaches req.user) — skipped for /auth/register,/auth/login,/auth/refresh
+  ▼
+Router (per module: auth, categories, expenses, budgets, dashboard, reports)
+  ▼
+Controller (parses req, calls Zod schema, calls service, shapes HTTP response — no business logic, no SQL)
+  ▼
+Service (business rules: ownership checks, budget-duplicate checks, aggregation orchestration, calls repository)
+  ▼
+Repository (the only layer that imports Prisma Client; every query filtered by user_id)
+  ▼
+Prisma Client → PostgreSQL (parameterized SQL, indexes, constraints, transactions)
+  ▼
+Response bubbles back up: repository returns typed rows → service shapes DTO → controller sends JSON → Axios resolves → TanStack Query updates cache → React re-renders
+</code></pre>
+<p><strong>Component architecture.</strong> Six backend modules (auth, categories, expenses, budgets, dashboard, reports) each own their full vertical slice (routes→controller→service→repository→types→tests). Frontend mirrors this with one feature folder per module, each exposing a typed hook (<code>useExpenses</code>, <code>useBudgets</code>, etc.) as its public API to pages.</p>
+<p><strong>Frontend architecture</strong> — detailed in Section 13.
+<strong>Backend architecture</strong> — detailed in Section 12.
+<strong>Database architecture</strong> — detailed in Section 8.
+<strong>Authentication architecture</strong> — detailed in Section 10.
+<strong>Reporting architecture</strong> — detailed in Section 18.
+<strong>Deployment architecture</strong> — detailed in Section 28.</p>
+<hr>
+<h2>6. Architecture Diagram (ASCII)</h2>
+<pre><code>┌─────────────────────────────────────────────────────────────────┐
+│                        CLIENT (Browser)                          │
+│  ┌───────────────┐   ┌───────────────┐   ┌───────────────────┐  │
+│  │  React Pages   │──▶│ TanStack Query │──▶│  Axios instance    │  │
+│  │ Login/Register │   │  (server state)│   │ (JWT header +      │  │
+│  │ Dashboard      │◀──│  RHF+Zod forms │◀──│  refresh interceptor)│ │
+│  │ Expenses       │   └───────────────┘   └─────────┬─────────┘  │
+│  │ Budgets        │                                  │            │
+│  │ Reports        │                                  │            │
+│  └───────────────┘                                  │            │
+└──────────────────────────────────────────────────────┼────────────┘
+                                                         │ HTTPS/JSON
+                                                         ▼
+┌─────────────────────────────────────────────────────────────────┐
+│                      SERVER (Node/Express)                       │
+│  helmet → cors → cookie-parser → json → rate-limit → auth mw     │
+│  ┌────────────────────────────────────────────────────────────┐ │
+│  │  Routers: /auth /categories /expenses /budgets /dashboard    │ │
+│  │           /reports                                           │ │
+│  └───────────────────────┬────────────────────────────────────┘ │
+│                           ▼                                       │
+│  ┌───────────────┐   ┌───────────────┐   ┌───────────────────┐  │
+│  │  Controllers   │──▶│   Services     │──▶│   Repositories     │  │
+│  │ (HTTP shaping) │   │ (business rules│   │ (Prisma queries,   │  │
+│  │                │◀──│  ownership)    │◀──│  user_id scoped)   │  │
+│  └───────────────┘   └───────────────┘   └─────────┬─────────┘  │
+└──────────────────────────────────────────────────────┼────────────┘
+                                                         │ Prisma Client
+                                                         ▼
+┌─────────────────────────────────────────────────────────────────┐
+│                    PostgreSQL (indexed, constrained)              │
+│   users │ categories │ expenses │ budgets │ refresh_tokens        │
+└─────────────────────────────────────────────────────────────────┘
+</code></pre>
+<hr>
+<h2>7. Domain Model</h2>
+<p><strong>Entities:</strong> User, Category, Expense, Budget, RefreshToken.</p>
+<p><strong>Engineering decision — Category as a first-class entity.</strong> The assignment never names a &quot;Category&quot; CRUD section, but F2 (&quot;category summary&quot;), F4 (&quot;filter by category&quot;), F5 (&quot;budget limits for different categories&quot;) and B5's implied budget-category link cannot be built against a free-text string without losing referential integrity (typos would silently split one category into two, budgets couldn't reliably reference &quot;the same&quot; category as expenses). Category is therefore modeled as a real table, owned per-user, with minimal CRUD (Section 11). This is called out again in Sections 3 and 30 as an inference required to satisfy stated requirements, not an assignment requirement in itself.</p>
+<p><strong>Relationships</strong></p>
+<table>
+<thead>
+<tr>
+<th>Relationship</th>
+<th>Cardinality</th>
+<th>Ownership rule</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>User → Category</td>
+<td>1 : N</td>
+<td>Category always belongs to exactly one user</td>
+</tr>
+<tr>
+<td>User → Expense</td>
+<td>1 : N</td>
+<td>Expense always belongs to exactly one user</td>
+</tr>
+<tr>
+<td>User → Budget</td>
+<td>1 : N</td>
+<td>Budget always belongs to exactly one user</td>
+</tr>
+<tr>
+<td>User → RefreshToken</td>
+<td>1 : N</td>
+<td>One row per issued session/token family</td>
+</tr>
+<tr>
+<td>Category → Expense</td>
+<td>1 : N</td>
+<td>An expense must reference a category owned by the same user</td>
+</tr>
+<tr>
+<td>Category → Budget</td>
+<td>1 : N</td>
+<td>A budget must reference a category owned by the same user</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Referential integrity / delete behavior</strong></p>
+<table>
+<thead>
+<tr>
+<th>Parent</th>
+<th>Child</th>
+<th>On parent delete</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>User</td>
+<td>Category, Expense, Budget, RefreshToken</td>
+<td><code>ON DELETE CASCADE</code> — deleting a user (account deletion, out of scope for UI but modeled for integrity) removes all owned data</td>
+</tr>
+<tr>
+<td>Category</td>
+<td>Expense</td>
+<td><strong>No hard delete of a category that has expenses.</strong> Category delete is a soft delete (<code>is_archived = true</code>); archived categories are hidden from &quot;create new expense&quot; pickers but historical expenses keep a valid reference and still display their category name. This is an engineering decision (assignment doesn't specify category-deletion behavior) — flagged in Section 30.</td>
+</tr>
+<tr>
+<td>Category</td>
+<td>Budget</td>
+<td>Same soft-delete rule: archiving a category does not delete its budgets; the dashboard simply stops offering new budgets against an archived category.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Uniqueness constraints</strong></p>
+<ul>
+<li><code>users.email</code> — unique (case-insensitive, enforced via a unique index on <code>lower(email)</code>).</li>
+<li><code>(categories.user_id, lower(categories.name))</code> — unique; a user cannot have two categories named &quot;Food&quot; and &quot;food&quot;.</li>
+<li><code>(budgets.user_id, budgets.category_id, budgets.month, budgets.year)</code> — unique; prevents duplicate budgets for the same category/month/year (explicit assignment concern in Section 4 of the brief: &quot;how duplicate budgets are prevented&quot;).</li>
+</ul>
+<p><strong>Validation constraints (enforced at both Zod layer and DB layer — defense in depth, Section 19)</strong></p>
+<ul>
+<li><code>expenses.amount &gt; 0</code>, <code>budgets.limit_amount &gt; 0</code>.</li>
+<li><code>budgets.month</code> ∈ [1,12], <code>budgets.year</code> ∈ [2000,2100] (sane bound, not a business rule).</li>
+<li><code>expenses.expense_date</code> is a valid calendar date, not in the far future (soft client-side warning, not a hard DB constraint, since backdating past expenses is legitimate but far-future dates likely indicate a UI bug).</li>
+<li><code>categories.name</code> length 1–50, <code>expenses.description</code> length 0–255.</li>
+</ul>
+<hr>
+<h2>8. Database Schema</h2>
+<p><strong>Design notes referenced by the tables below</strong></p>
+<ul>
+<li><strong>IDs: UUID v4</strong> (<code>gen_random_uuid()</code>, via the <code>pgcrypto</code> extension). Chosen over auto-increment integers specifically because this assignment's security section requires proving &quot;User A cannot access User B's data&quot; (Section 10/20) — sequential integer IDs let a client enumerate <code>/expenses/1</code>, <code>/expenses/2</code>... to probe for other users' records even if the authorization check ultimately blocks them; UUIDs remove that reconnaissance vector and avoid leaking row counts (e.g., &quot;how many total expenses exist in the system&quot;).</li>
+<li><strong>Currency/amount representation:</strong> <code>NUMERIC(12,2)</code>, never <code>FLOAT</code>/<code>DOUBLE</code> — floating point cannot represent currency exactly (e.g., 0.1 + 0.2 problem) and this assignment's own &quot;advanced concepts&quot; section asks for correct, optimized data handling. <code>NUMERIC(12,2)</code> supports values up to 9,999,999,999.99, far beyond any personal-finance figure.</li>
+<li><strong>Date/time representation:</strong> <code>expense_date</code> is a plain <code>DATE</code> (a calendar day, no timezone concept — an expense happens &quot;on a date,&quot; not at an instant). <code>created_at</code>/<code>updated_at</code> audit columns are <code>TIMESTAMPTZ</code>, stored in UTC, converted to the user's local time only in the UI. This split avoids the classic bug where a <code>TIMESTAMPTZ</code> expense date shifts to the previous/next day depending on the server's or browser's timezone.</li>
+<li><strong>Monthly budget representation:</strong> <code>month SMALLINT</code> + <code>year SMALLINT</code>, not a <code>DATE</code> set to the 1st of the month — a budget isn't &quot;on a day,&quot; it's a scope; storing it as two small integers makes the uniqueness constraint and the month/year filter (B5 requirement) a direct equality match instead of a date-range comparison.</li>
+<li><strong>How historical expenses remain valid:</strong> categories are soft-deleted (archived), never hard-deleted while referenced — see Section 7. This guarantees <code>expenses.category_id</code> and <code>budgets.category_id</code> are never dangling.</li>
+<li><strong>How categories relate to expenses/budgets:</strong> both <code>expenses</code> and <code>budgets</code> hold a <code>category_id</code> foreign key; a category groups N expenses and (at most one per month/year) N budgets over time.</li>
+<li><strong>How duplicate budgets are prevented:</strong> composite unique constraint <code>(user_id, category_id, month, year)</code> — a second insert attempt for the same tuple is rejected at the DB level even if application logic has a bug, and the service layer catches the unique-violation error and returns <code>409 Conflict</code> (Section 15).</li>
+</ul>
+<p><strong><code>users</code></strong></p>
+<table>
+<thead>
+<tr>
+<th>Column</th>
+<th>Type</th>
+<th>Constraints</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>id</td>
+<td>UUID</td>
+<td>PK, default <code>gen_random_uuid()</code></td>
+</tr>
+<tr>
+<td>name</td>
+<td>VARCHAR(100)</td>
+<td>NOT NULL</td>
+</tr>
+<tr>
+<td>email</td>
+<td>VARCHAR(255)</td>
+<td>NOT NULL, UNIQUE (on <code>lower(email)</code>)</td>
+</tr>
+<tr>
+<td>password_hash</td>
+<td>VARCHAR(255)</td>
+<td>NOT NULL</td>
+</tr>
+<tr>
+<td>created_at</td>
+<td>TIMESTAMPTZ</td>
+<td>NOT NULL, default <code>now()</code></td>
+</tr>
+<tr>
+<td>updated_at</td>
+<td>TIMESTAMPTZ</td>
+<td>NOT NULL, default <code>now()</code>, updated on write</td>
+</tr>
+</tbody>
+</table>
+<p><strong><code>categories</code></strong></p>
+<table>
+<thead>
+<tr>
+<th>Column</th>
+<th>Type</th>
+<th>Constraints</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>id</td>
+<td>UUID</td>
+<td>PK, default <code>gen_random_uuid()</code></td>
+</tr>
+<tr>
+<td>user_id</td>
+<td>UUID</td>
+<td>NOT NULL, FK → users.id, <code>ON DELETE CASCADE</code></td>
+</tr>
+<tr>
+<td>name</td>
+<td>VARCHAR(50)</td>
+<td>NOT NULL</td>
+</tr>
+<tr>
+<td>color</td>
+<td>VARCHAR(7)</td>
+<td>NULL (hex code, for chart/UI color coding)</td>
+</tr>
+<tr>
+<td>is_archived</td>
+<td>BOOLEAN</td>
+<td>NOT NULL, default <code>false</code></td>
+</tr>
+<tr>
+<td>created_at</td>
+<td>TIMESTAMPTZ</td>
+<td>NOT NULL, default <code>now()</code></td>
+</tr>
+<tr>
+<td>updated_at</td>
+<td>TIMESTAMPTZ</td>
+<td>NOT NULL, default <code>now()</code></td>
+</tr>
+<tr>
+<td>—</td>
+<td>—</td>
+<td>UNIQUE (user_id, lower(name))</td>
+</tr>
+</tbody>
+</table>
+<p><strong><code>expenses</code></strong></p>
+<table>
+<thead>
+<tr>
+<th>Column</th>
+<th>Type</th>
+<th>Constraints</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>id</td>
+<td>UUID</td>
+<td>PK, default <code>gen_random_uuid()</code></td>
+</tr>
+<tr>
+<td>user_id</td>
+<td>UUID</td>
+<td>NOT NULL, FK → users.id, <code>ON DELETE CASCADE</code></td>
+</tr>
+<tr>
+<td>category_id</td>
+<td>UUID</td>
+<td>NOT NULL, FK → categories.id, <code>ON DELETE RESTRICT</code></td>
+</tr>
+<tr>
+<td>amount</td>
+<td>NUMERIC(12,2)</td>
+<td>NOT NULL, CHECK (amount &gt; 0)</td>
+</tr>
+<tr>
+<td>description</td>
+<td>VARCHAR(255)</td>
+<td>NULL</td>
+</tr>
+<tr>
+<td>expense_date</td>
+<td>DATE</td>
+<td>NOT NULL</td>
+</tr>
+<tr>
+<td>created_at</td>
+<td>TIMESTAMPTZ</td>
+<td>NOT NULL, default <code>now()</code></td>
+</tr>
+<tr>
+<td>updated_at</td>
+<td>TIMESTAMPTZ</td>
+<td>NOT NULL, default <code>now()</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong><code>budgets</code></strong></p>
+<table>
+<thead>
+<tr>
+<th>Column</th>
+<th>Type</th>
+<th>Constraints</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>id</td>
+<td>UUID</td>
+<td>PK, default <code>gen_random_uuid()</code></td>
+</tr>
+<tr>
+<td>user_id</td>
+<td>UUID</td>
+<td>NOT NULL, FK → users.id, <code>ON DELETE CASCADE</code></td>
+</tr>
+<tr>
+<td>category_id</td>
+<td>UUID</td>
+<td>NOT NULL, FK → categories.id, <code>ON DELETE CASCADE</code></td>
+</tr>
+<tr>
+<td>month</td>
+<td>SMALLINT</td>
+<td>NOT NULL, CHECK (month BETWEEN 1 AND 12)</td>
+</tr>
+<tr>
+<td>year</td>
+<td>SMALLINT</td>
+<td>NOT NULL, CHECK (year BETWEEN 2000 AND 2100)</td>
+</tr>
+<tr>
+<td>limit_amount</td>
+<td>NUMERIC(12,2)</td>
+<td>NOT NULL, CHECK (limit_amount &gt; 0)</td>
+</tr>
+<tr>
+<td>created_at</td>
+<td>TIMESTAMPTZ</td>
+<td>NOT NULL, default <code>now()</code></td>
+</tr>
+<tr>
+<td>updated_at</td>
+<td>TIMESTAMPTZ</td>
+<td>NOT NULL, default <code>now()</code></td>
+</tr>
+<tr>
+<td>—</td>
+<td>—</td>
+<td>UNIQUE (user_id, category_id, month, year)</td>
+</tr>
+</tbody>
+</table>
+<p><strong><code>refresh_tokens</code></strong> (supports B3 — not explicitly asked for as a table, but a refresh mechanism cannot be revocable/rotatable without server-side state)</p>
+<table>
+<thead>
+<tr>
+<th>Column</th>
+<th>Type</th>
+<th>Constraints</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>id</td>
+<td>UUID</td>
+<td>PK, default <code>gen_random_uuid()</code></td>
+</tr>
+<tr>
+<td>user_id</td>
+<td>UUID</td>
+<td>NOT NULL, FK → users.id, <code>ON DELETE CASCADE</code></td>
+</tr>
+<tr>
+<td>token_hash</td>
+<td>VARCHAR(255)</td>
+<td>NOT NULL, UNIQUE (SHA-256 hash of the raw token; raw token never stored)</td>
+</tr>
+<tr>
+<td>expires_at</td>
+<td>TIMESTAMPTZ</td>
+<td>NOT NULL</td>
+</tr>
+<tr>
+<td>revoked_at</td>
+<td>TIMESTAMPTZ</td>
+<td>NULL</td>
+</tr>
+<tr>
+<td>replaced_by_hash</td>
+<td>VARCHAR(255)</td>
+<td>NULL (links rotation chain, enables reuse detection)</td>
+</tr>
+<tr>
+<td>created_at</td>
+<td>TIMESTAMPTZ</td>
+<td>NOT NULL, default <code>now()</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Prisma schema (directly convertible to migrations)</strong></p>
+<pre><code class="language-prisma">model User {
+  id            String    @id @default(uuid())
+  name          String    @db.VarChar(100)
+  email         String    @unique @db.VarChar(255)
+  passwordHash  String    @map(&#34;password_hash&#34;) @db.VarChar(255)
+  createdAt     DateTime  @default(now()) @map(&#34;created_at&#34;)
+  updatedAt     DateTime  @updatedAt @map(&#34;updated_at&#34;)
+  categories    Category[]
+  expenses      Expense[]
+  budgets       Budget[]
+  refreshTokens RefreshToken[]
+  @@map(&#34;users&#34;)
+}
+
+model Category {
+  id         String    @id @default(uuid())
+  userId     String    @map(&#34;user_id&#34;)
+  name       String    @db.VarChar(50)
+  color      String?   @db.VarChar(7)
+  isArchived Boolean   @default(false) @map(&#34;is_archived&#34;)
+  createdAt  DateTime  @default(now()) @map(&#34;created_at&#34;)
+  updatedAt  DateTime  @updatedAt @map(&#34;updated_at&#34;)
+  user       User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  expenses   Expense[]
+  budgets    Budget[]
+  @@unique([userId, name])
+  @@map(&#34;categories&#34;)
+}
+
+model Expense {
+  id          String   @id @default(uuid())
+  userId      String   @map(&#34;user_id&#34;)
+  categoryId  String   @map(&#34;category_id&#34;)
+  amount      Decimal  @db.Decimal(12, 2)
+  description String?  @db.VarChar(255)
+  expenseDate DateTime @map(&#34;expense_date&#34;) @db.Date
+  createdAt   DateTime @default(now()) @map(&#34;created_at&#34;)
+  updatedAt   DateTime @updatedAt @map(&#34;updated_at&#34;)
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  category    Category @relation(fields: [categoryId], references: [id], onDelete: Restrict)
+  @@index([userId, expenseDate])
+  @@index([userId, categoryId])
+  @@map(&#34;expenses&#34;)
+}
+
+model Budget {
+  id          String   @id @default(uuid())
+  userId      String   @map(&#34;user_id&#34;)
+  categoryId  String   @map(&#34;category_id&#34;)
+  month       Int      @db.SmallInt
+  year        Int      @db.SmallInt
+  limitAmount Decimal  @map(&#34;limit_amount&#34;) @db.Decimal(12, 2)
+  createdAt   DateTime @default(now()) @map(&#34;created_at&#34;)
+  updatedAt   DateTime @updatedAt @map(&#34;updated_at&#34;)
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  category    Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  @@unique([userId, categoryId, month, year])
+  @@index([userId, year, month])
+  @@map(&#34;budgets&#34;)
+}
+
+model RefreshToken {
+  id              String    @id @default(uuid())
+  userId          String    @map(&#34;user_id&#34;)
+  tokenHash       String    @unique @map(&#34;token_hash&#34;)
+  expiresAt       DateTime  @map(&#34;expires_at&#34;)
+  revokedAt       DateTime? @map(&#34;revoked_at&#34;)
+  replacedByHash  String?   @map(&#34;replaced_by_hash&#34;)
+  createdAt       DateTime  @default(now()) @map(&#34;created_at&#34;)
+  user            User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  @@index([userId])
+  @@map(&#34;refresh_tokens&#34;)
+}
+</code></pre>
+<p><strong>Index strategy (summary — full list in Section 21):</strong> <code>(user_id, expense_date)</code> and <code>(user_id, category_id)</code> on <code>expenses</code> for filtering (F4) and category rollups (F2); <code>(user_id, year, month)</code> on <code>budgets</code> for dashboard/report lookups; unique indexes double as lookup indexes for the uniqueness checks above.</p>
+<p><strong>Query optimization strategy:</strong> all list/aggregate endpoints filter by <code>user_id</code> first (leading column of every composite index), aggregation (<code>SUM</code>, <code>GROUP BY</code>) happens in PostgreSQL, never in application code over a fully-fetched row set (Section 17).</p>
+<p><strong>Transaction strategy</strong> — where <code>A7 &quot;transactions where necessary&quot;</code> actually applies:</p>
+<table>
+<thead>
+<tr>
+<th>Operation</th>
+<th>Transactional?</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Registration (insert user + seed default categories)</td>
+<td><strong>Yes</strong></td>
+<td>Partial failure would leave a user with no categories, breaking the first expense-creation screen</td>
+</tr>
+<tr>
+<td>Refresh token rotation (revoke old + insert new)</td>
+<td><strong>Yes</strong></td>
+<td>Partial failure could leave two valid tokens (security bug) or zero valid tokens (user logged out unexpectedly)</td>
+</tr>
+<tr>
+<td>Budget create (check-duplicate + insert)</td>
+<td><strong>Yes</strong>, via <code>prisma.$transaction</code> or relying on the unique constraint + catching <code>P2002</code></td>
+<td>Race condition: two rapid clicks could both pass an app-level &quot;does it exist&quot; check before either insert commits</td>
+</tr>
+<tr>
+<td>Category archive (set is_archived + no other writes)</td>
+<td>No</td>
+<td>Single-row update, atomic by default</td>
+</tr>
+<tr>
+<td>Expense create/update/delete</td>
+<td>No</td>
+<td>Single-row write; correctness comes from constraints, not multi-statement atomicity</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Migration strategy:</strong> Prisma Migrate (<code>prisma migrate dev</code> locally, <code>prisma migrate deploy</code> in CI/CD), migration SQL files committed to <code>prisma/migrations/</code>, one migration per schema change, never edited after being applied to a shared environment.</p>
+<p><strong>Seed-data strategy:</strong> a seed script (<code>prisma/seed.ts</code>) creates default categories (Food, Transport, Utilities, Entertainment, Health, Other) for a newly registered user, run inside the same transaction as user creation — not a separate manual step.</p>
+<hr>
+<h2>9. ER Diagram (ASCII)</h2>
+<pre><code>┌───────────────┐
+│     User      │
+│───────────────│
+│ id (PK)       │
+│ name          │
+│ email  (UQ)   │
+│ password_hash │
+└──────┬────────┘
+       │ 1
+       │
+       │ N                N                 1
+┌──────┴────────┐  ┌───────────────┐  ┌──────┴────────┐
+│  RefreshToken │  │   Category    │──│    (self)     │
+│───────────────│  │───────────────│  └───────────────┘
+│ id (PK)       │  │ id (PK)       │
+│ user_id (FK)  │  │ user_id (FK)  │
+│ token_hash(UQ)│  │ name          │
+│ expires_at    │  │ is_archived   │
+│ revoked_at    │  │ UQ(user,name) │
+└───────────────┘  └───┬───────┬───┘
+                        │1      │1
+                        │N      │N
+                 ┌──────┴──┐ ┌──┴────────┐
+                 │ Expense │ │  Budget   │
+                 │─────────│ │───────────│
+                 │id (PK)  │ │id (PK)    │
+                 │user_id  │ │user_id    │
+                 │category_id│category_id│
+                 │amount   │ │month,year │
+                 │expense_date│limit_amount│
+                 │         │ │UQ(user,cat,mo,yr)│
+                 └─────────┘ └───────────┘
+</code></pre>
+<hr>
+<h2>10. Authentication &amp; Authorization Architecture</h2>
+<p><strong>Access token:</strong> JWT (HS256), payload <code>{ sub: userId, iat, exp }</code>, <strong>15-minute</strong> lifetime, sent as <code>Authorization: Bearer &lt;token&gt;</code> header, held only in memory on the frontend (a React context / query client, never <code>localStorage</code>) to limit the blast radius of an XSS bug — this is a defense-in-depth choice, not a claim that the app has no other XSS risk.</p>
+<p><strong>Refresh token:</strong> an opaque, cryptographically random 256-bit value (<code>crypto.randomBytes(32).toString('hex')</code>) — deliberately <strong>not</strong> a JWT, because revocation of a JWT before its expiry requires a server-side blocklist anyway, so there is no benefit to the JWT format for this token and a plain random value is simpler to hash/compare. Lifetime <strong>30 days</strong>. Delivered as an <strong>httpOnly, Secure, SameSite=Strict</strong> cookie, <code>path=/api/auth</code>, so it is never readable by JavaScript and is only ever sent to the refresh/logout endpoints (reducing CSRF surface — see Section 20). Only the SHA-256 hash of the token is stored in <code>refresh_tokens.token_hash</code>; a leaked database does not hand out usable tokens.</p>
+<p><strong>Registration flow:</strong> validate body (Zod: name, email format, password ≥ 8 chars) → check email uniqueness → <code>bcrypt.hash(password, 12)</code> → transaction: insert <code>users</code> row + seed default <code>categories</code> → issue access token + refresh token (same as login) → respond <code>201</code> with user profile (no password hash) and set refresh cookie.</p>
+<p><strong>Login flow:</strong> validate body → look up user by email → <code>bcrypt.compare</code> → on success, issue access token (signed, 15 min) → generate refresh token, hash it, insert <code>refresh_tokens</code> row (expires_at = now + 30d) → set httpOnly cookie → respond <code>200</code> with access token in JSON body + user profile.</p>
+<p><strong>Refresh flow:</strong> read <code>refresh_token</code> cookie → hash it → look up <code>refresh_tokens</code> row by hash → checks, in order:</p>
+<ol>
+<li>Row exists → else <code>401</code>.</li>
+<li><code>revoked_at IS NULL</code> → if already revoked, <strong>this is a reuse signal</strong>: revoke every other non-revoked token for that <code>user_id</code> (kill the whole session family) and respond <code>401</code> — this defends against a stolen refresh token being used after the legitimate client already rotated past it.</li>
+<li><code>expires_at &gt; now()</code> → else <code>401</code>.</li>
+<li>All pass → <strong>rotate</strong>: mark current row <code>revoked_at = now()</code>, generate a new refresh token, insert new row, set <code>replaced_by_hash</code> on the old row to the new row's hash, issue a new 15-minute access token. All of this happens inside one DB transaction (Section 8).</li>
+<li>Respond <code>200</code> with new access token; set new refresh cookie.</li>
+</ol>
+<p><strong>Logout flow:</strong> read refresh cookie → hash it → set <code>revoked_at = now()</code> on the matching row → clear the cookie (<code>Set-Cookie</code> with <code>Max-Age=0</code>).</p>
+<p><strong>Middleware</strong></p>
+<ul>
+<li><code>authenticate</code>: reads <code>Authorization: Bearer</code>, verifies JWT signature + expiry, attaches <code>req.user = { id }</code>. Missing/invalid/expired → <code>401</code>.</li>
+<li>Authorization is <strong>not</strong> a separate role-check middleware here (no admin/user roles in scope) — it is enforced structurally: every repository method that touches <code>expenses</code>/<code>budgets</code>/<code>categories</code> takes <code>userId</code> as a mandatory first argument and includes it in the <code>WHERE</code> clause. There is no code path that can query another user's row, because no repository method accepts a bare <code>id</code> without a <code>userId</code>.</li>
+</ul>
+<p><strong>How the system prevents specific attacks</strong></p>
+<table>
+<thead>
+<tr>
+<th>Threat</th>
+<th>Prevention</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>User A reads/edits/deletes User B's expense or budget</td>
+<td>Every repository query is <code>WHERE id = :id AND user_id = :currentUserId</code>; a mismatched ID returns &quot;not found&quot; (404), never &quot;forbidden&quot; (403), so existence of other users' records isn't leaked</td>
+</tr>
+<tr>
+<td>Refresh token reuse (stolen cookie replayed after rotation)</td>
+<td>Reuse-detection in step 2 above revokes the entire token family</td>
+</tr>
+<tr>
+<td>Expired/invalid access token</td>
+<td><code>authenticate</code> middleware rejects with <code>401</code>; frontend Axios interceptor catches exactly this and attempts one silent refresh before giving up</td>
+</tr>
+<tr>
+<td>Invalid/expired/tampered refresh token</td>
+<td>Refresh endpoint rejects with <code>401</code>, frontend redirects to <code>/login</code></td>
+</tr>
+<tr>
+<td>Brute-force login attempts</td>
+<td><code>express-rate-limit</code> on <code>/auth/login</code> and <code>/auth/register</code> (e.g., 10 requests / 15 min / IP)</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2>11. Complete API Specification</h2>
+<p>Base path: <code>/api</code>. All authenticated routes require <code>Authorization: Bearer &lt;accessToken&gt;</code> unless noted. All error responses use the shape defined in Section 19.</p>
+<h3>AUTH</h3>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>POST /auth/register</strong></td>
+<td>Create a user account</td>
+</tr>
+<tr>
+<td>Auth required</td>
+<td>No</td>
+</tr>
+<tr>
+<td>Body</td>
+<td><code>{ name: string, email: string, password: string }</code></td>
+</tr>
+<tr>
+<td>Validation</td>
+<td>name 1–100 chars; email valid format; password ≥ 8 chars, ≥1 letter + ≥1 number</td>
+</tr>
+<tr>
+<td>Success</td>
+<td><code>201</code> <code>{ user: { id, name, email }, accessToken }</code> + sets refresh cookie</td>
+</tr>
+<tr>
+<td>Errors</td>
+<td><code>400</code> validation failed; <code>409</code> email already registered</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>POST /auth/login</strong></td>
+<td>Authenticate and start a session</td>
+</tr>
+<tr>
+<td>Auth required</td>
+<td>No</td>
+</tr>
+<tr>
+<td>Body</td>
+<td><code>{ email: string, password: string }</code></td>
+</tr>
+<tr>
+<td>Validation</td>
+<td>email format; password non-empty</td>
+</tr>
+<tr>
+<td>Success</td>
+<td><code>200</code> <code>{ user: { id, name, email }, accessToken }</code> + sets refresh cookie</td>
+</tr>
+<tr>
+<td>Errors</td>
+<td><code>400</code> validation; <code>401</code> invalid credentials (generic message — does not reveal whether email exists)</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>POST /auth/refresh</strong></td>
+<td>Rotate refresh token, issue new access token</td>
+</tr>
+<tr>
+<td>Auth required</td>
+<td>No (uses refresh cookie instead)</td>
+</tr>
+<tr>
+<td>Body</td>
+<td>none</td>
+</tr>
+<tr>
+<td>Success</td>
+<td><code>200</code> <code>{ accessToken }</code> + sets new refresh cookie</td>
+</tr>
+<tr>
+<td>Errors</td>
+<td><code>401</code> missing/invalid/expired/revoked/reused refresh token</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>POST /auth/logout</strong></td>
+<td>End the current session</td>
+</tr>
+<tr>
+<td>Auth required</td>
+<td>No (uses refresh cookie)</td>
+</tr>
+<tr>
+<td>Success</td>
+<td><code>204</code> no body, clears cookie</td>
+</tr>
+<tr>
+<td>Errors</td>
+<td>none meaningful — logout is idempotent</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>GET /auth/me</strong></td>
+<td>Return the current authenticated user</td>
+</tr>
+<tr>
+<td>Auth required</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Success</td>
+<td><code>200</code> <code>{ id, name, email, createdAt }</code></td>
+</tr>
+<tr>
+<td>Errors</td>
+<td><code>401</code> not authenticated</td>
+</tr>
+</tbody>
+</table>
+<h3>CATEGORIES</h3>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>GET /categories</strong></td>
+<td>List the user's categories</td>
+</tr>
+<tr>
+<td>Auth required</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Query params</td>
+<td><code>includeArchived?: boolean</code> (default false)</td>
+</tr>
+<tr>
+<td>Success</td>
+<td><code>200</code> <code>[{ id, name, color, isArchived }]</code></td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>POST /categories</strong></td>
+<td>Create a category</td>
+</tr>
+<tr>
+<td>Auth required</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Body</td>
+<td><code>{ name: string, color?: string }</code></td>
+</tr>
+<tr>
+<td>Validation</td>
+<td>name 1–50 chars, unique per user (case-insensitive); color, if present, is a <code>#RRGGBB</code> hex string</td>
+</tr>
+<tr>
+<td>Success</td>
+<td><code>201</code> created category</td>
+</tr>
+<tr>
+<td>Errors</td>
+<td><code>400</code> validation; <code>409</code> duplicate name</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>PATCH /categories/:id</strong></td>
+<td>Rename / recolor / archive a category</td>
+</tr>
+<tr>
+<td>Auth required</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Body</td>
+<td><code>{ name?: string, color?: string, isArchived?: boolean }</code></td>
+</tr>
+<tr>
+<td>Success</td>
+<td><code>200</code> updated category</td>
+</tr>
+<tr>
+<td>Errors</td>
+<td><code>400</code> validation; <code>404</code> not found / not owned; <code>409</code> new name collides with another category</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>DELETE /categories/:id</strong></td>
+<td>Archive a category (soft delete)</td>
+</tr>
+<tr>
+<td>Auth required</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Success</td>
+<td><code>204</code> — implemented as <code>isArchived = true</code>, never a hard delete while referenced (Section 7)</td>
+</tr>
+<tr>
+<td>Errors</td>
+<td><code>404</code> not found / not owned</td>
+</tr>
+</tbody>
+</table>
+<h3>EXPENSES</h3>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>POST /expenses</strong></td>
+<td>Create an expense</td>
+</tr>
+<tr>
+<td>Auth required</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Body</td>
+<td><code>{ categoryId: string(uuid), amount: number, description?: string, expenseDate: string(YYYY-MM-DD) }</code></td>
+</tr>
+<tr>
+<td>Validation</td>
+<td>amount &gt; 0; categoryId must belong to the caller and not be archived; expenseDate valid date</td>
+</tr>
+<tr>
+<td>Success</td>
+<td><code>201</code> created expense (with embedded category <code>{ id, name, color }</code>)</td>
+</tr>
+<tr>
+<td>Errors</td>
+<td><code>400</code> validation; <code>404</code> categoryId not found/not owned</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>GET /expenses</strong></td>
+<td>List expenses, filtered/paginated/sorted</td>
+</tr>
+<tr>
+<td>Auth required</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Query params</td>
+<td><code>startDate?, endDate?</code> (YYYY-MM-DD), <code>categoryId?</code>, <code>minAmount?, maxAmount?</code>, <code>page?</code> (default 1), <code>limit?</code> (default 20, max 100), <code>sortBy?</code> (`expenseDate</td>
+</tr>
+<tr>
+<td>Validation</td>
+<td>filters combine with AND; minAmount ≤ maxAmount; startDate ≤ endDate</td>
+</tr>
+<tr>
+<td>Success</td>
+<td><code>200</code> <code>{ data: Expense[], meta: { page, limit, total, totalPages } }</code></td>
+</tr>
+<tr>
+<td>Errors</td>
+<td><code>400</code> invalid filter combination</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>GET /expenses/:id</strong></td>
+<td>Get one expense</td>
+</tr>
+<tr>
+<td>Auth required</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Success</td>
+<td><code>200</code> expense</td>
+</tr>
+<tr>
+<td>Errors</td>
+<td><code>404</code> not found/not owned</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>PATCH /expenses/:id</strong></td>
+<td>Update an expense</td>
+</tr>
+<tr>
+<td>Auth required</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Body</td>
+<td>any subset of <code>{ categoryId, amount, description, expenseDate }</code></td>
+</tr>
+<tr>
+<td>Success</td>
+<td><code>200</code> updated expense</td>
+</tr>
+<tr>
+<td>Errors</td>
+<td><code>400</code> validation; <code>404</code> expense or new categoryId not found/not owned</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>DELETE /expenses/:id</strong></td>
+<td>Delete an expense</td>
+</tr>
+<tr>
+<td>Auth required</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Success</td>
+<td><code>204</code></td>
+</tr>
+<tr>
+<td>Errors</td>
+<td><code>404</code> not found/not owned</td>
+</tr>
+</tbody>
+</table>
+<h3>BUDGETS</h3>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>POST /budgets</strong></td>
+<td>Create a monthly category budget</td>
+</tr>
+<tr>
+<td>Auth required</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Body</td>
+<td><code>{ categoryId: string, month: number, year: number, limitAmount: number }</code></td>
+</tr>
+<tr>
+<td>Validation</td>
+<td>limitAmount &gt; 0; month 1–12; year 2000–2100; categoryId owned &amp; not archived; no existing budget for (categoryId, month, year)</td>
+</tr>
+<tr>
+<td>Success</td>
+<td><code>201</code> created budget</td>
+</tr>
+<tr>
+<td>Errors</td>
+<td><code>400</code> validation; <code>404</code> categoryId not found; <code>409</code> duplicate budget for that category/month/year</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>GET /budgets</strong></td>
+<td>List budgets</td>
+</tr>
+<tr>
+<td>Auth required</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Query params</td>
+<td><code>month?, year?, categoryId?</code></td>
+</tr>
+<tr>
+<td>Success</td>
+<td><code>200</code> <code>[{ id, categoryId, categoryName, month, year, limitAmount, spent, remaining }]</code> — <code>spent</code>/<code>remaining</code> computed server-side (Section 16)</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>GET /budgets/:id</strong></td>
+<td>Get one budget</td>
+</tr>
+<tr>
+<td>Auth required</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Success</td>
+<td><code>200</code> budget (with computed <code>spent</code>/<code>remaining</code>)</td>
+</tr>
+<tr>
+<td>Errors</td>
+<td><code>404</code></td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>PATCH /budgets/:id</strong></td>
+<td>Update a budget's limit (month/year/category not editable — delete and recreate instead, to avoid ambiguous &quot;moved&quot; semantics)</td>
+</tr>
+<tr>
+<td>Auth required</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Body</td>
+<td><code>{ limitAmount: number }</code></td>
+</tr>
+<tr>
+<td>Success</td>
+<td><code>200</code> updated budget</td>
+</tr>
+<tr>
+<td>Errors</td>
+<td><code>400</code> validation; <code>404</code></td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>DELETE /budgets/:id</strong></td>
+<td>Delete a budget</td>
+</tr>
+<tr>
+<td>Auth required</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Success</td>
+<td><code>204</code></td>
+</tr>
+<tr>
+<td>Errors</td>
+<td><code>404</code></td>
+</tr>
+</tbody>
+</table>
+<h3>DASHBOARD</h3>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>GET /dashboard/summary</strong></td>
+<td>Aggregated overview for one month</td>
+</tr>
+<tr>
+<td>Auth required</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Query params</td>
+<td><code>month?, year?</code> (default: current month/year)</td>
+</tr>
+<tr>
+<td>Success</td>
+<td><code>200</code> <code>{ totalExpenses, totalBudget, remainingBudget, categorySummary: [{ categoryId, categoryName, spent, budget, remaining, percentUsed }], monthlyTrend?: [{ month, total }] }</code> (<code>monthlyTrend</code> = optional, last 6 months, supports the optional chart, F9)</td>
+</tr>
+</tbody>
+</table>
+<h3>REPORTS</h3>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>GET /reports/monthly</strong></td>
+<td>Monthly report data</td>
+</tr>
+<tr>
+<td>Auth required</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Query params</td>
+<td><code>month, year</code> (required)</td>
+</tr>
+<tr>
+<td>Success</td>
+<td><code>200</code> <code>{ period: { month, year }, totalExpenses, byCategory: [{ categoryId, categoryName, total, budget, remaining }], byDay: [{ date, total }] }</code></td>
+</tr>
+<tr>
+<td>Errors</td>
+<td><code>400</code> missing/invalid month or year</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>GET /reports/yearly</strong></td>
+<td>Yearly report data</td>
+</tr>
+<tr>
+<td>Auth required</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Query params</td>
+<td><code>year</code> (required)</td>
+</tr>
+<tr>
+<td>Success</td>
+<td><code>200</code> <code>{ period: { year }, totalExpenses, byCategory: [{ categoryId, categoryName, total }], byMonth: [{ month, total }] }</code></td>
+</tr>
+<tr>
+<td>Errors</td>
+<td><code>400</code> missing/invalid year</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>GET /reports/export</strong></td>
+<td>Download CSV or Excel</td>
+</tr>
+<tr>
+<td>Auth required</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Query params</td>
+<td><code>format</code> (`csv</td>
+</tr>
+<tr>
+<td>Success</td>
+<td><code>200</code>, <code>Content-Type: text/csv</code> or <code>application/vnd.openxmlformats-officedocument.spreadsheetml.sheet</code>, <code>Content-Disposition: attachment; filename=...</code>, streamed body</td>
+</tr>
+<tr>
+<td>Errors</td>
+<td><code>400</code> invalid/missing params</td>
+</tr>
+</tbody>
+</table>
+<p>No endpoint exists purely to &quot;look complete&quot; — categories, budgets, and reports each map back to an explicit assignment line (F2, F5, F6, F7, F8) or to a structural necessity documented in Section 7.</p>
+<hr>
+<h2>12. Backend Architecture</h2>
+<pre><code>src/
+  config/            # env loading + validation (A6), db client singleton
+  middleware/
+    authenticate.ts
+    errorHandler.ts
+    rateLimiter.ts
+    validate.ts       # generic Zod-schema-to-middleware wrapper
+  modules/
+    auth/
+      auth.routes.ts
+      auth.controller.ts
+      auth.service.ts
+      auth.repository.ts
+      auth.validation.ts
+      auth.types.ts
+      auth.test.ts
+    categories/        # same 6-file pattern
+    expenses/
+    budgets/
+    dashboard/
+    reports/
+  utils/
+    hash.ts            # bcrypt wrappers
+    tokens.ts          # JWT + refresh token helpers
+    money.ts           # Decimal formatting helpers
+  app.ts               # express() + middleware wiring + route mounting
+  server.ts            # http.listen, graceful shutdown
+</code></pre>
+<p><strong>Layer responsibilities</strong></p>
+<table>
+<thead>
+<tr>
+<th>Layer</th>
+<th>Owns</th>
+<th>Must never contain</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Routes</td>
+<td>URL → controller wiring, applying <code>authenticate</code>/<code>validate</code> middleware</td>
+<td>Any logic</td>
+</tr>
+<tr>
+<td>Controller</td>
+<td>Reading <code>req</code>, calling the Zod-validated DTO through to the service, mapping the service's result/errors to HTTP status + JSON</td>
+<td>SQL, Prisma calls, business rules (e.g., &quot;is this a duplicate budget&quot;)</td>
+</tr>
+<tr>
+<td>Service</td>
+<td>Business rules: ownership checks, duplicate-budget check, dashboard/report number-crunching orchestration, transaction boundaries</td>
+<td>Reading <code>req</code>/<code>res</code> directly, raw SQL strings</td>
+</tr>
+<tr>
+<td>Repository</td>
+<td>The only layer importing <code>PrismaClient</code>; every method signature includes <code>userId</code></td>
+<td>Business rules (e.g., does not decide <em>whether</em> a budget is a duplicate — it exposes a <code>findByCategoryMonthYear</code> used by the service to decide)</td>
+</tr>
+<tr>
+<td>Validation (Zod schemas)</td>
+<td>Shape/type/range checks on request bodies and query params</td>
+<td>Ownership checks (that needs a DB round-trip, so it belongs in the service)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Explicitly prevented anti-patterns:</strong> no <code>prisma.*</code> calls inside a controller file (enforced by code review checklist in Section 27, optionally an ESLint import-restriction rule scoping <code>@prisma/client</code> imports to <code>*.repository.ts</code>); no duplicated ownership-check logic (<code>WHERE user_id = ...</code>) written ad hoc per query — it lives once, per repository method; no god-service — <code>expenses.service.ts</code> only knows about expenses, dashboard aggregation lives in <code>dashboard.service.ts</code> even though it reads expense/budget data (it calls the expense and budget repositories, not the other way around).</p>
+<hr>
+<h2>13. Frontend Architecture</h2>
+<p><strong>Pages</strong></p>
+<table>
+<thead>
+<tr>
+<th>Page</th>
+<th>Purpose</th>
+<th>Key components</th>
+<th>API calls</th>
+<th>States handled</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Login</td>
+<td>Authenticate</td>
+<td><code>LoginForm</code></td>
+<td><code>POST /auth/login</code></td>
+<td>loading, error (invalid creds), success→redirect</td>
+</tr>
+<tr>
+<td>Register</td>
+<td>Create account</td>
+<td><code>RegisterForm</code></td>
+<td><code>POST /auth/register</code></td>
+<td>loading, error (duplicate email), success→redirect</td>
+</tr>
+<tr>
+<td>Dashboard</td>
+<td>Monthly overview</td>
+<td><code>SummaryCards</code>, <code>CategoryBreakdownChart</code> (optional), <code>MonthPicker</code></td>
+<td><code>GET /dashboard/summary</code></td>
+<td>loading (skeleton cards), empty (no expenses yet → CTA to add one), error (retry banner)</td>
+</tr>
+<tr>
+<td>Expenses</td>
+<td>Manage expense records</td>
+<td><code>ExpenseTable</code>/<code>ExpenseCardList</code> (responsive swap), <code>ExpenseFilterBar</code>, <code>ExpenseFormModal</code>, <code>Pagination</code></td>
+<td><code>GET/POST/PATCH/DELETE /expenses</code></td>
+<td>loading, empty (no results for filter), error, success (optimistic row update)</td>
+</tr>
+<tr>
+<td>Budgets</td>
+<td>Manage monthly limits</td>
+<td><code>BudgetList</code>, <code>BudgetFormModal</code>, <code>MonthYearPicker</code></td>
+<td><code>GET/POST/PATCH/DELETE /budgets</code></td>
+<td>loading, empty (no budgets this month), error</td>
+</tr>
+<tr>
+<td>Categories</td>
+<td>Manage categories</td>
+<td><code>CategoryList</code>, <code>CategoryFormModal</code></td>
+<td><code>GET/POST/PATCH/DELETE /categories</code></td>
+<td>loading, empty (first-run, before seed data appears), error</td>
+</tr>
+<tr>
+<td>Reports</td>
+<td>Monthly/yearly reports + export</td>
+<td><code>ReportPeriodPicker</code>, <code>ReportSummary</code>, <code>ExportButtons</code></td>
+<td><code>GET /reports/monthly</code>, <code>GET /reports/yearly</code>, <code>GET /reports/export</code></td>
+<td>loading, empty (no data for period), error, download-in-progress</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Reusable components:</strong> <code>Button</code>, <code>Input</code>, <code>Select</code>, <code>Modal</code>, <code>ConfirmDialog</code>, <code>Toast</code>/<code>ToastProvider</code>, <code>Card</code>, <code>Table</code> (desktop) / <code>StackedCard</code> (mobile) pair driven by one shared <code>columns</code> config, <code>EmptyState</code>, <code>ErrorBanner</code>, <code>Skeleton</code>.</p>
+<p><strong>Routing.</strong> React Router v6, top-level:</p>
+<pre><code>/login, /register            (public)
+/                              (ProtectedRoute) → redirects to /dashboard
+/dashboard, /expenses, /budgets, /categories, /reports   (ProtectedRoute)
+</code></pre>
+<p><code>ProtectedRoute</code> reads auth context; if no valid access token in memory <em>and</em> the silent-refresh-on-load attempt fails, redirect to <code>/login</code>.</p>
+<p><strong>Authentication state.</strong> A small <code>AuthContext</code> holds <code>{ user, accessToken, isLoading }</code>. On app mount, it calls <code>POST /auth/refresh</code> once (cookie-based) to silently re-establish a session before rendering protected routes — this is what makes sessions &quot;persistent&quot; per B3 without the user re-logging in on every tab/reload.</p>
+<p><strong>API client.</strong> One Axios instance:</p>
+<pre><code class="language-ts">const api = axios.create({ baseURL: API_URL, withCredentials: true });
+api.interceptors.request.use(cfg =&gt; { if (accessToken) cfg.headers.Authorization = `Bearer ${accessToken}`; return cfg; });
+api.interceptors.response.use(
+  res =&gt; res,
+  async (error) =&gt; {
+    if (error.response?.status === 401 &amp;&amp; !error.config._retry) {
+      error.config._retry = true;
+      const { data } = await api.post(&#39;/auth/refresh&#39;);   // cookie sent automatically
+      setAccessToken(data.accessToken);
+      error.config.headers.Authorization = `Bearer ${data.accessToken}`;
+      return api(error.config);                            // replay original request once
+    }
+    return Promise.reject(error);
+  }
+);
+</code></pre>
+<p>A single in-flight refresh is de-duplicated (a shared promise) so N simultaneous 401s trigger one refresh call, not N.</p>
+<p><strong>Server state (TanStack Query).</strong> One query-key namespace per resource: <code>['expenses', filters]</code>, <code>['budgets', month, year]</code>, <code>['dashboard', month, year]</code>. Mutations (<code>useMutation</code>) call <code>queryClient.invalidateQueries(['expenses'])</code> and, where an expense mutation can change budget math, also invalidate <code>['budgets']</code> and <code>['dashboard']</code> — this is the mechanism that keeps the dashboard correct after any expense edit without manual refetch wiring per page.</p>
+<p><strong>Form state.</strong> React Hook Form + a Zod resolver per form (<code>expenseSchema</code>, <code>budgetSchema</code>, etc.), the same shape family as the backend's validation schemas (not literally shared code across a monorepo boundary here, but intentionally mirrored field-for-field to avoid drift).</p>
+<p><strong>Optimistic updates:</strong> used for expense delete only (row disappears immediately, rolled back on error) — chosen narrowly because delete is the one mutation with no server-computed fields to reconcile; create/update wait for the server response since the server returns the joined category object.</p>
+<hr>
+<h2>14. UI/UX Architecture</h2>
+<p>General layout: <strong>desktop</strong> — persistent left sidebar (Dashboard/Expenses/Budgets/Categories/Reports/Logout) + top bar (month/year picker where relevant, user menu). <strong>mobile</strong> — sidebar collapses to a bottom tab bar (5 icons) plus a hamburger for secondary items (Categories, Logout); tables become stacked cards; filter bars collapse into a &quot;Filters&quot; button opening a bottom sheet.</p>
+<table>
+<thead>
+<tr>
+<th>Screen</th>
+<th>Layout</th>
+<th>Forms</th>
+<th>Table/Cards</th>
+<th>Filters</th>
+<th>Confirmations</th>
+<th>Feedback</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Login/Register</td>
+<td>Centered single-column card, full-height on mobile</td>
+<td>Email/password (+name on register), inline field errors</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>Toast on network error; inline error under form on 401/409</td>
+</tr>
+<tr>
+<td>Dashboard</td>
+<td>Grid of 3 summary cards (Total Spent, Total Budget, Remaining) + category breakdown list/chart below; desktop = 3-column grid, mobile = stacked</td>
+<td>Month/year picker only</td>
+<td>Category breakdown as horizontal progress bars (spent vs. limit), color = category color, red state if <code>percentUsed &gt; 100</code></td>
+<td>Month/year selector</td>
+<td>—</td>
+<td>Skeleton cards while loading; empty-state illustration + &quot;Add your first expense&quot; CTA if no data for the period</td>
+</tr>
+<tr>
+<td>Expenses</td>
+<td>Filter bar above list/table</td>
+<td>Add/Edit expense in a modal (amount, category select, date picker, description)</td>
+<td>Desktop: sortable table (date, category, amount, description, actions). Mobile: card per expense</td>
+<td>Date range, category dropdown, min/max amount — collapsible on mobile</td>
+<td>&quot;Delete this expense?&quot; confirm dialog before DELETE</td>
+<td>Toast on create/update/delete success; inline error on validation failure</td>
+</tr>
+<tr>
+<td>Budgets</td>
+<td>List of budget cards per category for the selected month</td>
+<td>Add/Edit budget modal (category select — excludes categories that already have a budget for that month, amount input)</td>
+<td>Card per budget: category, limit, spent, remaining, progress bar</td>
+<td>Month/year selector</td>
+<td>&quot;Delete this budget?&quot; confirm dialog</td>
+<td>Toast on success; inline <code>409</code> message (&quot;A budget for this category already exists this month&quot;) mapped to the amount/category field</td>
+</tr>
+<tr>
+<td>Categories</td>
+<td>Simple list with inline archive toggle</td>
+<td>Add/Edit category modal (name, color swatch picker)</td>
+<td>List rows, archived shown greyed with an &quot;Unarchive&quot; action</td>
+<td>Show/hide archived toggle</td>
+<td>&quot;Archive this category?&quot; (not &quot;delete,&quot; to set correct expectation that history is preserved)</td>
+<td>Toast</td>
+</tr>
+<tr>
+<td>Reports</td>
+<td>Period picker (month or year tab) + summary numbers + per-category table + export buttons</td>
+<td>—</td>
+<td>Table: category, total, budget (monthly only), remaining</td>
+<td>Month or year selector</td>
+<td>—</td>
+<td>Loading spinner on export button while the file streams; browser's native download on completion</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Dashboard visualizations (concrete):</strong> 3 stat cards (Total Expenses, Total Budget, Remaining Budget — remaining rendered in red if negative); one horizontal bar per category showing spent/limit; optional (F9) donut chart of spend-by-category and an optional 6-month line chart of total spend trend, both via Recharts, both behind a &quot;charts&quot; tab so their absence never blocks the required numeric summary from rendering.</p>
+<hr>
+<h2>15. Expense Management Workflow</h2>
+<p><strong>Create:</strong> <code>ExpenseFormModal</code> (RHF+Zod validates client-side) → <code>useCreateExpense</code> mutation → <code>POST /expenses</code> → <code>authenticate</code> middleware → <code>validate(expenseCreateSchema)</code> middleware → <code>expenses.controller.create</code> → <code>expenses.service.create</code> (verifies <code>categoryId</code> belongs to caller and is not archived) → <code>expenses.repository.create</code> (Prisma insert) → PostgreSQL insert (constraints checked) → row returned → service joins category for the response DTO → controller sends <code>201</code> → mutation's <code>onSuccess</code> invalidates <code>['expenses']</code>, <code>['dashboard']</code>, <code>['budgets']</code> query caches → UI re-renders the list and dashboard with fresh data, modal closes, success toast fires.</p>
+<p><strong>Edit:</strong> same path via <code>PATCH /expenses/:id</code>; service re-verifies ownership of the expense <em>and</em> of any new <code>categoryId</code> before calling the repository update; same cache invalidation on success.</p>
+<p><strong>Delete:</strong> <code>ConfirmDialog</code> → <code>useDeleteExpense</code> mutation applies an <strong>optimistic</strong> removal from the <code>['expenses']</code> cache → <code>DELETE /expenses/:id</code> → service checks ownership → repository delete → <code>204</code> → cache invalidation confirms the removal (or, on error, the mutation's <code>onError</code> restores the optimistic cache to its prior snapshot and a toast explains the failure).</p>
+<p><strong>List:</strong> <code>ExpenseTable</code> reads current filter/sort/page state (local <code>useState</code>, not global) → <code>useExpenses(filters)</code> query → <code>GET /expenses?...</code> → controller parses/validates query params → service passes a typed filter object to the repository → repository builds a Prisma <code>where</code> clause (<code>AND</code>-combined) plus <code>skip/take</code> for pagination and <code>orderBy</code> for sort → PostgreSQL executes against the <code>(user_id, expense_date)</code>/<code>(user_id, category_id)</code> indexes → response <code>{ data, meta }</code> → table renders rows + <code>Pagination</code> renders <code>meta</code>.</p>
+<p><strong>Filter:</strong> changing any filter control updates local state → React Query's key changes → automatic refetch (<code>['expenses', filters]</code>); filters combine with logical AND, exactly mirroring the query-param contract in Section 11.</p>
+<p><strong>Paginate:</strong> <code>Pagination</code> component reads <code>meta.page/meta.totalPages</code>, dispatches <code>page</code> changes into the same local filter state — no separate code path from filtering, since page is just one more query param.</p>
+<hr>
+<h2>16. Budget Management Workflow</h2>
+<p><strong>Create:</strong> <code>BudgetFormModal</code> (category picker excludes categories that already have a budget for the selected month/year, fetched via <code>GET /budgets?month&amp;year</code> client-side to populate the exclusion list) → <code>POST /budgets</code> → service re-checks uniqueness server-side regardless of the client-side filtering (client-side exclusion is a UX nicety, not the source of truth) → on the DB unique-constraint violation (<code>P2002</code>), service translates it to a domain error → controller returns <code>409</code> → form surfaces the error on the category field.</p>
+<p><strong>Edit:</strong> <code>PATCH /budgets/:id</code>, <code>limitAmount</code> only (category/month/year are immutable by design — Section 11 — to avoid ambiguous semantics like &quot;did this budget move to a new month, or did a new budget appear&quot;).</p>
+<p><strong>Delete:</strong> <code>DELETE /budgets/:id</code> after confirm dialog; deleting a budget does <strong>not</strong> delete or alter any expenses — expenses are independent facts; a missing budget just means &quot;no limit set&quot; for that category/month going forward.</p>
+<p><strong>List / calculations.</strong> <code>GET /budgets?month&amp;year</code> computes, per budget row, in one SQL query per Section 17's approach:</p>
+<ul>
+<li><code>spent</code> = <code>SUM(expenses.amount)</code> where <code>expenses.category_id = budgets.category_id AND expenses.user_id = budgets.user_id AND date_part('month', expense_date) = budgets.month AND date_part('year', expense_date) = budgets.year</code></li>
+<li><code>remaining</code> = <code>limitAmount - spent</code></li>
+<li><code>percentUsed</code> = <code>spent / limitAmount * 100</code> (frontend clamps display at 100% for the progress bar but shows the true percentage as text if over)</li>
+</ul>
+<p><strong>Defined behavior for edge cases</strong></p>
+<table>
+<thead>
+<tr>
+<th>Situation</th>
+<th>Behavior</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>No budget exists for a category this month</td>
+<td>Dashboard/report shows that category's spend with <code>budget: null</code>, <code>remaining: null</code> — spend is never hidden just because it's unbudgeted</td>
+</tr>
+<tr>
+<td>An expense pushes spend over the budget</td>
+<td>No blocking — the expense still saves (the assignment does not ask for hard spending caps); the UI shows <code>percentUsed &gt; 100%</code> in a warning color</td>
+</tr>
+<tr>
+<td>A budget is deleted</td>
+<td>Its past association with expenses is not stored anywhere (the relationship is computed at read time, not a stored foreign key on the expense), so nothing about existing expenses changes; the category simply shows as unbudgeted going forward</td>
+</tr>
+<tr>
+<td>A category is archived</td>
+<td>Existing budgets for it remain visible/queryable (historical correctness); the &quot;create new budget&quot; category picker excludes archived categories</td>
+</tr>
+<tr>
+<td>An expense is added after the budget for its month already exists</td>
+<td>The next read of <code>spent</code> includes it automatically — <code>spent</code> is never cached/stored, always computed live</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2>17. Dashboard Architecture</h2>
+<p><strong>Principle:</strong> the dashboard endpoint returns already-aggregated numbers; the browser never downloads the raw expense list to compute a total.</p>
+<p><strong>Representative SQL (what the repository's aggregation query does, conceptually — actual code goes through Prisma's query builder or <code>$queryRaw</code> for the parts Prisma's builder can't express cleanly, e.g. multi-column month/year grouping):</strong></p>
+<pre><code class="language-sql">SELECT
+  c.id                          AS category_id,
+  c.name                        AS category_name,
+  COALESCE(SUM(e.amount), 0)    AS spent,
+  b.limit_amount                AS budget
+FROM categories c
+LEFT JOIN expenses e
+  ON e.category_id = c.id
+ AND e.user_id = c.user_id
+ AND EXTRACT(MONTH FROM e.expense_date) = $month
+ AND EXTRACT(YEAR  FROM e.expense_date) = $year
+LEFT JOIN budgets b
+  ON b.category_id = c.id
+ AND b.user_id = c.user_id
+ AND b.month = $month
+ AND b.year  = $year
+WHERE c.user_id = $userId AND c.is_archived = false
+GROUP BY c.id, c.name, b.limit_amount;
+</code></pre>
+<p><code>totalExpenses</code> and <code>totalBudget</code> are <code>SUM()</code> over this same result set (or a parallel simpler aggregate query); <code>remainingBudget = totalBudget - totalExpenses</code>.</p>
+<p><strong>API response shape</strong> — see Section 11's <code>/dashboard/summary</code> entry.</p>
+<p><strong>Indexes used:</strong> <code>expenses(user_id, category_id)</code> and <code>expenses(user_id, expense_date)</code> support the join+filter; <code>budgets(user_id, year, month)</code> supports the budget join.</p>
+<p><strong>Frontend visualization:</strong> the response maps 1:1 onto <code>SummaryCards</code> (3 numbers) and <code>CategoryBreakdownChart</code>/list (one row per <code>categorySummary</code> entry) — no client-side re-aggregation of any kind.</p>
+<hr>
+<h2>18. Reporting Architecture</h2>
+<p><strong>Monthly report</strong> (<code>GET /reports/monthly</code>): same category-grouped aggregation as the dashboard, scoped to one month, plus a <code>byDay</code> breakdown (<code>GROUP BY expense_date</code>) for a spend-over-time view.</p>
+<p><strong>Yearly report</strong> (<code>GET /reports/yearly</code>): <code>GROUP BY EXTRACT(MONTH FROM expense_date)</code> for <code>byMonth</code>, and <code>GROUP BY category_id</code> for <code>byCategory</code>, both scoped to the year via <code>EXTRACT(YEAR FROM expense_date) = $year</code>.</p>
+<p><strong>CSV/Excel export.</strong> The export endpoint re-runs the same aggregation query used by the on-screen report (single source of truth for the numbers — the file a user downloads always matches what they saw on screen) and streams it:</p>
+<ul>
+<li>CSV via <code>fast-csv</code>, piped directly to the HTTP response (<code>res</code>) as rows are produced — no full string built in memory.</li>
+<li>Excel via <code>exceljs</code>'s streaming <code>WorkbookWriter</code>, same principle.</li>
+</ul>
+<p><strong>Synchronous vs. background job — decision.</strong> Reports are generated <strong>synchronously</strong>, in the request/response cycle, not via a queue/worker. Justification: this is a single-user personal-finance tool; even a &quot;heavy&quot; user logging 10 expenses/day for 5 years is ~18,000 rows, and the export query is a single indexed, aggregated <code>GROUP BY</code> — this returns in well under a second on Postgres with the indexes in Section 8. Introducing a job queue (BullMQ/Redis) and a polling/webhook download-ready flow would add operational complexity (a queue, a worker process, a job-status endpoint) with no user-visible benefit at this data scale. This is explicitly flagged as <strong>an engineering decision that would be revisited</strong> if the product needed multi-year, multi-thousand-user aggregate reports (e.g., an admin analytics view) — out of scope here.</p>
+<p><strong>Large dataset handling within the sync approach:</strong> streaming writers (above) keep memory flat regardless of row count; the underlying SQL query is the only place row count matters, and it is bounded by the indexed date-range filter (a report is always scoped to one month or one year, never &quot;all time&quot;).</p>
+<h2>19. Validation &amp; Error Handling</h2>
+<p><strong>Frontend:</strong> Zod schemas colocated with each form, wired through React Hook Form's <code>zodResolver</code>; inline field errors, submit blocked until valid.</p>
+<p><strong>Backend:</strong> a generic <code>validate(schema)</code> middleware runs <code>schema.safeParse({ ...req.body, ...req.params, ...req.query })</code> before the controller executes; on failure it short-circuits with <code>400</code> and a field-level error list — controllers never see invalid shapes.</p>
+<p><strong>Database:</strong> <code>CHECK</code>, <code>NOT NULL</code>, <code>UNIQUE</code>, and FK constraints (Sections 7–8) are the last line of defense — they catch bugs in the two layers above, they are not the primary validation mechanism (by the time a <code>CHECK</code> fires in production, it indicates the app-level validation has a gap worth fixing).</p>
+<p><strong>Standard error response shape (every 4xx/5xx):</strong></p>
+<pre><code class="language-json">{
+  &#34;error&#34;: {
+    &#34;code&#34;: &#34;VALIDATION_ERROR&#34;,
+    &#34;message&#34;: &#34;amount must be greater than 0&#34;,
+    &#34;details&#34;: [{ &#34;field&#34;: &#34;amount&#34;, &#34;message&#34;: &#34;must be greater than 0&#34; }]
+  }
+}
+</code></pre>
+<p><strong>Status code usage</strong></p>
+<table>
+<thead>
+<tr>
+<th>Code</th>
+<th>Used for</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>400</td>
+<td>Malformed/invalid request body or query params</td>
+</tr>
+<tr>
+<td>401</td>
+<td>Missing/invalid/expired access token; failed login; invalid refresh token</td>
+</tr>
+<tr>
+<td>403</td>
+<td>Reserved (unused in this scope — see Section 10: ownership mismatches return 404, not 403, to avoid confirming a resource exists)</td>
+</tr>
+<tr>
+<td>404</td>
+<td>Resource not found, or found but not owned by the caller</td>
+</tr>
+<tr>
+<td>409</td>
+<td>Unique-constraint conflicts (duplicate email, duplicate category name, duplicate budget)</td>
+</tr>
+<tr>
+<td>422</td>
+<td>Not used — 400 covers all validation failures in this API; 422 is not introduced without a concrete case that needs the &quot;syntactically valid but semantically wrong&quot; distinction</td>
+</tr>
+<tr>
+<td>429</td>
+<td>Rate limit exceeded (<code>/auth/login</code>, <code>/auth/register</code>)</td>
+</tr>
+<tr>
+<td>500</td>
+<td>Unhandled server error — a global Express error-handling middleware catches these, logs the stack server-side, and returns a generic message (never the raw error/stack) to the client</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2>20. Security Architecture</h2>
+<table>
+<thead>
+<tr>
+<th>Concern</th>
+<th>Measure</th>
+<th>Relevant here?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Password storage</td>
+<td>bcrypt, cost factor 12</td>
+<td>Yes — required (assignment: JWT auth implies credential storage)</td>
+</tr>
+<tr>
+<td>JWT security</td>
+<td>Short-lived (15 min) access token, signed with a secret from env, <code>alg</code> pinned to HS256 (no <code>alg:none</code> acceptance)</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Refresh token security</td>
+<td>Opaque random value, hashed at rest, httpOnly cookie, rotation + reuse detection (Section 10)</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Cookies</td>
+<td><code>httpOnly</code>, <code>Secure</code> (prod), <code>SameSite=Strict</code>, scoped <code>path=/api/auth</code></td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>CORS</td>
+<td>Whitelist the exact frontend origin, <code>credentials: true</code> (required for the cookie to be sent cross-origin if FE/BE are on different domains in prod)</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Rate limiting</td>
+<td><code>express-rate-limit</code> on <code>/auth/login</code>, <code>/auth/register</code>, <code>/auth/refresh</code></td>
+<td>Yes — brute-force/credential-stuffing mitigation</td>
+</tr>
+<tr>
+<td>Input validation</td>
+<td>Zod on every endpoint (Section 19)</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>SQL injection</td>
+<td>Prisma parameterizes all queries by default; the one raw-SQL aggregation query (Section 17) uses Prisma's tagged-template <code>$queryRaw</code> (parameterized), never string concatenation</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>XSS</td>
+<td>React escapes rendered text by default; no <code>dangerouslySetInnerHTML</code> anywhere in this app (nothing here renders user-supplied HTML)</td>
+<td>Yes, but low incremental risk given no rich-text fields</td>
+</tr>
+<tr>
+<td>CSRF</td>
+<td>Main API calls carry the access token in an <code>Authorization</code> header (not a cookie), so they are not CSRF-able by definition; the one cookie-based endpoint (<code>/auth/refresh</code>) is mitigated by <code>SameSite=Strict</code> plus its narrow <code>path</code> scope</td>
+<td>Yes, scoped narrowly</td>
+</tr>
+<tr>
+<td>Authorization</td>
+<td>Every data query filtered by <code>user_id</code> at the repository layer (Section 10/12)</td>
+<td>Yes — this is the core &quot;User A can't touch User B's data&quot; guarantee</td>
+</tr>
+<tr>
+<td>Sensitive logging</td>
+<td>Request logger redacts <code>password</code>, <code>Authorization</code>, and cookie headers before writing to logs</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Environment secrets</td>
+<td><code>JWT_SECRET</code>, <code>DATABASE_URL</code>, <code>COOKIE_SECRET</code> etc. via <code>.env</code>, never committed (<code>.gitignore</code>'d), validated present-and-non-default at boot via a small Zod env schema in <code>config/</code></td>
+<td>Yes — A6</td>
+</tr>
+<tr>
+<td>Database credentials</td>
+<td>Only in <code>DATABASE_URL</code> env var; not hardcoded; different values per environment (dev/test/prod)</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Production configuration</td>
+<td><code>NODE_ENV=production</code> disables verbose error bodies, enables <code>Secure</code> cookie flag, trusts proxy for correct client IP behind a load balancer</td>
+<td>Yes</td>
+</tr>
+</tbody>
+</table>
+<p>Not added because not relevant to this scope: role-based access control (no admin role exists), 2FA/MFA (not requested), file-upload scanning (no file uploads other than the report export, which is server-generated, not user-uploaded).</p>
+<hr>
+<h2>21. Performance &amp; Database Optimization</h2>
+<table>
+<thead>
+<tr>
+<th>Optimization</th>
+<th>Applied where</th>
+<th>Necessary now vs. future</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>(user_id, expense_date)</code> index</td>
+<td>Expense list/filter/report date-range queries</td>
+<td>Necessary now</td>
+</tr>
+<tr>
+<td><code>(user_id, category_id)</code> index</td>
+<td>Expense filter by category, dashboard join</td>
+<td>Necessary now</td>
+</tr>
+<tr>
+<td><code>(user_id, year, month)</code> index</td>
+<td>Budget lookup, dashboard/report budget join</td>
+<td>Necessary now</td>
+</tr>
+<tr>
+<td>Pagination (default 20, max 100) on <code>GET /expenses</code></td>
+<td>Prevents unbounded result sets as history grows</td>
+<td>Necessary now</td>
+</tr>
+<tr>
+<td>SQL-side <code>SUM</code>/<code>GROUP BY</code> instead of client-side reduction</td>
+<td>Dashboard, reports (Sections 17–18)</td>
+<td>Necessary now — this is the single highest-impact decision in the system</td>
+</tr>
+<tr>
+<td>Avoiding N+1 queries</td>
+<td>Prisma <code>include</code>/<code>select</code> used to fetch an expense's category in the same query, never a per-row follow-up query in a loop</td>
+<td>Necessary now</td>
+</tr>
+<tr>
+<td>Connection pooling</td>
+<td>Prisma's built-in pool (tunable <code>connection_limit</code> in <code>DATABASE_URL</code>)</td>
+<td>Necessary now, default settings suffice at this scale</td>
+</tr>
+<tr>
+<td>Frontend caching</td>
+<td>TanStack Query <code>staleTime</code> (e.g., 30s for dashboard, 10s for expense list) avoids refetching on every component remount</td>
+<td>Necessary now</td>
+</tr>
+<tr>
+<td>API-level response caching (e.g., Redis)</td>
+<td>—</td>
+<td><strong>Future</strong> — no evidence of need at single-user data volumes; would add an unjustified moving part</td>
+</tr>
+<tr>
+<td>Stored procedures</td>
+<td>—</td>
+<td><strong>Future/optional</strong> — assignment marks this optional (A10); the current query complexity (Sections 17–18) does not need procedural logic beyond what Prisma/<code>$queryRaw</code> express clearly, and keeping logic in the codebase (vs. inside the DB) keeps it version-controlled and testable the same way as everything else</td>
+</tr>
+<tr>
+<td>Materialized views for reports</td>
+<td>—</td>
+<td><strong>Future</strong> — only relevant if report queries start showing up in slow-query logs at real usage scale</td>
+</tr>
+<tr>
+<td>Read replicas / sharding</td>
+<td>—</td>
+<td><strong>Future</strong> — not remotely justified at this application's scale</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2>22. Testing Strategy</h2>
+<p><strong>Backend (Jest + Supertest)</strong></p>
+<ul>
+<li>Unit tests on <strong>services</strong>: budget-duplicate detection, dashboard remaining-budget math, report date-boundary math (month/year filters at edges — e.g., Jan 31 vs. Feb 1, Dec→Jan year rollover), refresh-token rotation/reuse logic.</li>
+<li>Integration/API tests per module, hitting a real test database (a disposable Postgres schema, migrated fresh per test run): registration (success, duplicate email), login (success, wrong password, unknown email), refresh (success, rotation, reuse-detection), logout, each CRUD endpoint's happy path, each CRUD endpoint's ownership check (user A cannot fetch/edit/delete user B's row — asserted with two seeded users per test), each CRUD endpoint's validation failures, budget duplicate <code>409</code>, category duplicate <code>409</code>.</li>
+<li>Negative cases explicitly included: expired access token, malformed JWT, missing refresh cookie, negative amount, non-existent categoryId on expense create, month=13 on budget create.</li>
+</ul>
+<p><strong>Frontend (Vitest/Jest + React Testing Library, MSW for API mocking)</strong></p>
+<ul>
+<li>Component tests: form validation messages (<code>ExpenseFormModal</code> rejects amount ≤ 0), <code>Pagination</code> control behavior, <code>ConfirmDialog</code> firing the delete callback only on confirm.</li>
+<li>Page tests: <code>Dashboard</code> renders summary cards from a mocked API response; <code>Expenses</code> page applies a filter and re-requests with the right query params; empty/error/loading states render the correct UI for each page (Section 14's per-screen state list).</li>
+<li>Hook tests: <code>useExpenses</code>/<code>useBudgets</code> cache invalidation after a mutation (mocked mutation → assert the list query refetches).</li>
+</ul>
+<p><strong>End-to-end (Playwright — recommended, tied to T1's &quot;has weightage&quot; note)</strong>
+Scenarios: register → auto-login lands on empty dashboard; login → refresh persists session across a page reload; create category → create expense against it → dashboard reflects the new total; create budget → add an expense exceeding it → budget card shows over-limit state; edit and delete an expense → totals update; filter expenses by date/category/amount; generate a monthly report and confirm a CSV downloads; logout → protected routes redirect to <code>/login</code>.</p>
+<p>A detailed requirement-to-test mapping is consolidated in Section 26 rather than duplicated here.</p>
+<hr>
+<h2>23. Development Phases</h2>
+<table>
+<thead>
+<tr>
+<th>Phase</th>
+<th>Objective</th>
+<th>Prerequisites</th>
+<th>Key tasks</th>
+<th>DB changes</th>
+<th>APIs</th>
+<th>Frontend</th>
+<th>Tests</th>
+<th>Completion criteria</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0 — Architecture &amp; repo setup</td>
+<td>Repos exist, tooling agreed</td>
+<td>None</td>
+<td>Create backend/frontend repos (or monorepo), configure TS/ESLint/Prettier, commit this plan as <code>/docs/PLAN.md</code></td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td><code>npm run build</code> succeeds in both projects on a clean clone</td>
+</tr>
+<tr>
+<td>1 — Project scaffolding</td>
+<td>Runnable skeleton apps</td>
+<td>Phase 0</td>
+<td>Express app boots on a health-check route; Vite React app boots to a blank page; env-var loading validated at startup (A6)</td>
+<td>—</td>
+<td><code>GET /health</code></td>
+<td>Vite scaffold + router shell</td>
+<td>Smoke test: server starts, health check returns 200</td>
+<td>Both apps run locally with one command each</td>
+</tr>
+<tr>
+<td>2 — Database schema</td>
+<td>Schema live in a real Postgres instance</td>
+<td>Phase 1</td>
+<td>Write Prisma schema (Section 8), run first migration, write seed script</td>
+<td>users, categories, expenses, budgets, refresh_tokens created</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td><code>prisma migrate dev</code> + <code>prisma db seed</code> succeed against a local Postgres</td>
+</tr>
+<tr>
+<td>3 — Authentication</td>
+<td>Full auth flow working</td>
+<td>Phase 2</td>
+<td>Implement register/login/refresh/logout/me per Section 10</td>
+<td>refresh_tokens populated on login</td>
+<td>AUTH block (Section 11)</td>
+<td>Login/Register pages, AuthContext, silent-refresh-on-load</td>
+<td>Auth integration tests (Section 22)</td>
+<td>A user can register, close the tab, reopen it, and remain logged in</td>
+</tr>
+<tr>
+<td>4 — Categories</td>
+<td>Minimal category CRUD</td>
+<td>Phase 3</td>
+<td>Implement category CRUD, archive-not-delete</td>
+<td>categories rows read/write</td>
+<td>CATEGORIES block</td>
+<td>Categories page</td>
+<td>Category CRUD + duplicate-name tests</td>
+<td>User can create/rename/archive categories</td>
+</tr>
+<tr>
+<td>5 — Expense module</td>
+<td>Full expense CRUD + filtering + pagination</td>
+<td>Phase 4</td>
+<td>Implement per Section 15</td>
+<td>expenses rows</td>
+<td>EXPENSES block</td>
+<td>Expenses page, filter bar, form modal</td>
+<td>Expense CRUD/ownership/validation tests</td>
+<td>User can add, edit, delete, filter, and paginate expenses</td>
+</tr>
+<tr>
+<td>6 — Budget module</td>
+<td>Full budget CRUD + computed spent/remaining</td>
+<td>Phase 5</td>
+<td>Implement per Section 16</td>
+<td>budgets rows</td>
+<td>BUDGETS block</td>
+<td>Budgets page</td>
+<td>Budget CRUD/duplicate/ownership tests</td>
+<td>User can set, edit, delete monthly category budgets with correct live spent/remaining</td>
+</tr>
+<tr>
+<td>7 — Dashboard</td>
+<td>Aggregated summary endpoint + page</td>
+<td>Phase 6</td>
+<td>Implement Section 17's aggregation query and endpoint</td>
+<td>— (read-only)</td>
+<td>DASHBOARD block</td>
+<td>Dashboard page, summary cards, category breakdown</td>
+<td>Dashboard aggregation unit + integration tests</td>
+<td>Dashboard totals match manually-computed totals for a seeded dataset</td>
+</tr>
+<tr>
+<td>8 — Reports</td>
+<td>Monthly/yearly reports + CSV/Excel export</td>
+<td>Phase 7</td>
+<td>Implement Section 18</td>
+<td>— (read-only)</td>
+<td>REPORTS block</td>
+<td>Reports page, export buttons</td>
+<td>Report math + export-stream tests</td>
+<td>Downloaded CSV/Excel figures match on-screen report figures</td>
+</tr>
+<tr>
+<td>9 — Frontend integration polish</td>
+<td>All pages fully wired, no mock data left</td>
+<td>Phase 8</td>
+<td>Replace any placeholder/mock calls, wire toasts/loading/empty/error states everywhere per Section 14</td>
+<td>—</td>
+<td>—</td>
+<td>All pages</td>
+<td>Page-level RTL tests</td>
+<td>Every page has real loading/empty/error states, not just happy path</td>
+</tr>
+<tr>
+<td>10 — Responsive UI</td>
+<td>Mobile + desktop layouts correct</td>
+<td>Phase 9</td>
+<td>Apply Tailwind responsive breakpoints, table↔card swap, bottom nav on mobile</td>
+<td>—</td>
+<td>—</td>
+<td>Layout components</td>
+<td>Manual device-width QA pass (Chrome DevTools breakpoints)</td>
+<td>App is usable at common mobile widths (e.g., 375px) and desktop widths, tablet intentionally unhandled</td>
+</tr>
+<tr>
+<td>11 — Testing hardening</td>
+<td>Full test suite green</td>
+<td>Phase 10</td>
+<td>Fill gaps identified against Section 22's checklist</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>Full backend + frontend suites</td>
+<td>CI (or local <code>npm test</code>) green across both projects</td>
+</tr>
+<tr>
+<td>12 — Security hardening</td>
+<td>Section 20 checklist fully applied</td>
+<td>Phase 11</td>
+<td>Add helmet/cors/rate-limit if not already wired in Phase 3, redact logs, verify prod cookie flags</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>Auth negative-case tests (expired/invalid/reused tokens) all pass</td>
+<td>Section 20's table has no unaddressed &quot;Yes&quot; row</td>
+</tr>
+<tr>
+<td>13 — Deployment (optional, D1/D4)</td>
+<td>Live URL</td>
+<td>Phase 12</td>
+<td>Provision managed Postgres, deploy backend, deploy frontend, wire prod env vars/CORS (Section 28)</td>
+<td>Run <code>prisma migrate deploy</code> against prod DB</td>
+<td>—</td>
+<td>Point frontend <code>API_URL</code> at deployed backend</td>
+<td>Smoke test against prod URL</td>
+<td>App reachable and functional at a public URL</td>
+</tr>
+<tr>
+<td>14 — Documentation &amp; final audit</td>
+<td>Submission-ready</td>
+<td>Phase 13 (or 12 if not deploying)</td>
+<td>Write README (Section 29), run the Section 30 audit, tick Section 31's checklist</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>Every item in Section 31 is checked</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2>24. Detailed Task Breakdown</h2>
+<p>Representative, executable task list (not exhaustive to the line, but sized so each task is a single sitting of work). IDs group by phase/module.</p>
+<table>
+<thead>
+<tr>
+<th>Task ID</th>
+<th>Name</th>
+<th>Depends on</th>
+<th>Files affected</th>
+<th>Expected output</th>
+<th>Acceptance criteria</th>
+<th>Tests</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ARCH-001</td>
+<td>Initialize backend TS project</td>
+<td>—</td>
+<td><code>package.json</code>, <code>tsconfig.json</code></td>
+<td>Compiles empty project</td>
+<td><code>tsc --noEmit</code> passes</td>
+<td>—</td>
+</tr>
+<tr>
+<td>ARCH-002</td>
+<td>Initialize frontend Vite+TS+React project</td>
+<td>—</td>
+<td><code>package.json</code>, <code>vite.config.ts</code></td>
+<td>Blank app renders</td>
+<td><code>npm run dev</code> serves a page</td>
+<td>—</td>
+</tr>
+<tr>
+<td>ARCH-003</td>
+<td>Add env-var loading &amp; validation</td>
+<td>ARCH-001</td>
+<td><code>config/env.ts</code></td>
+<td>Typed <code>env</code> object</td>
+<td>Boot fails loudly if <code>JWT_SECRET</code>/<code>DATABASE_URL</code> missing</td>
+<td>Unit test for missing-var case</td>
+</tr>
+<tr>
+<td>DB-001</td>
+<td>Write Prisma schema</td>
+<td>ARCH-001</td>
+<td><code>prisma/schema.prisma</code></td>
+<td>Schema matches Section 8</td>
+<td><code>prisma validate</code> passes</td>
+<td>—</td>
+</tr>
+<tr>
+<td>DB-002</td>
+<td>First migration</td>
+<td>DB-001</td>
+<td><code>prisma/migrations/*</code></td>
+<td>Tables created</td>
+<td><code>prisma migrate dev</code> succeeds locally</td>
+<td>—</td>
+</tr>
+<tr>
+<td>DB-003</td>
+<td>Seed script</td>
+<td>DB-002</td>
+<td><code>prisma/seed.ts</code></td>
+<td>Default categories inserted per new user (called from registration, not standalone)</td>
+<td>Seed logic covered by registration test</td>
+<td>Registration integration test</td>
+</tr>
+<tr>
+<td>AUTH-001</td>
+<td>Password hash utility</td>
+<td>ARCH-001</td>
+<td><code>utils/hash.ts</code></td>
+<td><code>hashPassword</code>/<code>verifyPassword</code></td>
+<td>bcrypt cost 12</td>
+<td>Unit test round-trip</td>
+</tr>
+<tr>
+<td>AUTH-002</td>
+<td>Token utilities</td>
+<td>ARCH-001</td>
+<td><code>utils/tokens.ts</code></td>
+<td><code>signAccessToken</code>, <code>generateRefreshToken</code>, <code>hashToken</code></td>
+<td>15-min access token exp, 256-bit refresh token</td>
+<td>Unit tests</td>
+</tr>
+<tr>
+<td>AUTH-003</td>
+<td>Register endpoint</td>
+<td>AUTH-001, DB-003</td>
+<td><code>modules/auth/*</code></td>
+<td><code>POST /auth/register</code></td>
+<td>Matches Section 11 spec</td>
+<td>Integration test (success + duplicate email)</td>
+</tr>
+<tr>
+<td>AUTH-004</td>
+<td>Login endpoint</td>
+<td>AUTH-002</td>
+<td><code>modules/auth/*</code></td>
+<td><code>POST /auth/login</code></td>
+<td>Matches Section 11 spec</td>
+<td>Integration test (success + wrong password)</td>
+</tr>
+<tr>
+<td>AUTH-005</td>
+<td>Refresh endpoint w/ rotation &amp; reuse detection</td>
+<td>AUTH-004</td>
+<td><code>modules/auth/*</code></td>
+<td><code>POST /auth/refresh</code></td>
+<td>Rotation + reuse revocation per Section 10</td>
+<td>Integration tests: normal refresh, reused-token revokes family</td>
+</tr>
+<tr>
+<td>AUTH-006</td>
+<td>Logout endpoint</td>
+<td>AUTH-005</td>
+<td><code>modules/auth/*</code></td>
+<td><code>POST /auth/logout</code></td>
+<td>Cookie cleared, token revoked</td>
+<td>Integration test</td>
+</tr>
+<tr>
+<td>AUTH-007</td>
+<td><code>authenticate</code> middleware</td>
+<td>AUTH-002</td>
+<td><code>middleware/authenticate.ts</code></td>
+<td>Rejects missing/expired/invalid tokens</td>
+<td>401 on all three cases</td>
+<td>Unit/integration tests</td>
+</tr>
+<tr>
+<td>CAT-001</td>
+<td>Category CRUD (create/list/update/archive)</td>
+<td>AUTH-007</td>
+<td><code>modules/categories/*</code></td>
+<td>Endpoints per Section 11</td>
+<td>Duplicate name → 409; archive not hard-delete</td>
+<td>Integration tests</td>
+</tr>
+<tr>
+<td>EXP-001</td>
+<td>Expense create/get/update/delete</td>
+<td>CAT-001</td>
+<td><code>modules/expenses/*</code></td>
+<td>Endpoints per Section 11</td>
+<td>Ownership + categoryId checks enforced</td>
+<td>Integration tests incl. cross-user 404</td>
+</tr>
+<tr>
+<td>EXP-002</td>
+<td>Expense list with filter/sort/pagination</td>
+<td>EXP-001</td>
+<td><code>modules/expenses/*</code></td>
+<td><code>GET /expenses</code> per Section 11</td>
+<td>Filters combine with AND; pagination meta correct</td>
+<td>Integration tests per filter combination</td>
+</tr>
+<tr>
+<td>BUD-001</td>
+<td>Budget create/get/update/delete</td>
+<td>CAT-001</td>
+<td><code>modules/budgets/*</code></td>
+<td>Endpoints per Section 11</td>
+<td>Duplicate (category,month,year) → 409</td>
+<td>Integration tests</td>
+</tr>
+<tr>
+<td>BUD-002</td>
+<td>Budget list w/ computed spent/remaining</td>
+<td>EXP-001, BUD-001</td>
+<td><code>modules/budgets/*</code></td>
+<td><code>GET /budgets</code> returns spent/remaining/percentUsed</td>
+<td>Numbers match Section 16's formulas</td>
+<td>Unit test on the calc function + integration test end-to-end</td>
+</tr>
+<tr>
+<td>DASH-001</td>
+<td>Dashboard summary aggregation query</td>
+<td>BUD-002</td>
+<td><code>modules/dashboard/*</code></td>
+<td><code>GET /dashboard/summary</code> per Section 17</td>
+<td>Matches manually-verified totals on seeded data</td>
+<td>Integration test w/ seeded fixtures</td>
+</tr>
+<tr>
+<td>REP-001</td>
+<td>Monthly/yearly report endpoints</td>
+<td>DASH-001</td>
+<td><code>modules/reports/*</code></td>
+<td><code>GET /reports/monthly</code>, <code>/yearly</code></td>
+<td>Matches Section 18 shapes</td>
+<td>Integration tests</td>
+</tr>
+<tr>
+<td>REP-002</td>
+<td>CSV export</td>
+<td>REP-001</td>
+<td><code>modules/reports/*</code>, <code>utils/export.ts</code></td>
+<td>Streamed CSV, figures match on-screen report</td>
+<td>Downloaded file parses to expected rows</td>
+<td>Integration test asserting response headers + streamed content</td>
+</tr>
+<tr>
+<td>REP-003</td>
+<td>Excel export</td>
+<td>REP-001</td>
+<td><code>modules/reports/*</code>, <code>utils/export.ts</code></td>
+<td>Streamed XLSX</td>
+<td>Same as REP-002, <code>.xlsx</code> format</td>
+<td>Integration test</td>
+</tr>
+<tr>
+<td>FE-001</td>
+<td>Auth context + silent refresh on load</td>
+<td>AUTH-005</td>
+<td><code>context/AuthContext.tsx</code></td>
+<td>Session persists across reload</td>
+<td>Manual + Playwright reload test</td>
+<td>Playwright scenario</td>
+</tr>
+<tr>
+<td>FE-002</td>
+<td>Axios instance w/ refresh interceptor</td>
+<td>FE-001</td>
+<td><code>api/client.ts</code></td>
+<td>401 triggers one refresh + retry, de-duplicated</td>
+<td>No duplicate refresh calls on parallel 401s</td>
+<td>Unit test with mocked axios</td>
+</tr>
+<tr>
+<td>FE-003</td>
+<td>Login/Register pages</td>
+<td>FE-002</td>
+<td><code>pages/Login.tsx</code>, <code>pages/Register.tsx</code></td>
+<td>Forms per Section 14</td>
+<td>Inline validation, error toasts</td>
+<td>RTL tests</td>
+</tr>
+<tr>
+<td>FE-004</td>
+<td>Dashboard page</td>
+<td>DASH-001, FE-002</td>
+<td><code>pages/Dashboard.tsx</code></td>
+<td>Cards + breakdown per Section 14</td>
+<td>Loading/empty/error states present</td>
+<td>RTL test with MSW</td>
+</tr>
+<tr>
+<td>FE-005</td>
+<td>Expenses page (table/cards, filters, modal, pagination)</td>
+<td>EXP-002, FE-002</td>
+<td><code>pages/Expenses.tsx</code></td>
+<td>Full CRUD UI per Sections 14–15</td>
+<td>Responsive table↔card swap</td>
+<td>RTL tests + Playwright CRUD scenario</td>
+</tr>
+<tr>
+<td>FE-006</td>
+<td>Budgets page</td>
+<td>BUD-002, FE-002</td>
+<td><code>pages/Budgets.tsx</code></td>
+<td>Full CRUD UI per Sections 14/16</td>
+<td>Duplicate-budget error surfaced on the right field</td>
+<td>RTL tests</td>
+</tr>
+<tr>
+<td>FE-007</td>
+<td>Categories page</td>
+<td>CAT-001, FE-002</td>
+<td><code>pages/Categories.tsx</code></td>
+<td>CRUD + archive UI</td>
+<td>Archive wording (not &quot;delete&quot;) per Section 14</td>
+<td>RTL tests</td>
+</tr>
+<tr>
+<td>FE-008</td>
+<td>Reports page + export buttons</td>
+<td>REP-003, FE-002</td>
+<td><code>pages/Reports.tsx</code></td>
+<td>Period picker, summary, export</td>
+<td>Triggers real file download</td>
+<td>Playwright export scenario</td>
+</tr>
+<tr>
+<td>FE-009 (opt)</td>
+<td>Charts (F9)</td>
+<td>FE-004, FE-008</td>
+<td><code>components/charts/*</code></td>
+<td>Donut + trend line via Recharts</td>
+<td>Renders without blocking numeric summary if data is sparse</td>
+<td>Snapshot/RTL test</td>
+</tr>
+<tr>
+<td>TEST-001</td>
+<td>Backend test-DB setup</td>
+<td>DB-002</td>
+<td><code>jest.setup.ts</code></td>
+<td>Fresh schema per test run</td>
+<td>CI can run backend suite hermetically</td>
+<td>—</td>
+</tr>
+<tr>
+<td>TEST-002</td>
+<td>Frontend MSW setup</td>
+<td>FE-002</td>
+<td><code>test/msw/handlers.ts</code></td>
+<td>Mocked API for all modules</td>
+<td>Page tests run without a live backend</td>
+<td>—</td>
+</tr>
+<tr>
+<td>DEP-001 (opt)</td>
+<td>Backend deploy config</td>
+<td>Phase 12 complete</td>
+<td><code>Dockerfile</code> or platform config</td>
+<td>Backend reachable at a public URL</td>
+<td>Prod env vars set, <code>migrate deploy</code> run</td>
+<td>Smoke test</td>
+</tr>
+<tr>
+<td>DEP-002 (opt)</td>
+<td>Frontend deploy config</td>
+<td>DEP-001</td>
+<td>Platform config (Vercel/Netlify)</td>
+<td>Frontend reachable, pointed at prod API</td>
+<td>CORS allows the prod frontend origin</td>
+<td>Smoke test</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2>25. Dependency Graph</h2>
+<pre><code>Phase 0 ─▶ Phase 1 ─▶ Phase 2 ─▶ Phase 3 ─▶ Phase 4 ─▶ Phase 5 ─┬─▶ Phase 6 ─▶ Phase 7 ─▶ Phase 8
+ (setup)   (scaffold) (DB)       (auth)     (categories)(expenses)│  (budgets) (dashboard)(reports)
+                                                                    │
+                                                                    ▼
+                                                              (budgets needs
+                                                               expenses for
+                                                               spent-calc)
+
+Phase 8 ─▶ Phase 9 (FE integration) ─▶ Phase 10 (responsive) ─▶ Phase 11 (tests)
+        ─▶ Phase 12 (security) ─▶ Phase 13 (deploy, optional) ─▶ Phase 14 (docs/audit)
+</code></pre>
+<p>Note the one non-linear dependency called out explicitly: <strong>Budget's <code>spent</code> calculation (Phase 6) depends on the Expense module (Phase 5)</strong> existing first, even though both &quot;could&quot; be built in either order per the assignment's own suggested phase list — this plan's ordering (Section 23) fixes that dependency, deviating slightly from the assignment's example order for this reason.</p>
+<hr>
+<h2>26. Requirement Traceability Matrix</h2>
+<table>
+<thead>
+<tr>
+<th>Requirement</th>
+<th>Architecture</th>
+<th>API</th>
+<th>DB</th>
+<th>Frontend</th>
+<th>Test</th>
+<th>Phase</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Login/registration pages (F1)</td>
+<td>Auth architecture (§10)</td>
+<td>POST /auth/register, /login</td>
+<td>users</td>
+<td>Login.tsx, Register.tsx</td>
+<td>Auth integration + RTL</td>
+<td>3</td>
+</tr>
+<tr>
+<td>Dashboard: totals/remaining/category summary (F2)</td>
+<td>Dashboard architecture (§17)</td>
+<td>GET /dashboard/summary</td>
+<td>expenses, budgets, categories</td>
+<td>Dashboard.tsx</td>
+<td>Dashboard aggregation test</td>
+<td>7</td>
+</tr>
+<tr>
+<td>Add/edit/delete expense (F3)</td>
+<td>Expense workflow (§15)</td>
+<td>POST/PATCH/DELETE /expenses</td>
+<td>expenses</td>
+<td>Expenses.tsx + modal</td>
+<td>Expense CRUD integration</td>
+<td>5</td>
+</tr>
+<tr>
+<td>Filter expenses by date/category/amount (F4)</td>
+<td>§15, §21 indexes</td>
+<td>GET /expenses (query params)</td>
+<td>expenses (indexed)</td>
+<td>ExpenseFilterBar</td>
+<td>Filter-combination integration tests</td>
+<td>5</td>
+</tr>
+<tr>
+<td>Monthly budget limits per category (F5)</td>
+<td>Budget workflow (§16)</td>
+<td>POST /budgets</td>
+<td>budgets</td>
+<td>Budgets.tsx</td>
+<td>Budget create + duplicate tests</td>
+<td>6</td>
+</tr>
+<tr>
+<td>Edit/delete budget limits (F6)</td>
+<td>§16</td>
+<td>PATCH/DELETE /budgets</td>
+<td>budgets</td>
+<td>Budgets.tsx</td>
+<td>Budget update/delete tests</td>
+<td>6</td>
+</tr>
+<tr>
+<td>Monthly/yearly reports (F7)</td>
+<td>Reporting architecture (§18)</td>
+<td>GET /reports/monthly, /yearly</td>
+<td>expenses, budgets, categories</td>
+<td>Reports.tsx</td>
+<td>Report math tests</td>
+<td>8</td>
+</tr>
+<tr>
+<td>CSV/Excel export (F8)</td>
+<td>§18</td>
+<td>GET /reports/export</td>
+<td>—</td>
+<td>Reports.tsx export buttons</td>
+<td>Export stream tests</td>
+<td>8</td>
+</tr>
+<tr>
+<td>Charts/graphs (F9, optional)</td>
+<td>§14 dashboard viz</td>
+<td>(reuses /dashboard/summary's monthlyTrend)</td>
+<td>—</td>
+<td>charts components</td>
+<td>Snapshot tests</td>
+<td>9 (opt)</td>
+</tr>
+<tr>
+<td>Responsive mobile+desktop, no tablet (F10)</td>
+<td>§14</td>
+<td>—</td>
+<td>—</td>
+<td>Tailwind breakpoints across all pages</td>
+<td>Manual device-width QA</td>
+<td>10</td>
+</tr>
+<tr>
+<td>JWT auth (B1)</td>
+<td>§10</td>
+<td>all authenticated routes</td>
+<td>—</td>
+<td>AuthContext</td>
+<td>Auth tests</td>
+<td>3</td>
+</tr>
+<tr>
+<td>Register/login endpoints (B2)</td>
+<td>§10</td>
+<td>POST /auth/register, /login</td>
+<td>users</td>
+<td>—</td>
+<td>Integration tests</td>
+<td>3</td>
+</tr>
+<tr>
+<td>Refresh token mechanism (B3)</td>
+<td>§10</td>
+<td>POST /auth/refresh</td>
+<td>refresh_tokens</td>
+<td>Axios interceptor (§13)</td>
+<td>Refresh + reuse-detection tests</td>
+<td>3</td>
+</tr>
+<tr>
+<td>CRUD expense endpoints (B4)</td>
+<td>§12</td>
+<td>full EXPENSES block</td>
+<td>expenses</td>
+<td>—</td>
+<td>Integration tests</td>
+<td>5</td>
+</tr>
+<tr>
+<td>CRUD budget endpoints (B5)</td>
+<td>§12</td>
+<td>full BUDGETS block</td>
+<td>budgets</td>
+<td>—</td>
+<td>Integration tests</td>
+<td>6</td>
+</tr>
+<tr>
+<td>SQL schema: users/expenses/budgets (B6)</td>
+<td>§8</td>
+<td>—</td>
+<td>users, expenses, budgets</td>
+<td>—</td>
+<td>Migration runs clean</td>
+<td>2</td>
+</tr>
+<tr>
+<td>Relational DB (B7)</td>
+<td>§4, §8</td>
+<td>—</td>
+<td>PostgreSQL</td>
+<td>—</td>
+<td>—</td>
+<td>2</td>
+</tr>
+<tr>
+<td>React Hooks used effectively (A1)</td>
+<td>§13 (TanStack Query, RHF, custom hooks)</td>
+<td>—</td>
+<td>—</td>
+<td>all pages</td>
+<td>RTL/hook tests</td>
+<td>3–9</td>
+</tr>
+<tr>
+<td>TS interfaces/types (A2)</td>
+<td>§12, §13</td>
+<td>typed DTOs</td>
+<td>Prisma-generated types</td>
+<td>typed props/state throughout</td>
+<td><code>tsc --noEmit</code> in CI</td>
+<td>all</td>
+</tr>
+<tr>
+<td>Charting library (A3, optional)</td>
+<td>§14</td>
+<td>—</td>
+<td>—</td>
+<td>Recharts components</td>
+<td>Snapshot tests</td>
+<td>9 (opt)</td>
+</tr>
+<tr>
+<td>Request validation/error handling (A4)</td>
+<td>§19</td>
+<td>Zod on every endpoint</td>
+<td>CHECK constraints (defense-in-depth)</td>
+<td>RHF+Zod on every form</td>
+<td>Validation negative-case tests</td>
+<td>3–8</td>
+</tr>
+<tr>
+<td>TypeScript backend (A5)</td>
+<td>§4, §12</td>
+<td>—</td>
+<td>Prisma types</td>
+<td>—</td>
+<td><code>tsc --noEmit</code></td>
+<td>all</td>
+</tr>
+<tr>
+<td>Env variables (A6)</td>
+<td>§20</td>
+<td>—</td>
+<td>DATABASE_URL etc.</td>
+<td>VITE_API_URL</td>
+<td>Boot-fails-without-env test</td>
+<td>0–1</td>
+</tr>
+<tr>
+<td>Transactions where necessary (A7)</td>
+<td>§8 transaction table</td>
+<td>register, refresh-rotation, budget-create</td>
+<td>Prisma <code>$transaction</code></td>
+<td>—</td>
+<td>Integration tests assert atomicity (e.g., simulate failure mid-transaction)</td>
+<td>2–6</td>
+</tr>
+<tr>
+<td>Query optimization (A8)</td>
+<td>§17, §21</td>
+<td>SQL aggregation in dashboard/reports</td>
+<td>GROUP BY, indexed joins</td>
+<td>—</td>
+<td>Performance spot-check (query plan review)</td>
+<td>7–8</td>
+</tr>
+<tr>
+<td>Indexing (A9, optional)</td>
+<td>§8, §21</td>
+<td>—</td>
+<td>composite indexes on expenses/budgets</td>
+<td>—</td>
+<td>—</td>
+<td>2</td>
+</tr>
+<tr>
+<td>Stored procedures (A10, optional)</td>
+<td>§21 — deliberately not implemented, justified</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>Unit tests, FE+BE (T1, weighted-optional)</td>
+<td>§22</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>Full suite</td>
+<td>11</td>
+</tr>
+<tr>
+<td>Deployment (D1, optional)</td>
+<td>§28</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>Smoke test</td>
+<td>13</td>
+</tr>
+<tr>
+<td>Source code, both sides (D2)</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>ongoing</td>
+</tr>
+<tr>
+<td>README (D3)</td>
+<td>§29</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>14</td>
+</tr>
+<tr>
+<td>Deployed URL (D4, optional)</td>
+<td>§28</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>13</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2>27. Definition of Done</h2>
+<p>A feature is <strong>not</strong> done because the code exists. It is done when, for that feature:</p>
+<ul>
+<li><input disabled="" type="checkbox"> Implementation matches the Section 11 API spec exactly (method, URL, status codes, response shape).</li>
+<li><input disabled="" type="checkbox"> Zod validation covers every field named in Section 19, with a corresponding negative-case test.</li>
+<li><input disabled="" type="checkbox"> Ownership/authorization is enforced at the repository layer (Section 10) and covered by a cross-user test (user A cannot touch user B's row).</li>
+<li><input disabled="" type="checkbox"> Standard error shape (Section 19) is returned on every failure path, not an unhandled 500.</li>
+<li><input disabled="" type="checkbox"> Frontend integration exists for every state in Section 14's table (loading, empty, error, success) — not just the happy path.</li>
+<li><input disabled="" type="checkbox"> At least one backend integration test and, where UI exists, one frontend test cover the feature.</li>
+<li><input disabled="" type="checkbox"> Responsive behavior verified at a mobile width and a desktop width where the feature has UI.</li>
+<li><input disabled="" type="checkbox"> The feature's row in Section 26 is fully filled in (no blank cells).</li>
+<li><input disabled="" type="checkbox"> <code>tsc --noEmit</code> passes with no <code>any</code> introduced to route around a type error.</li>
+<li><input disabled="" type="checkbox"> No secrets, credentials, or <code>.env</code> values are committed.</li>
+</ul>
+<hr>
+<h2>28. Deployment Plan</h2>
+<p><strong>Database:</strong> a managed PostgreSQL instance (Neon, Supabase, or Render's managed Postgres — any give a connection string usable as <code>DATABASE_URL</code>). Run <code>prisma migrate deploy</code> (not <code>migrate dev</code>) against it, then the seed script once for any manually-created demo user only (real users get seeded at registration, Section 8).</p>
+<p><strong>Backend:</strong> deploy to Render or Railway (both support a Node service from a <code>Dockerfile</code> or buildpack). Required env vars: <code>DATABASE_URL</code>, <code>JWT_SECRET</code>, <code>JWT_ACCESS_EXPIRY=15m</code>, <code>REFRESH_TOKEN_EXPIRY_DAYS=30</code>, <code>COOKIE_DOMAIN</code>, <code>FRONTEND_ORIGIN</code> (for CORS), <code>NODE_ENV=production</code>.</p>
+<p><strong>Frontend:</strong> deploy to Vercel or Netlify as a static Vite build. Required env var: <code>VITE_API_URL</code> pointing at the deployed backend.</p>
+<p><strong>Cross-origin cookie note:</strong> if frontend and backend end up on different subdomains (typical for Vercel+Render), the refresh cookie needs <code>SameSite=None; Secure</code> instead of <code>Strict</code> for the browser to send it cross-site — this is a concrete, assignment-relevant detail to get right during deployment, called out here so it isn't discovered as a &quot;login works locally but not in prod&quot; bug.</p>
+<p><strong>Steps, in order:</strong> provision DB → set backend env vars → deploy backend → run <code>prisma migrate deploy</code> against the prod DB → verify <code>GET /health</code> → set frontend env var to the live backend URL → deploy frontend → set backend's <code>FRONTEND_ORIGIN</code> to the live frontend URL (CORS) → smoke test the full login→create-expense→dashboard flow against production.</p>
+<p><strong>CI (optional but cheap to add):</strong> a GitHub Actions workflow running <code>tsc --noEmit</code>, backend Jest suite (against a service-container Postgres), and frontend test suite on every push.</p>
+<hr>
+<h2>29. README Documentation Plan</h2>
+<ol>
+<li><strong>Overview</strong> — one paragraph, what the app does.</li>
+<li><strong>Tech stack</strong> — table from Section 4.</li>
+<li><strong>Prerequisites</strong> — Node version, PostgreSQL (or Docker), npm/pnpm.</li>
+<li><strong>Setup — backend</strong> — clone, <code>npm install</code>, copy <code>.env.example</code> to <code>.env</code> and fill values, <code>prisma migrate dev</code>, <code>npm run dev</code>.</li>
+<li><strong>Setup — frontend</strong> — clone/cd, <code>npm install</code>, copy <code>.env.example</code>, <code>npm run dev</code>.</li>
+<li><strong>Environment variables table</strong> — every var from Section 28, with description and example (non-secret) value.</li>
+<li><strong>Database setup</strong> — how migrations and seeding work, how to reset a local DB.</li>
+<li><strong>Running tests</strong> — exact commands for backend and frontend suites.</li>
+<li><strong>API reference pointer</strong> — link to Section 11 of this plan (or a generated OpenAPI doc, if added as a stretch item).</li>
+<li><strong>Folder structure</strong> — the tree from Section 12/13.</li>
+<li><strong>Deployment</strong> — summary of Section 28, or the live URL if deployed.</li>
+<li><strong>Known limitations</strong> — single currency, no tablet-specific layout, synchronous report generation (Section 18's justified scope boundary), category deletion is archive-only.</li>
+<li><strong>License</strong> (if applicable).</li>
+</ol>
+<hr>
+<h2>30. Final Evaluator Audit</h2>
+<p><strong>A. Mandatory requirements fully covered</strong>
+Login/registration, JWT auth with refresh-token rotation, expense CRUD + filtering + pagination, budget CRUD with computed spent/remaining, SQL schema for users/expenses/budgets (plus the structurally-necessary categories/refresh_tokens tables), relational DB (PostgreSQL), monthly/yearly reports, CSV/Excel export, responsive mobile+desktop layout, React Hooks throughout, TypeScript on both sides, request validation, error handling, environment variables, transactions on the three operations identified in Section 8, query optimization via SQL-side aggregation, source code delivery, README.</p>
+<p><strong>B. Optional requirements/enhancements</strong>
+Charts/graphs (F9/A3), database indexing (A9 — implemented anyway, see Section 2), stored procedures (A10 — deliberately not implemented, justified in Section 21), automated test suite (T1 — implemented as &quot;recommended&quot; given its stated evaluation weight), deployment + live URL (D1/D4).</p>
+<p><strong>C. Potential gaps or risks — named explicitly, not hidden</strong></p>
+<ul>
+<li>Category as a first-class entity, and archive-not-delete as its deletion semantics, are <strong>engineering decisions inferred from stated requirements</strong>, not requirements stated verbatim in the assignment (Sections 3, 7, 11). A different reasonable implementation could model categories as a free-text field — this plan judges that to be a worse fit for F2/F4/F5's referential needs, but it is a judgment call, flagged as such.</li>
+<li>Synchronous (non-queued) report generation (Section 18) is a scale assumption (single user, personal-finance data volumes) — explicitly would not hold at a different scale.</li>
+<li>No hard spending cap when an expense exceeds a budget (Section 16) — the assignment describes budgets as limits to <em>track against</em>, not enforce; this plan treats &quot;block the expense&quot; as out of scope rather than a missed requirement, but it's a reading, not a certainty.</li>
+<li>Stored procedures and DB-level indexing are marked optional by the assignment; indexing was still built (necessary for correctness at any real data volume), stored procedures were not (no query in this plan needs procedural logic that <code>$queryRaw</code>/application code doesn't already express cleanly) — if an evaluator specifically wants to see a stored procedure exercised, this is a gap.</li>
+<li>E2E test coverage (Section 22) lists representative scenarios, not an exhaustive enumeration of every filter/sort permutation — a real implementation should extend it as edge cases are discovered.</li>
+<li>Multi-currency, tablet layout, and shared/family budgets are out of scope (Section 3) by design, matching the assignment's own exclusions or silence — flagged in case the evaluator's expectations differ from the written brief.</li>
+</ul>
+<hr>
+<h2>31. Final Implementation Checklist</h2>
+<ul>
+<li><input disabled="" type="checkbox"> Backend and frontend repos scaffolded, TypeScript strict mode on, linting configured.</li>
+<li><input disabled="" type="checkbox"> Prisma schema matches Section 8; migrations committed; seed script wired into registration.</li>
+<li><input disabled="" type="checkbox"> Auth: register, login, refresh (with rotation + reuse detection), logout, <code>/auth/me</code> all implemented and tested.</li>
+<li><input disabled="" type="checkbox"> Category CRUD implemented (archive, not hard delete, when expenses/budgets reference it).</li>
+<li><input disabled="" type="checkbox"> Expense CRUD implemented with date/category/amount filtering, sorting, and pagination.</li>
+<li><input disabled="" type="checkbox"> Budget CRUD implemented with server-computed <code>spent</code>/<code>remaining</code>/<code>percentUsed</code>, duplicate (category, month, year) rejected with <code>409</code>.</li>
+<li><input disabled="" type="checkbox"> Dashboard endpoint returns SQL-aggregated totals, remaining budget, and category summary — no client-side summation of raw rows.</li>
+<li><input disabled="" type="checkbox"> Monthly and yearly report endpoints implemented; CSV and Excel export both stream and both match the on-screen numbers exactly.</li>
+<li><input disabled="" type="checkbox"> Optional charts implemented if time allows, without blocking or replacing the required numeric summary.</li>
+<li><input disabled="" type="checkbox"> Every page has explicit loading, empty, error, and success states (Section 14).</li>
+<li><input disabled="" type="checkbox"> Responsive layout verified at a mobile width and a desktop width for every page; tablet intentionally left unhandled.</li>
+<li><input disabled="" type="checkbox"> Standard error response shape used everywhere; status codes match Section 19's table.</li>
+<li><input disabled="" type="checkbox"> Security checklist (Section 20) fully applied: bcrypt, short-lived JWT, httpOnly/Secure/SameSite refresh cookie, CORS whitelist, rate limiting on auth routes, no secrets committed.</li>
+<li><input disabled="" type="checkbox"> Backend integration tests cover every endpoint's happy path, validation failures, and cross-user ownership checks.</li>
+<li><input disabled="" type="checkbox"> Frontend tests cover forms, pages, and cache-invalidation behavior.</li>
+<li><input disabled="" type="checkbox"> (Optional) End-to-end suite covers the flows listed in Section 22.</li>
+<li><input disabled="" type="checkbox"> (Optional) App deployed; prod cookie <code>SameSite</code>/CORS settings verified against the real frontend/backend origins.</li>
+<li><input disabled="" type="checkbox"> README written per Section 29, including environment variable documentation.</li>
+<li><input disabled="" type="checkbox"> Section 26's traceability matrix has no blank cells against the final implementation.</li>
+<li><input disabled="" type="checkbox"> Section 30's audit re-run against the finished code, not just this plan.</li>
+</ul>
+
+</body></html>

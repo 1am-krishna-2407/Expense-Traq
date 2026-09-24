@@ -1,0 +1,924 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{colors:{"surface-dim":"#cbdbf5","on-secondary-container":"#5c647a","on-secondary-fixed-variant":"#3f465c","on-error":"#ffffff","secondary-container":"#dae2fd","secondary-fixed":"#dae2fd","surface-container-high":"#dce9ff","surface-container":"#e5eeff","surface-container-highest":"#d3e4fe","on-tertiary-container":"#bdffdb","surface-bright":"#f8f9ff","tertiary":"#006242","secondary-fixed-dim":"#bec6e0","inverse-surface":"#213145","tertiary-fixed-dim":"#4edea3","on-surface":"#0b1c30","surface-tint":"#0053db","on-tertiary-fixed":"#002113","error":"#ba1a1a","on-tertiary-fixed-variant":"#005236","inverse-on-surface":"#eaf1ff","on-surface-variant":"#434655","on-error-container":"#93000a","inverse-primary":"#b4c5ff","tertiary-fixed":"#6ffbbe","surface-variant":"#d3e4fe","on-tertiary":"#ffffff","outline-variant":"#c3c6d7","on-primary":"#ffffff","on-secondary":"#ffffff","outline":"#737686","on-primary-fixed-variant":"#003ea8","on-primary-fixed":"#00174b","primary-fixed-dim":"#b4c5ff","background":"#f8f9ff","surface":"#f8f9ff","on-background":"#0b1c30","surface-container-lowest":"#ffffff","secondary":"#565e74","primary-fixed":"#dbe1ff","primary-container":"#2563eb","surface-container-low":"#eff4ff","on-secondary-fixed":"#131b2e","tertiary-container":"#007d55","error-container":"#ffdad6","on-primary-container":"#eeefff","primary":"#004ac6"},borderRadius:{DEFAULT:"0.25rem",lg:"0.5rem",xl:"0.75rem",full:"9999px"},spacing:{"space-md":"1rem","space-sm":"0.5rem","margin":"2rem","gutter-mobile":"1rem","space-xl":"2rem","space-lg":"1.5rem","gutter":"1.5rem","margin-mobile":"1rem","space-xs":"0.25rem"},fontFamily:{"display-lg-mobile":["Plus Jakarta Sans"],"title-md":["Inter"],"body-lg":["Inter"],"display-lg":["Plus Jakarta Sans"],"headline-md":["Plus Jakarta Sans"],"label-lg":["Inter"],"currency-stat":["Plus Jakarta Sans"],"headline-sm":["Plus Jakarta Sans"],"label-md":["Inter"],"body-sm":["Inter"],"headline-lg-mobile":["Plus Jakarta Sans"],"body-md":["Inter"],"tabular-data":["Inter"],"headline-lg":["Plus Jakarta Sans"]},fontSize:{"display-lg-mobile":["2rem",{lineHeight:"2.5rem",letterSpacing:"-0.02em",fontWeight:"700"}],"title-md":["1rem",{lineHeight:"1.5rem",letterSpacing:"-0.005em",fontWeight:"600"}],"body-lg":["1.125rem",{lineHeight:"1.75rem",letterSpacing:"0em",fontWeight:"400"}],"display-lg":["3rem",{lineHeight:"3.5rem",letterSpacing:"-0.03em",fontWeight:"700"}],"headline-md":["1.5rem",{lineHeight:"2rem",letterSpacing:"-0.015em",fontWeight:"600"}],"label-lg":["0.875rem",{lineHeight:"1.25rem",letterSpacing:"0.01em",fontWeight:"600"}],"currency-stat":["2.25rem",{lineHeight:"2.75rem",letterSpacing:"-0.025em",fontWeight:"700"}],"headline-sm":["1.125rem",{lineHeight:"1.625rem",letterSpacing:"-0.01em",fontWeight:"600"}],"label-md":["0.75rem",{lineHeight:"1rem",letterSpacing:"0.02em",fontWeight:"500"}],"body-sm":["0.75rem",{lineHeight:"1.125rem",letterSpacing:"0.01em",fontWeight:"400"}],"headline-lg-mobile":["1.5rem",{lineHeight:"2rem",letterSpacing:"-0.01em",fontWeight:"600"}],"body-md":["0.875rem",{lineHeight:"1.375rem",letterSpacing:"0em",fontWeight:"400"}],"tabular-data":["0.875rem",{lineHeight:"1.25rem",letterSpacing:"-0.01em",fontWeight:"500"}],"headline-lg":["2rem",{lineHeight:"2.5rem",letterSpacing:"-0.02em",fontWeight:"600"}]}}}}</script></head><body class="bg-surface font-body-md text-body-md text-on-surface antialiased"><aside class="fixed left-0 top-0 h-full w-64 bg-surface-container-lowest shadow-[0_1px_8px_rgba(0,0,0,0.04)] z-50 flex flex-col justify-between"><div class="flex flex-col"><div class="h-16 px-space-lg flex items-center gap-space-sm"><img alt="RupeeFlow Brand Logo" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1Xz1pqFJcUOoXuCQ-trsFOOcYaaozbYmUdgS4WNsSavpJhAuB1kRqNa6LeJKx5LipigYTbQ-CN4hBALb9h0GpmZ-QE6s-LungzOKh3E9Bp27KlqHiLiXvpheIn88bAcJLic0sUbbogM7r-jR-RQKpaGxdLCwdONqiX9gObsFuxaZAtGbv_21OzPgRfYskE1fKYcG3ocrSQ8MjwjuGcKlYR4tRwubDasrTLuB9nA95Ybds9hlMLLdCYvtv8"/><span class="font-headline-sm text-headline-sm text-on-surface tracking-tight">RupeeFlow</span></div><nav class="flex flex-col gap-space-xs px-space-md mt-space-md" data-active-classes="bg-primary-container text-on-primary-container font-label-lg rounded-lg"><a class="flex items-center px-space-md py-space-sm rounded-lg text-on-surface-variant font-label-lg text-label-lg hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="dashboard" href="#">Dashboard</a><a class="flex items-center px-space-md py-space-sm rounded-lg text-on-surface-variant font-label-lg text-label-lg hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="expenses" href="#">Expenses</a><a aria-current="page" class="flex items-center px-space-md py-space-sm transition-colors bg-primary-container text-on-primary-container font-label-lg rounded-lg" data-path="budgets" href="#">Budgets</a><a class="flex items-center px-space-md py-space-sm rounded-lg text-on-surface-variant font-label-lg text-label-lg hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="categories" href="#">Categories</a><a class="flex items-center px-space-md py-space-sm rounded-lg text-on-surface-variant font-label-lg text-label-lg hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="reports" href="#">Reports</a></nav></div><div class="p-space-md m-space-sm rounded-xl bg-surface-container-low flex flex-col gap-space-sm"><div class="flex items-center gap-space-sm"><img alt="Profile" class="w-8 h-8 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC5uqFP1v51nAlG5q44IubbJ3iVzsKhwb2wuNIHQrtHRy_cMW0I1ji23PpZl6KE0Q-VYA-prZxd3fAy4uKRSE9A7nAvRA6qkpvoeZwLwbptkWNoFJBXNeJgQno9O8R-1GTnJNrxJPHvMhmBPubsKEK3GqqEp17a787rgTc6c8AVCcYpN4F4VuBWelDYCYu34Ru5vhXuxcVvzwyLAsTepLzr7i_NGn5jRJZp0zH-pRVZ5gIUu3nwv4ev"/><div class="flex flex-col min-w-0 flex-1"><span class="font-label-lg text-label-lg text-on-surface truncate">Good evening, Krishna</span><span class="font-body-sm text-body-sm text-on-surface-variant truncate">Individual Plan</span></div></div><a class="flex items-center gap-space-xs pt-space-xs font-label-md text-label-md text-error hover:text-on-error-container transition-colors" data-path="login" href="#"><span class="material-symbols-outlined text-[18px]">logout</span><span>Logout</span></a></div></aside><div class="pl-64"><header class="fixed top-0 left-64 right-0 h-16 bg-surface/80 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)] z-40"><div class="h-16 w-full px-space-lg flex items-center justify-between gap-space-md"><div class="flex items-center gap-space-md flex-1 max-w-xl"><button class="flex items-center gap-space-xs px-space-md py-space-sm rounded-lg bg-surface-container-lowest shadow-[0_1px_8px_rgba(0,0,0,0.04)] font-label-lg text-label-lg text-on-surface hover:bg-surface-container-high transition-colors" type="button"><span class="material-symbols-outlined text-[18px] text-primary">calendar_month</span><span>September 2026</span><span class="material-symbols-outlined text-[16px] text-on-surface-variant">arrow_drop_down</span></button><div class="relative flex-1"><span class="material-symbols-outlined absolute left-space-md top-1/2 -translate-y-1/2 text-on-surface-variant text-[20px]">search</span><input class="w-full pl-10 pr-space-md py-space-xs h-10 rounded-lg bg-surface-container-lowest shadow-[0_1px_8px_rgba(0,0,0,0.04)] font-body-md text-body-md text-on-surface placeholder:text-outline focus:outline-none focus:ring-2 focus:ring-primary-container transition-all" placeholder="Quick search transactions, budgets, vendors..." type="search"/></div></div><div class="flex items-center gap-space-md"><button aria-label="Notifications" class="relative p-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" type="button"><span class="material-symbols-outlined text-[22px]">notifications</span><span class="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-error"></span></button><button class="flex items-center gap-space-xs px-space-md h-10 rounded-lg bg-primary-container text-on-primary font-label-lg text-label-lg shadow-[0_1px_8px_rgba(0,0,0,0.04)] hover:bg-primary transition-colors" type="button"><span class="material-symbols-outlined text-[20px]">add</span><span>+ Add Expense</span></button><img alt="Profile" class="w-8 h-8 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC5uqFP1v51nAlG5q44IubbJ3iVzsKhwb2wuNIHQrtHRy_cMW0I1ji23PpZl6KE0Q-VYA-prZxd3fAy4uKRSE9A7nAvRA6qkpvoeZwLwbptkWNoFJBXNeJgQno9O8R-1GTnJNrxJPHvMhmBPubsKEK3GqqEp17a787rgTc6c8AVCcYpN4F4VuBWelDYCYu34Ru5vhXuxcVvzwyLAsTepLzr7i_NGn5jRJZp0zH-pRVZ5gIUu3nwv4ev"/></div></div></header><main class="relative pt-16 bg-surface w-full px-space-lg py-space-lg"><div class="flex flex-col w-full">
+<!-- Top Viewport Control & Breadcrumbs -->
+<div class="flex flex-col md:flex-row md:items-center md:justify-between gap-space-md mb-space-lg">
+<div class="flex flex-col gap-space-xs">
+<div class="flex items-center gap-space-sm">
+<h1 class="font-headline-lg text-headline-lg text-on-surface tracking-tight">Budgets</h1>
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-label-md font-label-md bg-secondary-container text-on-secondary-container">
+          8 Active Envelopes
+        </span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant">
+        Set monthly spending limits, monitor envelope depletion, and prevent overdrafts.
+      </p>
+</div>
+<div class="flex items-center gap-space-sm flex-wrap">
+<button class="inline-flex items-center gap-space-xs px-space-md h-10 rounded-lg bg-surface-container-high text-on-surface hover:bg-surface-container-highest transition-colors font-label-lg text-label-lg shadow-sm" id="openReallocateModalBtn" type="button">
+<span class="material-symbols-outlined text-[18px] text-primary">sync_alt</span>
+<span>Reallocate Funds</span>
+</button>
+<button class="inline-flex items-center gap-space-xs px-space-md h-10 rounded-lg bg-primary-container text-on-primary hover:bg-primary transition-colors font-label-lg text-label-lg shadow-sm" id="openAddEnvelopeBtn" type="button">
+<span class="material-symbols-outlined text-[18px]">add_circle</span>
+<span>+ Create Envelope</span>
+</button>
+</div>
+</div>
+<!-- KPI Summary Matrix -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-space-md mb-space-xl">
+<!-- KPI 1: Allocated -->
+<div class="bg-surface-container-lowest p-space-lg rounded-xl shadow-sm flex flex-col justify-between relative overflow-hidden group">
+<div class="flex items-center justify-between mb-space-sm">
+<span class="font-label-md text-label-md uppercase tracking-wider text-on-surface-variant">Total Allocated</span>
+<div class="w-8 h-8 rounded-lg bg-surface-container-high flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[18px]">account_balance_wallet</span>
+</div>
+</div>
+<div class="flex flex-col gap-space-xs">
+<div class="font-currency-stat text-currency-stat text-on-surface font-headline-md tracking-tight">₹60,000</div>
+<div class="flex items-center gap-1 text-body-sm font-body-sm text-on-surface-variant">
+<span>Across 8 active categories</span>
+</div>
+</div>
+<div class="absolute bottom-0 left-0 right-0 h-1 bg-surface-container-high">
+<div class="h-full bg-primary" style="width: 100%"></div>
+</div>
+</div>
+<!-- KPI 2: Spent -->
+<div class="bg-surface-container-lowest p-space-lg rounded-xl shadow-sm flex flex-col justify-between relative overflow-hidden group">
+<div class="flex items-center justify-between mb-space-sm">
+<span class="font-label-md text-label-md uppercase tracking-wider text-on-surface-variant">Total Spent</span>
+<div class="w-8 h-8 rounded-lg bg-surface-container-high flex items-center justify-center text-primary-container">
+<span class="material-symbols-outlined text-[18px]">trending_up</span>
+</div>
+</div>
+<div class="flex flex-col gap-space-xs">
+<div class="font-currency-stat text-currency-stat text-on-surface font-headline-md tracking-tight">₹42,500</div>
+<div class="flex items-center gap-1 text-body-sm font-body-sm text-on-surface-variant">
+<span class="font-label-md text-label-md text-primary font-semibold">70.8%</span>
+<span>overall month pace</span>
+</div>
+</div>
+<div class="absolute bottom-0 left-0 right-0 h-1 bg-surface-container-high">
+<div class="h-full bg-primary-container" style="width: 70.8%"></div>
+</div>
+</div>
+<!-- KPI 3: Remaining Balance -->
+<div class="bg-surface-container-lowest p-space-lg rounded-xl shadow-sm flex flex-col justify-between relative overflow-hidden group">
+<div class="flex items-center justify-between mb-space-sm">
+<span class="font-label-md text-label-md uppercase tracking-wider text-on-surface-variant">Total Remaining</span>
+<div class="w-8 h-8 rounded-lg bg-surface-container-high flex items-center justify-center text-tertiary">
+<span class="material-symbols-outlined text-[18px]">savings</span>
+</div>
+</div>
+<div class="flex flex-col gap-space-xs">
+<div class="font-currency-stat text-currency-stat text-tertiary font-headline-md tracking-tight">₹17,500</div>
+<div class="flex items-center gap-1.5 text-body-sm font-body-sm">
+<span class="inline-flex items-center px-1.5 py-0.5 rounded text-label-md font-label-md bg-surface-container-high text-tertiary">Safe Zone</span>
+<span class="text-on-surface-variant">7 days left in Sep</span>
+</div>
+</div>
+<div class="absolute bottom-0 left-0 right-0 h-1 bg-surface-container-high">
+<div class="h-full bg-tertiary" style="width: 29.2%"></div>
+</div>
+</div>
+<!-- KPI 4: Health Metrics -->
+<div class="bg-surface-container-lowest p-space-lg rounded-xl shadow-sm flex flex-col justify-between relative overflow-hidden">
+<div class="flex items-center justify-between mb-space-sm">
+<span class="font-label-md text-label-md uppercase tracking-wider text-on-surface-variant">Health Status</span>
+<div class="w-8 h-8 rounded-lg bg-surface-container-high flex items-center justify-center text-error">
+<span class="material-symbols-outlined text-[18px]">shield_with_heart</span>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<div class="flex -space-x-1 overflow-hidden">
+<span class="inline-flex items-center justify-center w-6 h-6 rounded-full bg-error-container text-on-error-container text-[11px] font-bold" title="1 Over Budget">1</span>
+<span class="inline-flex items-center justify-center w-6 h-6 rounded-full bg-secondary-container text-on-secondary-container text-[11px] font-bold" title="1 Warning">1</span>
+<span class="inline-flex items-center justify-center w-6 h-6 rounded-full bg-surface-container-high text-tertiary text-[11px] font-bold" title="6 On Track">6</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-error font-semibold leading-tight">1 Over Budget</span>
+<span class="text-[11px] font-body-sm text-on-surface-variant leading-tight">Shopping (+₹1.2k)</span>
+</div>
+</div>
+<div class="mt-2 flex items-center justify-between text-[11px] text-on-surface-variant">
+<span>6 On Track</span>
+<span class="text-on-secondary-fixed-variant font-medium">1 Warning</span>
+</div>
+</div>
+</div>
+<!-- Interactive Controls Bar: Month Picker & Filter Tabs -->
+<div class="bg-surface-container-lowest rounded-xl p-space-md shadow-sm mb-space-lg flex flex-col md:flex-row md:items-center md:justify-between gap-space-md">
+<!-- Month Navigation -->
+<div class="flex items-center gap-space-xs">
+<div class="flex items-center bg-surface-container-low rounded-lg p-0.5">
+<button class="w-8 h-8 flex items-center justify-center rounded text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors" title="Previous Month">
+<span class="material-symbols-outlined text-[18px]">chevron_left</span>
+</button>
+<div class="flex items-center gap-space-xs px-space-sm py-1 font-label-lg text-label-lg text-on-surface cursor-pointer select-none">
+<span class="material-symbols-outlined text-[16px] text-primary">calendar_month</span>
+<span>September 2026</span>
+<span class="material-symbols-outlined text-[14px] text-on-surface-variant">keyboard_arrow_down</span>
+</div>
+<button class="w-8 h-8 flex items-center justify-center rounded text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors" title="Next Month">
+<span class="material-symbols-outlined text-[18px]">chevron_right</span>
+</button>
+</div>
+<span class="text-body-sm font-body-sm text-on-surface-variant hidden lg:inline-block ml-2">
+        Financial Period: Sep 1 - Sep 30, 2026
+      </span>
+</div>
+<!-- Envelope Filter Segmented Tabs -->
+<div class="flex items-center gap-1 bg-surface-container-low p-1 rounded-lg self-start md:self-auto">
+<button class="filter-tab px-space-md py-1.5 rounded font-label-md text-label-md transition-colors bg-surface-container-lowest text-on-surface shadow-sm font-semibold" data-filter="all">
+        All Envelopes <span class="ml-1 opacity-70">(8)</span>
+</button>
+<button class="filter-tab px-space-md py-1.5 rounded font-label-md text-label-md transition-colors text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high" data-filter="on-track">
+        On Track <span class="ml-1 opacity-70">(6)</span>
+</button>
+<button class="filter-tab px-space-md py-1.5 rounded font-label-md text-label-md transition-colors text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high" data-filter="warning-over">
+        Warning / Over <span class="ml-1 px-1 rounded-full bg-error-container text-on-error-container text-[10px]">2</span>
+</button>
+</div>
+</div>
+<!-- Primary Layout: Main Envelopes Grid & Visual Mini-Analytics -->
+<div class="grid grid-cols-1 xl:grid-cols-12 gap-space-lg items-start">
+<!-- Envelopes List / Cards Matrix (8-cols on XL) -->
+<div class="xl:col-span-8 flex flex-col gap-space-md">
+<!-- Envelope 1: Food & Dining (On Track) -->
+<div class="envelope-card bg-surface-container-lowest rounded-xl p-space-lg shadow-sm hover:shadow-md transition-shadow" data-category="on-track">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm mb-space-md">
+<div class="flex items-center gap-space-sm">
+<div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[20px]">restaurant</span>
+</div>
+<div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Food &amp; Dining</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Cafes, delivery, dining out &amp; bistros</p>
+</div>
+</div>
+<div class="flex items-center gap-space-sm">
+<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-label-md font-label-md bg-surface-container-high text-tertiary">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span>
+              On Track
+            </span>
+<div class="flex items-center gap-1">
+<button class="p-1.5 rounded-lg text-on-surface-variant hover:text-primary hover:bg-surface-container-low transition-colors" onclick="openEditEnvelope('Food &amp; Dining', 10000, 80)" title="Edit Budget">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+</button>
+<button class="p-1.5 rounded-lg text-on-surface-variant hover:text-primary hover:bg-surface-container-low transition-colors" title="View Transactions">
+<span class="material-symbols-outlined text-[18px]">receipt_long</span>
+</button>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-3 gap-space-sm mb-space-sm bg-surface-container-low p-space-sm rounded-lg">
+<div>
+<span class="font-label-md text-label-md text-on-surface-variant block">Budget</span>
+<span class="font-tabular-data text-tabular-data text-on-surface font-semibold">₹10,000</span>
+</div>
+<div>
+<span class="font-label-md text-label-md text-on-surface-variant block">Spent</span>
+<span class="font-tabular-data text-tabular-data text-on-surface font-semibold">₹7,500</span>
+</div>
+<div class="text-right">
+<span class="font-label-md text-label-md text-on-surface-variant block">Remaining</span>
+<span class="font-tabular-data text-tabular-data text-tertiary font-bold">₹2,500</span>
+</div>
+</div>
+<!-- Progress Bar -->
+<div class="w-full h-2.5 rounded-full bg-surface-container-high overflow-hidden relative">
+<div class="h-full rounded-full bg-tertiary transition-all duration-500" style="width: 75%"></div>
+</div>
+<div class="flex justify-between items-center mt-1.5 text-body-sm font-body-sm text-on-surface-variant">
+<span>75.0% utilized</span>
+<span>₹357 / day safe velocity</span>
+</div>
+</div>
+<!-- Envelope 2: Travel & Fuel (Near Limit / Warning) -->
+<div class="envelope-card bg-surface-container-lowest rounded-xl p-space-lg shadow-sm hover:shadow-md transition-shadow" data-category="warning-over">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm mb-space-md">
+<div class="flex items-center gap-space-sm">
+<div class="w-10 h-10 rounded-lg bg-surface-container-high flex items-center justify-center text-on-secondary-fixed-variant">
+<span class="material-symbols-outlined text-[20px]">local_gas_station</span>
+</div>
+<div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Travel &amp; Fuel</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Daily cab rides, highway tolls &amp; petrol</p>
+</div>
+</div>
+<div class="flex items-center gap-space-sm">
+<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-label-md font-label-md bg-secondary-container text-on-secondary-container">
+<span class="material-symbols-outlined text-[14px]">warning</span>
+              Near Limit
+            </span>
+<div class="flex items-center gap-1">
+<button class="p-1.5 rounded-lg text-on-surface-variant hover:text-primary hover:bg-surface-container-low transition-colors" onclick="openEditEnvelope('Travel &amp; Fuel', 15000, 85)" title="Edit Budget">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+</button>
+<button class="p-1.5 rounded-lg text-on-surface-variant hover:text-primary hover:bg-surface-container-low transition-colors" title="View Transactions">
+<span class="material-symbols-outlined text-[18px]">receipt_long</span>
+</button>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-3 gap-space-sm mb-space-sm bg-surface-container-low p-space-sm rounded-lg">
+<div>
+<span class="font-label-md text-label-md text-on-surface-variant block">Budget</span>
+<span class="font-tabular-data text-tabular-data text-on-surface font-semibold">₹15,000</span>
+</div>
+<div>
+<span class="font-label-md text-label-md text-on-surface-variant block">Spent</span>
+<span class="font-tabular-data text-tabular-data text-on-surface font-semibold">₹12,000</span>
+</div>
+<div class="text-right">
+<span class="font-label-md text-label-md text-on-surface-variant block">Remaining</span>
+<span class="font-tabular-data text-tabular-data text-on-secondary-fixed-variant font-bold">₹3,000</span>
+</div>
+</div>
+<!-- Progress Bar -->
+<div class="w-full h-2.5 rounded-full bg-surface-container-high overflow-hidden relative">
+<div class="h-full rounded-full bg-secondary transition-all duration-500" style="width: 80%"></div>
+</div>
+<div class="flex justify-between items-center mt-1.5 text-body-sm font-body-sm">
+<span class="text-on-secondary-fixed-variant font-medium">80.0% utilized</span>
+<span class="text-on-secondary-fixed-variant flex items-center gap-1 text-[11px]">
+<span class="material-symbols-outlined text-[13px]">info</span> Approaching 85% alert threshold
+          </span>
+</div>
+</div>
+<!-- Envelope 3: Shopping & Lifestyle (Over Budget) -->
+<div class="envelope-card bg-surface-container-lowest rounded-xl p-space-lg shadow-sm hover:shadow-md transition-shadow" data-category="warning-over">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm mb-space-md">
+<div class="flex items-center gap-space-sm">
+<div class="w-10 h-10 rounded-lg bg-error-container flex items-center justify-center text-error">
+<span class="material-symbols-outlined text-[20px]">shopping_bag</span>
+</div>
+<div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Shopping &amp; Lifestyle</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Apparel, electronics, personal care</p>
+</div>
+</div>
+<div class="flex items-center gap-space-sm">
+<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-label-md font-label-md bg-error-container text-on-error-container">
+<span class="material-symbols-outlined text-[14px]">error</span>
+              Over Budget
+            </span>
+<div class="flex items-center gap-1">
+<button class="p-1.5 rounded-lg text-on-surface-variant hover:text-primary hover:bg-surface-container-low transition-colors" onclick="openEditEnvelope('Shopping &amp; Lifestyle', 8000, 90)" title="Edit Budget">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+</button>
+<button class="p-1.5 rounded-lg text-on-surface-variant hover:text-primary hover:bg-surface-container-low transition-colors" title="View Transactions">
+<span class="material-symbols-outlined text-[18px]">receipt_long</span>
+</button>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-3 gap-space-sm mb-space-sm bg-surface-container-low p-space-sm rounded-lg">
+<div>
+<span class="font-label-md text-label-md text-on-surface-variant block">Budget</span>
+<span class="font-tabular-data text-tabular-data text-on-surface font-semibold">₹8,000</span>
+</div>
+<div>
+<span class="font-label-md text-label-md text-on-surface-variant block">Spent</span>
+<span class="font-tabular-data text-tabular-data text-error font-semibold">₹9,200</span>
+</div>
+<div class="text-right">
+<span class="font-label-md text-label-md text-on-surface-variant block">Remaining</span>
+<span class="font-tabular-data text-tabular-data text-error font-bold">-₹1,200</span>
+</div>
+</div>
+<!-- Progress Bar with Overdraft indicator -->
+<div class="w-full h-2.5 rounded-full bg-surface-container-high overflow-hidden relative">
+<div class="h-full rounded-full bg-error transition-all duration-500" style="width: 100%"></div>
+</div>
+<div class="flex justify-between items-center mt-1.5 text-body-sm font-body-sm">
+<span class="text-error font-semibold">115.0% utilized</span>
+<span class="text-error flex items-center gap-1 text-[11px] font-medium">
+<span class="material-symbols-outlined text-[13px]">notification_important</span> ₹1,200 deficit exceeded on Sep 21
+          </span>
+</div>
+</div>
+<!-- Envelope 4: Entertainment & Leisure (On Track) -->
+<div class="envelope-card bg-surface-container-lowest rounded-xl p-space-lg shadow-sm hover:shadow-md transition-shadow" data-category="on-track">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm mb-space-md">
+<div class="flex items-center gap-space-sm">
+<div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[20px]">movie</span>
+</div>
+<div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Entertainment &amp; Leisure</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Cinema, events, gaming passes</p>
+</div>
+</div>
+<div class="flex items-center gap-space-sm">
+<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-label-md font-label-md bg-surface-container-high text-tertiary">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span>
+              On Track
+            </span>
+<div class="flex items-center gap-1">
+<button class="p-1.5 rounded-lg text-on-surface-variant hover:text-primary hover:bg-surface-container-low transition-colors" onclick="openEditEnvelope('Entertainment &amp; Leisure', 5000, 80)" title="Edit Budget">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+</button>
+<button class="p-1.5 rounded-lg text-on-surface-variant hover:text-primary hover:bg-surface-container-low transition-colors" title="View Transactions">
+<span class="material-symbols-outlined text-[18px]">receipt_long</span>
+</button>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-3 gap-space-sm mb-space-sm bg-surface-container-low p-space-sm rounded-lg">
+<div>
+<span class="font-label-md text-label-md text-on-surface-variant block">Budget</span>
+<span class="font-tabular-data text-tabular-data text-on-surface font-semibold">₹5,000</span>
+</div>
+<div>
+<span class="font-label-md text-label-md text-on-surface-variant block">Spent</span>
+<span class="font-tabular-data text-tabular-data text-on-surface font-semibold">₹3,400</span>
+</div>
+<div class="text-right">
+<span class="font-label-md text-label-md text-on-surface-variant block">Remaining</span>
+<span class="font-tabular-data text-tabular-data text-tertiary font-bold">₹1,600</span>
+</div>
+</div>
+<div class="w-full h-2.5 rounded-full bg-surface-container-high overflow-hidden relative">
+<div class="h-full rounded-full bg-tertiary transition-all duration-500" style="width: 68%"></div>
+</div>
+<div class="flex justify-between items-center mt-1.5 text-body-sm font-body-sm text-on-surface-variant">
+<span>68.0% utilized</span>
+<span>₹228 / day safe velocity</span>
+</div>
+</div>
+<!-- Envelope 5: Healthcare & Wellness (On Track) -->
+<div class="envelope-card bg-surface-container-lowest rounded-xl p-space-lg shadow-sm hover:shadow-md transition-shadow" data-category="on-track">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm mb-space-md">
+<div class="flex items-center gap-space-sm">
+<div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[20px]">medical_services</span>
+</div>
+<div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Healthcare &amp; Wellness</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Pharmacy prescriptions, yoga &amp; routine checkups</p>
+</div>
+</div>
+<div class="flex items-center gap-space-sm">
+<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-label-md font-label-md bg-surface-container-high text-tertiary">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span>
+              On Track
+            </span>
+<div class="flex items-center gap-1">
+<button class="p-1.5 rounded-lg text-on-surface-variant hover:text-primary hover:bg-surface-container-low transition-colors" onclick="openEditEnvelope('Healthcare &amp; Wellness', 4000, 80)" title="Edit Budget">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+</button>
+<button class="p-1.5 rounded-lg text-on-surface-variant hover:text-primary hover:bg-surface-container-low transition-colors" title="View Transactions">
+<span class="material-symbols-outlined text-[18px]">receipt_long</span>
+</button>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-3 gap-space-sm mb-space-sm bg-surface-container-low p-space-sm rounded-lg">
+<div>
+<span class="font-label-md text-label-md text-on-surface-variant block">Budget</span>
+<span class="font-tabular-data text-tabular-data text-on-surface font-semibold">₹4,000</span>
+</div>
+<div>
+<span class="font-label-md text-label-md text-on-surface-variant block">Spent</span>
+<span class="font-tabular-data text-tabular-data text-on-surface font-semibold">₹2,100</span>
+</div>
+<div class="text-right">
+<span class="font-label-md text-label-md text-on-surface-variant block">Remaining</span>
+<span class="font-tabular-data text-tabular-data text-tertiary font-bold">₹1,900</span>
+</div>
+</div>
+<div class="w-full h-2.5 rounded-full bg-surface-container-high overflow-hidden relative">
+<div class="h-full rounded-full bg-tertiary transition-all duration-500" style="width: 52.5%"></div>
+</div>
+<div class="flex justify-between items-center mt-1.5 text-body-sm font-body-sm text-on-surface-variant">
+<span>52.5% utilized</span>
+<span>₹271 / day safe velocity</span>
+</div>
+</div>
+<!-- Envelope 6: Utilities & Bills (On Track) -->
+<div class="envelope-card bg-surface-container-lowest rounded-xl p-space-lg shadow-sm hover:shadow-md transition-shadow" data-category="on-track">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm mb-space-md">
+<div class="flex items-center gap-space-sm">
+<div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[20px]">bolt</span>
+</div>
+<div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Utilities &amp; Bills</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Electricity, water, broadband &amp; LPG refill</p>
+</div>
+</div>
+<div class="flex items-center gap-space-sm">
+<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-label-md font-label-md bg-surface-container-high text-tertiary">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span>
+              On Track
+            </span>
+<div class="flex items-center gap-1">
+<button class="p-1.5 rounded-lg text-on-surface-variant hover:text-primary hover:bg-surface-container-low transition-colors" onclick="openEditEnvelope('Utilities &amp; Bills', 6000, 80)" title="Edit Budget">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+</button>
+<button class="p-1.5 rounded-lg text-on-surface-variant hover:text-primary hover:bg-surface-container-low transition-colors" title="View Transactions">
+<span class="material-symbols-outlined text-[18px]">receipt_long</span>
+</button>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-3 gap-space-sm mb-space-sm bg-surface-container-low p-space-sm rounded-lg">
+<div>
+<span class="font-label-md text-label-md text-on-surface-variant block">Budget</span>
+<span class="font-tabular-data text-tabular-data text-on-surface font-semibold">₹6,000</span>
+</div>
+<div>
+<span class="font-label-md text-label-md text-on-surface-variant block">Spent</span>
+<span class="font-tabular-data text-tabular-data text-on-surface font-semibold">₹4,250</span>
+</div>
+<div class="text-right">
+<span class="font-label-md text-label-md text-on-surface-variant block">Remaining</span>
+<span class="font-tabular-data text-tabular-data text-tertiary font-bold">₹1,750</span>
+</div>
+</div>
+<div class="w-full h-2.5 rounded-full bg-surface-container-high overflow-hidden relative">
+<div class="h-full rounded-full bg-tertiary transition-all duration-500" style="width: 70.8%"></div>
+</div>
+<div class="flex justify-between items-center mt-1.5 text-body-sm font-body-sm text-on-surface-variant">
+<span>70.8% utilized</span>
+<span>Settled for current billing cycle</span>
+</div>
+</div>
+<!-- Envelope 7: Education & Subscriptions (On Track) -->
+<div class="envelope-card bg-surface-container-lowest rounded-xl p-space-lg shadow-sm hover:shadow-md transition-shadow" data-category="on-track">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm mb-space-md">
+<div class="flex items-center gap-space-sm">
+<div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[20px]">school</span>
+</div>
+<div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Education &amp; Subscriptions</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Cloud tools, newsletter feeds &amp; professional courses</p>
+</div>
+</div>
+<div class="flex items-center gap-space-sm">
+<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-label-md font-label-md bg-surface-container-high text-tertiary">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span>
+              On Track
+            </span>
+<div class="flex items-center gap-1">
+<button class="p-1.5 rounded-lg text-on-surface-variant hover:text-primary hover:bg-surface-container-low transition-colors" onclick="openEditEnvelope('Education &amp; Subscriptions', 7000, 80)" title="Edit Budget">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+</button>
+<button class="p-1.5 rounded-lg text-on-surface-variant hover:text-primary hover:bg-surface-container-low transition-colors" title="View Transactions">
+<span class="material-symbols-outlined text-[18px]">receipt_long</span>
+</button>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-3 gap-space-sm mb-space-sm bg-surface-container-low p-space-sm rounded-lg">
+<div>
+<span class="font-label-md text-label-md text-on-surface-variant block">Budget</span>
+<span class="font-tabular-data text-tabular-data text-on-surface font-semibold">₹7,000</span>
+</div>
+<div>
+<span class="font-label-md text-label-md text-on-surface-variant block">Spent</span>
+<span class="font-tabular-data text-tabular-data text-on-surface font-semibold">₹1,200</span>
+</div>
+<div class="text-right">
+<span class="font-label-md text-label-md text-on-surface-variant block">Remaining</span>
+<span class="font-tabular-data text-tabular-data text-tertiary font-bold">₹5,800</span>
+</div>
+</div>
+<div class="w-full h-2.5 rounded-full bg-surface-container-high overflow-hidden relative">
+<div class="h-full rounded-full bg-tertiary transition-all duration-500" style="width: 17.1%"></div>
+</div>
+<div class="flex justify-between items-center mt-1.5 text-body-sm font-body-sm text-on-surface-variant">
+<span>17.1% utilized</span>
+<span>₹828 / day safe velocity</span>
+</div>
+</div>
+<!-- Envelope 8: Groceries & Essentials (On Track) -->
+<div class="envelope-card bg-surface-container-lowest rounded-xl p-space-lg shadow-sm hover:shadow-md transition-shadow" data-category="on-track">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm mb-space-md">
+<div class="flex items-center gap-space-sm">
+<div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[20px]">local_grocery_store</span>
+</div>
+<div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Groceries &amp; Essentials</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Daily provisions, dairy, fruits &amp; staples</p>
+</div>
+</div>
+<div class="flex items-center gap-space-sm">
+<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-label-md font-label-md bg-surface-container-high text-tertiary">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span>
+              On Track
+            </span>
+<div class="flex items-center gap-1">
+<button class="p-1.5 rounded-lg text-on-surface-variant hover:text-primary hover:bg-surface-container-low transition-colors" onclick="openEditEnvelope('Groceries &amp; Essentials', 5000, 80)" title="Edit Budget">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+</button>
+<button class="p-1.5 rounded-lg text-on-surface-variant hover:text-primary hover:bg-surface-container-low transition-colors" title="View Transactions">
+<span class="material-symbols-outlined text-[18px]">receipt_long</span>
+</button>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-3 gap-space-sm mb-space-sm bg-surface-container-low p-space-sm rounded-lg">
+<div>
+<span class="font-label-md text-label-md text-on-surface-variant block">Budget</span>
+<span class="font-tabular-data text-tabular-data text-on-surface font-semibold">₹5,000</span>
+</div>
+<div>
+<span class="font-label-md text-label-md text-on-surface-variant block">Spent</span>
+<span class="font-tabular-data text-tabular-data text-on-surface font-semibold">₹2,350</span>
+</div>
+<div class="text-right">
+<span class="font-label-md text-label-md text-on-surface-variant block">Remaining</span>
+<span class="font-tabular-data text-tabular-data text-tertiary font-bold">₹2,650</span>
+</div>
+</div>
+<div class="w-full h-2.5 rounded-full bg-surface-container-high overflow-hidden relative">
+<div class="h-full rounded-full bg-tertiary transition-all duration-500" style="width: 47%"></div>
+</div>
+<div class="flex justify-between items-center mt-1.5 text-body-sm font-body-sm text-on-surface-variant">
+<span>47.0% utilized</span>
+<span>₹378 / day safe velocity</span>
+</div>
+</div>
+</div>
+<!-- Right Side Rail: Allocation Donut & Direct Quick-Action Enveloping Card (4-cols on XL) -->
+<div class="xl:col-span-4 flex flex-col gap-space-lg">
+<!-- Mini Visual Chart Card: Distribution breakdown -->
+<div class="bg-surface-container-lowest rounded-xl p-space-lg shadow-sm flex flex-col">
+<div class="flex items-center justify-between mb-space-md">
+<h3 class="font-title-md text-title-md text-on-surface">Allocation Split</h3>
+<span class="font-label-md text-label-md text-on-surface-variant">Sep 2026</span>
+</div>
+<!-- SVG Donut Chart for Clean Fintech Visualization -->
+<div class="relative flex items-center justify-center py-2">
+<svg class="w-48 h-48 transform -rotate-90" viewbox="0 0 100 100">
+<!-- Background Ring -->
+<circle cx="50" cy="50" fill="transparent" r="38" stroke="#eff4ff" stroke-width="12"></circle>
+<!-- Travel 25% (stroke-dasharray="59.7 238.8") -->
+<circle cx="50" cy="50" fill="transparent" r="38" stroke="#0053db" stroke-dasharray="59.7 238.8" stroke-dashoffset="0" stroke-width="12"></circle>
+<!-- Food 16.7% (stroke-dasharray="39.8 238.8") -->
+<circle cx="50" cy="50" fill="transparent" r="38" stroke="#2563eb" stroke-dasharray="39.8 238.8" stroke-dashoffset="-59.7" stroke-width="12"></circle>
+<!-- Shopping 13.3% (stroke-dasharray="31.8 238.8") -->
+<circle cx="50" cy="50" fill="transparent" r="38" stroke="#ba1a1a" stroke-dasharray="31.8 238.8" stroke-dashoffset="-99.5" stroke-width="12"></circle>
+<!-- Education 11.6% (stroke-dasharray="27.8 238.8") -->
+<circle cx="50" cy="50" fill="transparent" r="38" stroke="#007d55" stroke-dasharray="27.8 238.8" stroke-dashoffset="-131.3" stroke-width="12"></circle>
+<!-- Utilities 10% (stroke-dasharray="23.9 238.8") -->
+<circle cx="50" cy="50" fill="transparent" r="38" stroke="#565e74" stroke-dasharray="23.9 238.8" stroke-dashoffset="-159.1" stroke-width="12"></circle>
+<!-- Others 23.4% (stroke-dasharray="55.8 238.8") -->
+<circle cx="50" cy="50" fill="transparent" r="38" stroke="#bec6e0" stroke-dasharray="55.8 238.8" stroke-dashoffset="-183" stroke-width="12"></circle>
+</svg>
+<div class="absolute flex flex-col items-center justify-center text-center">
+<span class="font-currency-stat text-currency-stat font-headline-sm text-on-surface">₹60k</span>
+<span class="text-[11px] font-label-md text-on-surface-variant uppercase tracking-wider">Allocated</span>
+</div>
+</div>
+<div class="mt-space-md flex flex-col gap-2">
+<div class="flex items-center justify-between text-body-sm font-body-sm">
+<div class="flex items-center gap-2">
+<span class="w-2.5 h-2.5 rounded-full bg-primary-container"></span>
+<span class="text-on-surface">Travel &amp; Fuel</span>
+</div>
+<span class="font-tabular-data text-tabular-data text-on-surface font-medium">₹15,000 (25%)</span>
+</div>
+<div class="flex items-center justify-between text-body-sm font-body-sm">
+<div class="flex items-center gap-2">
+<span class="w-2.5 h-2.5 rounded-full bg-surface-tint"></span>
+<span class="text-on-surface">Food &amp; Dining</span>
+</div>
+<span class="font-tabular-data text-tabular-data text-on-surface font-medium">₹10,000 (16.7%)</span>
+</div>
+<div class="flex items-center justify-between text-body-sm font-body-sm">
+<div class="flex items-center gap-2">
+<span class="w-2.5 h-2.5 rounded-full bg-error"></span>
+<span class="text-on-surface">Shopping &amp; Lifestyle</span>
+</div>
+<span class="font-tabular-data text-tabular-data text-error font-medium">₹8,000 (13.3%)</span>
+</div>
+<div class="flex items-center justify-between text-body-sm font-body-sm">
+<div class="flex items-center gap-2">
+<span class="w-2.5 h-2.5 rounded-full bg-tertiary"></span>
+<span class="text-on-surface">Education &amp; Subscriptions</span>
+</div>
+<span class="font-tabular-data text-tabular-data text-on-surface font-medium">₹7,000 (11.6%)</span>
+</div>
+<div class="flex items-center justify-between text-body-sm font-body-sm">
+<div class="flex items-center gap-2">
+<span class="w-2.5 h-2.5 rounded-full bg-secondary-fixed-dim"></span>
+<span class="text-on-surface">Remaining Categories</span>
+</div>
+<span class="font-tabular-data text-tabular-data text-on-surface font-medium">₹20,000 (33.4%)</span>
+</div>
+</div>
+</div>
+<!-- Quick Advice & Protection Card -->
+<div class="bg-surface-container-low rounded-xl p-space-lg shadow-sm flex flex-col gap-space-sm relative overflow-hidden">
+<div class="flex items-start gap-space-sm">
+<div class="w-8 h-8 rounded-lg bg-primary-container text-on-primary flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[18px]">auto_fix_high</span>
+</div>
+<div>
+<h4 class="font-title-md text-title-md text-on-surface">Overdraft Protection Alert</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">
+              Your <strong class="text-on-surface">Shopping envelope</strong> is ₹1,200 past its cap. You have ₹5,800 unspent in <strong class="text-on-surface">Education &amp; Subscriptions</strong>.
+            </p>
+</div>
+</div>
+<div class="mt-2 flex items-center justify-between pt-2">
+<button class="text-primary hover:text-on-primary-fixed-variant font-label-lg text-label-lg flex items-center gap-1 py-1" id="triggerAutoFix">
+<span>Transfer ₹1,200 to cover deficit</span>
+<span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</button>
+</div>
+</div>
+<!-- Envelope Rules & Auto-Rollover Info -->
+<div class="bg-surface-container-lowest rounded-xl p-space-lg shadow-sm flex flex-col gap-space-md">
+<div class="flex items-center justify-between">
+<h4 class="font-title-md text-title-md text-on-surface">Rules Engine</h4>
+<span class="material-symbols-outlined text-primary text-[20px]">tune</span>
+</div>
+<div class="flex flex-col gap-space-sm">
+<div class="flex items-center justify-between py-1">
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface">Monthly Unspent Rollover</span>
+<span class="text-body-sm font-body-sm text-on-surface-variant text-[11px]">Carry over surplus to next month</span>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="w-9 h-5 bg-surface-container-highest peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-primary-container"></div>
+</label>
+</div>
+<div class="flex items-center justify-between py-1">
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface">Early Warning at 80%</span>
+<span class="text-body-sm font-body-sm text-on-surface-variant text-[11px]">Push notification upon threshold breach</span>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="w-9 h-5 bg-surface-container-highest peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-primary-container"></div>
+</label>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Reusable Slide-Over / Modal: Add & Edit Budget Envelope -->
+<div class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-inverse-surface/40 backdrop-blur-sm hidden" id="budgetEnvelopeModal">
+<div class="bg-surface-container-lowest rounded-xl shadow-xl w-full max-w-lg overflow-hidden flex flex-col">
+<!-- Modal Header -->
+<div class="px-space-lg py-space-md bg-surface-container-low flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<div class="w-8 h-8 rounded-lg bg-primary-container text-on-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-[18px]">account_balance_wallet</span>
+</div>
+<div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface" id="modalTitle">Set Category Budget</h3>
+<span class="text-body-sm font-body-sm text-on-surface-variant">Allocate envelope ceiling for monthly tracking</span>
+</div>
+</div>
+<button class="p-1 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors" id="closeModalBtn">
+<span class="material-symbols-outlined text-[20px]">close</span>
+</button>
+</div>
+<!-- Modal Body -->
+<form class="p-space-lg flex flex-col gap-space-md" id="envelopeForm">
+<!-- Category Selector -->
+<div class="flex flex-col gap-space-xs">
+<label class="font-label-md text-label-md text-on-surface font-medium" for="envelopeCategory">Category</label>
+<div class="relative">
+<select class="w-full h-10 px-space-md rounded-lg bg-surface-container-low text-body-md font-body-md text-on-surface appearance-none focus:outline-none focus:bg-surface-container-lowest focus:ring-2 focus:ring-primary-container transition-all" id="envelopeCategory">
+<option value="Food &amp; Dining">Food &amp; Dining</option>
+<option value="Travel &amp; Fuel">Travel &amp; Fuel</option>
+<option value="Shopping &amp; Lifestyle">Shopping &amp; Lifestyle</option>
+<option value="Entertainment &amp; Leisure">Entertainment &amp; Leisure</option>
+<option value="Healthcare &amp; Wellness">Healthcare &amp; Wellness</option>
+<option value="Utilities &amp; Bills">Utilities &amp; Bills</option>
+<option value="Education &amp; Subscriptions">Education &amp; Subscriptions</option>
+<option value="Groceries &amp; Essentials">Groceries &amp; Essentials</option>
+<option value="+ Custom Category">+ Add New Category</option>
+</select>
+<span class="material-symbols-outlined absolute right-space-md top-1/2 -translate-y-1/2 text-on-surface-variant pointer-events-none text-[18px]">keyboard_arrow_down</span>
+</div>
+</div>
+<!-- Period -->
+<div class="flex flex-col gap-space-xs">
+<label class="font-label-md text-label-md text-on-surface font-medium" for="envelopePeriod">Budget Period</label>
+<div class="relative">
+<input class="w-full h-10 px-space-md rounded-lg bg-surface-container-low text-body-md font-body-md text-on-surface cursor-not-allowed" id="envelopePeriod" readonly="" type="text" value="September 2026"/>
+<span class="material-symbols-outlined absolute right-space-md top-1/2 -translate-y-1/2 text-on-surface-variant pointer-events-none text-[18px]">lock</span>
+</div>
+</div>
+<!-- Monthly Limit Input -->
+<div class="flex flex-col gap-space-xs">
+<label class="font-label-md text-label-md text-on-surface font-medium" for="envelopeLimit">Monthly Limit (INR)</label>
+<div class="relative">
+<span class="absolute left-space-md top-1/2 -translate-y-1/2 font-tabular-data text-tabular-data text-on-surface-variant font-bold">₹</span>
+<input class="w-full h-10 pl-8 pr-space-md rounded-lg bg-surface-container-low text-body-md font-body-md text-on-surface focus:outline-none focus:bg-surface-container-lowest focus:ring-2 focus:ring-primary-container transition-all" id="envelopeLimit" placeholder="10,000" required="" type="number"/>
+</div>
+<span class="text-[11px] font-body-sm text-on-surface-variant">Recommended based on August spend: ₹9,400</span>
+</div>
+<!-- Alert Threshold -->
+<div class="flex flex-col gap-space-xs">
+<div class="flex items-center justify-between">
+<label class="font-label-md text-label-md text-on-surface font-medium" for="thresholdRange">Alert Threshold</label>
+<span class="font-label-md text-label-md text-primary font-bold" id="thresholdValue">80%</span>
+</div>
+<input class="w-full accent-primary h-2 bg-surface-container-high rounded-lg appearance-none cursor-pointer" id="thresholdRange" max="100" min="50" step="5" type="range" value="80"/>
+<div class="flex justify-between text-[11px] font-body-sm text-on-surface-variant">
+<span>50% (Conservative)</span>
+<span>80% (Recommended)</span>
+<span>100% (Strict)</span>
+</div>
+</div>
+<!-- Rollover Option Toggle -->
+<div class="flex items-center justify-between p-space-sm bg-surface-container-low rounded-lg mt-1">
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface">Rollover unspent balance</span>
+<span class="text-[11px] font-body-sm text-on-surface-variant">Automatically augment next month's allocation</span>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" id="rolloverCheck" type="checkbox"/>
+<div class="w-9 h-5 bg-surface-container-highest peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-primary-container"></div>
+</label>
+</div>
+<!-- Modal Actions -->
+<div class="flex items-center justify-end gap-space-sm pt-space-md">
+<button class="px-space-md h-10 rounded-lg text-on-surface-variant hover:bg-surface-container-high font-label-lg text-label-lg transition-colors" id="cancelModalBtn" type="button">
+            Cancel
+          </button>
+<button class="px-space-lg h-10 rounded-lg bg-primary-container text-on-primary hover:bg-primary font-label-lg text-label-lg transition-colors shadow-sm" type="submit">
+            Save Envelope
+          </button>
+</div>
+</form>
+</div>
+</div>
+<!-- Reallocate Funds Mini Slideover / Toast Modal -->
+<div class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-inverse-surface/40 backdrop-blur-sm hidden" id="reallocateModal">
+<div class="bg-surface-container-lowest rounded-xl shadow-xl w-full max-w-md overflow-hidden flex flex-col p-space-lg">
+<div class="flex items-center justify-between mb-space-md">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-primary text-[22px]">sync_alt</span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Reallocate Envelope Funds</h3>
+</div>
+<button class="p-1 rounded text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high" id="closeReallocateBtn">
+<span class="material-symbols-outlined text-[18px]">close</span>
+</button>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-space-md">Shift surplus funds between envelopes to prevent overdraft penalties before month-end.</p>
+<div class="flex flex-col gap-space-sm">
+<div class="flex flex-col gap-1">
+<label class="font-label-md text-label-md text-on-surface">Source Envelope (Surplus)</label>
+<select class="w-full h-10 px-space-md rounded-lg bg-surface-container-low text-body-md font-body-md text-on-surface">
+<option>Education &amp; Subscriptions (₹5,800 available)</option>
+<option>Groceries &amp; Essentials (₹2,650 available)</option>
+<option>Food &amp; Dining (₹2,500 available)</option>
+</select>
+</div>
+<div class="flex justify-center my-1">
+<span class="material-symbols-outlined text-on-surface-variant text-[20px]">arrow_downward</span>
+</div>
+<div class="flex flex-col gap-1">
+<label class="font-label-md text-label-md text-on-surface">Destination Envelope (Deficit)</label>
+<select class="w-full h-10 px-space-md rounded-lg bg-surface-container-low text-body-md font-body-md text-on-surface">
+<option>Shopping &amp; Lifestyle (₹1,200 deficit)</option>
+<option>Travel &amp; Fuel (₹3,000 left)</option>
+</select>
+</div>
+<div class="flex flex-col gap-1 mt-2">
+<label class="font-label-md text-label-md text-on-surface">Amount (INR)</label>
+<div class="relative">
+<span class="absolute left-space-md top-1/2 -translate-y-1/2 font-tabular-data text-tabular-data text-on-surface-variant">₹</span>
+<input class="w-full h-10 pl-8 pr-space-md rounded-lg bg-surface-container-low text-body-md font-body-md text-on-surface" type="number" value="1200"/>
+</div>
+</div>
+</div>
+<div class="flex items-center justify-end gap-space-sm pt-space-lg">
+<button class="px-space-md h-10 rounded-lg text-on-surface-variant hover:bg-surface-container-high font-label-lg text-label-lg" id="cancelReallocateBtn">Cancel</button>
+<button class="px-space-lg h-10 rounded-lg bg-primary-container text-on-primary hover:bg-primary font-label-lg text-label-lg" id="confirmReallocateBtn">Transfer Funds</button>
+</div>
+</div>
+</div>
+<!-- Script for Tab Filtering, Interactive Modals & Threshold Sync -->
+<script>
+    (function() {
+      // Filter Tabs Handling
+      const filterTabs = document.querySelectorAll('.filter-tab');
+      const envelopeCards = document.querySelectorAll('.envelope-card');
+
+      filterTabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+          // Highlight Active Tab
+          filterTabs.forEach(t => {
+            t.classList.remove('bg-surface-container-lowest', 'text-on-surface', 'shadow-sm', 'font-semibold');
+            t.classList.add('text-on-surface-variant');
+          });
+          tab.classList.add('bg-surface-container-lowest', 'text-on-surface', 'shadow-sm', 'font-semibold');
+          tab.classList.remove('text-on-surface-variant');
+
+          const filter = tab.getAttribute('data-filter');
+          envelopeCards.forEach(card => {
+            const category = card.getAttribute('data-category');
+            if (filter === 'all') {
+              card.style.display = 'block';
+            } else if (filter === 'on-track' && category === 'on-track') {
+              card.style.display = 'block';
+            } else if (filter === 'warning-over' && category === 'warning-over') {
+              card.style.display = 'block';
+            } else {
+              card.style.display = 'none';
+            }
+          });
+        });
+      });
+
+      // Envelope Modal Controls
+      const modal = document.getElementById('budgetEnvelopeModal');
+      const openAddBtn = document.getElementById('openAddEnvelopeBtn');
+      const closeModalBtn = document.getElementById('closeModalBtn');
+      const cancelModalBtn = document.getElementById('cancelModalBtn');
+      const modalTitle = document.getElementById('modalTitle');
+      const envelopeCategory = document.getElementById('envelopeCategory');
+      const envelopeLimit = document.getElementById('envelopeLimit');
+      const thresholdRange = document.getElementById('thresholdRange');
+      const thresholdValue = document.getElementById('thresholdValue');
+
+      function openModal() {
+        modal.classList.remove('hidden');
+      }
+
+      function closeModal() {
+        modal.classList.add('hidden');
+      }
+
+      if (openAddBtn) openAddBtn.addEventListener('click', () => {
+        modalTitle.textContent = 'Set Category Budget';
+        envelopeCategory.value = 'Food & Dining';
+        envelopeLimit.value = '';
+        thresholdRange.value = 80;
+        thresholdValue.textContent = '80%';
+        openModal();
+      });
+
+      if (closeModalBtn) closeModalBtn.addEventListener('click', closeModal);
+      if (cancelModalBtn) cancelModalBtn.addEventListener('click', closeModal);
+
+      // Range slider dynamic readout
+      if (thresholdRange && thresholdValue) {
+        thresholdRange.addEventListener('input', (e) => {
+          thresholdValue.textContent = e.target.value + '%';
+        });
+      }
+
+      // Quick-Edit Modal Trigger from individual cards
+      window.openEditEnvelope = function(categoryName, limit, threshold) {
+        modalTitle.textContent = 'Edit Envelope Limit';
+        envelopeCategory.value = categoryName;
+        envelopeLimit.value = limit;
+        thresholdRange.value = threshold;
+        thresholdValue.textContent = threshold + '%';
+        openModal();
+      };
+
+      // Reallocate Funds Modal Controls
+      const reallocModal = document.getElementById('reallocateModal');
+      const openReallocBtn = document.getElementById('openReallocateModalBtn');
+      const closeReallocBtn = document.getElementById('closeReallocateBtn');
+      const cancelReallocBtn = document.getElementById('cancelReallocateBtn');
+      const triggerAutoFixBtn = document.getElementById('triggerAutoFix');
+      const confirmReallocateBtn = document.getElementById('confirmReallocateBtn');
+
+      function openRealloc() {
+        reallocModal.classList.remove('hidden');
+      }
+
+      function closeRealloc() {
+        reallocModal.classList.add('hidden');
+      }
+
+      if (openReallocBtn) openReallocBtn.addEventListener('click', openRealloc);
+      if (triggerAutoFixBtn) triggerAutoFixBtn.addEventListener('click', openRealloc);
+      if (closeReallocBtn) closeReallocBtn.addEventListener('click', closeRealloc);
+      if (cancelReallocBtn) cancelReallocBtn.addEventListener('click', closeRealloc);
+      if (confirmReallocateBtn) confirmReallocateBtn.addEventListener('click', () => {
+        alert('Reallocated ₹1,200 from Education to Shopping successfully!');
+        closeRealloc();
+      });
+
+      // Submit Form Handler
+      const envelopeForm = document.getElementById('envelopeForm');
+      if (envelopeForm) {
+        envelopeForm.addEventListener('submit', (e) => {
+          e.preventDefault();
+          alert('Envelope for ' + envelopeCategory.value + ' updated to ₹' + envelopeLimit.value + ' with ' + thresholdRange.value + '% alert threshold.');
+          closeModal();
+        });
+      }
+    })();
+  </script>
+</div></main></div></body></html>

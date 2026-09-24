@@ -1,0 +1,34 @@
+# Render Blueprint (Plan §28): managed Postgres + the API as a Docker web service.
+# Fill in FRONTEND_ORIGIN after the frontend is deployed.
+databases:
+  - name: rupeeflow-db
+    plan: free
+    databaseName: rupeeflow
+    user: rupeeflow
+
+services:
+  - type: web
+    name: rupeeflow-api
+    runtime: docker
+    rootDir: backend
+    plan: free
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: DATABASE_URL
+        fromDatabase:
+          name: rupeeflow-db
+          property: connectionString
+      - key: JWT_SECRET
+        generateValue: true
+      - key: JWT_ACCESS_EXPIRY
+        value: 15m
+      - key: REFRESH_TOKEN_EXPIRY_DAYS
+        value: "30"
+      - key: FRONTEND_ORIGIN
+        sync: false # e.g. https://rupeeflow.vercel.app
+      # "strict" when the frontend proxies /api (see frontend/vercel.json);
+      # "none" only if the browser calls this API cross-site directly.
+      - key: COOKIE_SAMESITE
+        value: strict

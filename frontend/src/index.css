@@ -1,0 +1,135 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+ * Theme tokens (RGB channels so Tailwind opacity modifiers like bg-primary/10 work).
+ *  Light → ui/light "SpendWise identity"   Dark → ui/dark "RupeeFlow design system"
+ */
+@layer base {
+  :root {
+    color-scheme: light;
+    --canvas: 248 249 255;          /* #F8F9FF surface */
+    --surface: 255 255 255;         /* #FFFFFF surface-container-lowest */
+    --surface-2: 239 244 255;       /* #EFF4FF surface-container-low */
+    --surface-3: 229 238 255;       /* #E5EEFF surface-container */
+    --hover: 220 233 255;           /* #DCE9FF surface-container-high */
+    --line: 226 232 240;            /* #E2E8F0 */
+    --line-strong: 203 213 225;     /* #CBD5E1 */
+    --ink: 11 28 48;                /* #0B1C30 on-surface */
+    --ink-2: 51 65 85;              /* #334155 */
+    --muted: 67 70 85;              /* #434655 on-surface-variant */
+    --subtle: 115 118 134;          /* #737686 outline */
+    --primary: 37 99 235;           /* #2563EB primary-container */
+    --primary-hover: 0 74 198;      /* #004AC6 primary */
+    --primary-fg: 0 74 198;         /* links / accents */
+    --primary-soft: 219 225 255;    /* #DBE1FF primary-fixed */
+    --success: 16 185 129;          /* #10B981 */
+    --success-fg: 0 98 66;          /* #006242 tertiary */
+    --warning: 245 158 11;          /* #F59E0B */
+    --warning-fg: 180 83 9;         /* #B45309 */
+    --danger: 220 38 38;            /* #DC2626 */
+    --danger-fg: 186 26 26;         /* #BA1A1A error */
+    --track: 226 232 240;           /* progress track */
+
+    --font-heading: 'Plus Jakarta Sans';
+    --radius-control: 0.5rem;
+    --radius-card: 0.75rem;
+    --shadow-card: 0 1px 8px rgba(0, 0, 0, 0.04);
+    --shadow-float: 0 20px 25px -5px rgba(15, 23, 42, 0.1), 0 8px 10px -6px rgba(15, 23, 42, 0.05);
+  }
+
+  .dark {
+    color-scheme: dark;
+    --canvas: 11 15 23;             /* #0B0F17 base canvas */
+    --surface: 15 23 42;            /* #0F172A layer 1 */
+    --surface-2: 19 28 46;          /* #131C2E layer 3 / inputs */
+    --surface-3: 30 41 59;          /* #1E293B layer 2 */
+    --hover: 26 34 52;              /* #1A2234 elevated hover */
+    --line: 30 41 59;               /* #1E293B hairline */
+    --line-strong: 51 65 85;        /* #334155 */
+    --ink: 248 250 252;             /* #F8FAFC primary text */
+    --ink-2: 226 232 240;           /* #E2E8F0 */
+    --muted: 203 213 225;           /* #CBD5E1 secondary text */
+    --subtle: 148 163 184;          /* #94A3B8 muted text */
+    --primary: 37 99 235;           /* #2563EB */
+    --primary-hover: 59 130 246;    /* #3B82F6 */
+    --primary-fg: 180 197 255;      /* #B4C5FF primary */
+    --primary-soft: 30 41 79;       /* tinted navy */
+    --success: 16 185 129;          /* #10B981 */
+    --success-fg: 52 211 153;       /* #34D399 */
+    --warning: 245 158 11;          /* #F59E0B */
+    --warning-fg: 251 191 36;       /* #FBBF24 */
+    --danger: 239 68 68;            /* #EF4444 */
+    --danger-fg: 248 113 113;       /* #F87171 */
+    --track: 30 41 59;
+
+    --font-heading: 'Inter';
+    --radius-control: 0.375rem;
+    --radius-card: 0.5rem;
+    --shadow-card: none;
+    --shadow-float: 0 10px 25px -5px rgba(0, 0, 0, 0.6);
+  }
+
+  html,
+  body,
+  #root {
+    min-height: 100%;
+  }
+
+  body {
+    @apply bg-canvas font-sans text-body-md text-ink antialiased;
+    overscroll-behavior: none;
+  }
+
+  /* Tabular numerals for every monetary figure (both DESIGN.md files) */
+  .tnum {
+    font-feature-settings: 'tnum' 1;
+    font-variant-numeric: tabular-nums;
+  }
+
+  :focus-visible {
+    @apply outline-none ring-2 ring-primary ring-offset-2 ring-offset-canvas;
+  }
+
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply rounded-full bg-line-strong;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  input[type='date']::-webkit-calendar-picker-indicator {
+    opacity: 0.6;
+    cursor: pointer;
+  }
+  .dark input[type='date']::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+  }
+}
+
+@layer components {
+  .card {
+    @apply rounded-card border border-line bg-surface shadow-card;
+  }
+  :root:not(.dark) .card {
+    border-color: rgb(var(--line) / 0.6);
+  }
+
+  .material-symbols-outlined {
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    line-height: 1;
+    user-select: none;
+  }
+  .icon-filled {
+    font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+  }
+
+  .label-caps {
+    @apply text-label-sm uppercase text-subtle;
+  }
+}
