@@ -1,254 +1,451 @@
-# RupeeFlow — Expense Tracker & Budget Management System
+<p align="center">
+  <img src="ui/light/rupeeflow_brand_logo/screen.png" alt="RupeeFlow Logo" width="120" />
+</p>
 
-A personal-finance web app: register, log expenses against your own categories, set a monthly limit per category, and review spending on a dashboard and in monthly/yearly reports you can download as CSV or Excel. It works on mobile and desktop, with light and dark themes.
+<h1 align="center">RupeeFlow</h1>
 
-The implementation follows the project plan in [`docs/PLAN.md`](docs/PLAN.md). [`docs/AUDIT.md`](docs/AUDIT.md) maps every requirement to the code and tests that satisfy it.
+<p align="center">
+  <strong>Expense Tracker & Budget Management System</strong><br/>
+  Track every rupee · Set monthly budgets · Export financial reports
+</p>
 
-| | |
+<p align="center">
+  <img src="https://img.shields.io/badge/React-18.3-61DAFB?logo=react&logoColor=white" alt="React" />
+  <img src="https://img.shields.io/badge/TypeScript-5.6-3178C6?logo=typescript&logoColor=white" alt="TypeScript" />
+  <img src="https://img.shields.io/badge/Express-4.x-000000?logo=express&logoColor=white" alt="Express" />
+  <img src="https://img.shields.io/badge/Prisma-6.x-2D3748?logo=prisma&logoColor=white" alt="Prisma" />
+  <img src="https://img.shields.io/badge/PostgreSQL-16-4169E1?logo=postgresql&logoColor=white" alt="PostgreSQL" />
+  <img src="https://img.shields.io/badge/Vite-6.x-646CFF?logo=vite&logoColor=white" alt="Vite" />
+  <img src="https://img.shields.io/badge/Docker-Ready-2496ED?logo=docker&logoColor=white" alt="Docker" />
+  <img src="https://img.shields.io/badge/Node-%E2%89%A520-339933?logo=node.js&logoColor=white" alt="Node" />
+</p>
+
+---
+
+## 📸 Screenshots
+
+### Dashboard — Financial Overview at a Glance
+
+<p align="center">
+  <img src="ui/light/dashboard_financial_overview/screen.png" alt="Dashboard — Light Mode" width="100%" />
+</p>
+
+<details>
+<summary>🌙 Dark Mode</summary>
+<p align="center">
+  <img src="ui/dark/dashboard_dark_mode_interactive_financial_analytics/screen.png" alt="Dashboard — Dark Mode" width="100%" />
+</p>
+</details>
+
+### Expenses — Transaction Ledger
+
+<p align="center">
+  <img src="ui/dark/expenses_dark_mode_transactions_ledger/screen.png" alt="Expenses Page" width="100%" />
+</p>
+
+### Budgets — Envelope Management
+
+<p align="center">
+  <img src="ui/dark/budgets_dark_mode_envelope_management/screen.png" alt="Budgets Page" width="100%" />
+</p>
+
+### Reports — Financial Intelligence & Audit
+
+<p align="center">
+  <img src="ui/dark/reports_dark_mode_financial_intelligence_audit/screen.png" alt="Reports Page" width="100%" />
+</p>
+
+<details>
+<summary>🔐 Authentication Screens</summary>
+
+#### Login
+<p align="center">
+  <img src="ui/dark/login_dark_mode_rupeeflow_authentication/screen.png" alt="Login Page" width="80%" />
+</p>
+
+#### Sign Up
+<p align="center">
+  <img src="ui/dark/sign_up_dark_mode_create_rupeeflow_account/screen.png" alt="Sign Up Page" width="80%" />
+</p>
+
+</details>
+
+<details>
+<summary>🏷️ Categories Page</summary>
+<p align="center">
+  <img src="ui/dark/categories_dark_mode_expense_groups/screen.png" alt="Categories Page" width="100%" />
+</p>
+</details>
+
+---
+
+## ✨ Features
+
+| Module | Highlights |
 |---|---|
-| **Frontend** | React 18 · TypeScript · Vite · React Router 6 · TanStack Query · React Hook Form + Zod · Axios · Tailwind CSS · Recharts · date-fns |
-| **Backend** | Node.js · Express · TypeScript · Prisma ORM · Zod · jsonwebtoken · bcrypt · fast-csv · exceljs · helmet · cors · express-rate-limit |
-| **Database** | PostgreSQL 16 (UUID keys, `NUMERIC(12,2)` money, CHECK constraints, composite indexes) |
-| **Tests** | Jest + Supertest (API, real Postgres) · Vitest + React Testing Library + MSW · Playwright E2E |
+| **Dashboard** | Monthly KPI cards (total expenses, budget, remaining, usage %), daily expense trend chart with moving average, category breakdown donut chart, budget utilization bars, recent transactions feed |
+| **Expenses** | Full CRUD with sortable/paginated table, filter by category · date range · amount bounds, search by description, CSV export |
+| **Budgets** | Envelope-style monthly budget per category, real-time spend vs. limit tracking, "On Track / Near Limit / Over Budget" status badges, allocation donut chart |
+| **Categories** | User-defined expense groups with color codes, archive/restore, default categories created on sign-up |
+| **Reports** | Monthly/quarterly/yearly views, budget vs. actual bar chart (longitudinal), category variance audit table, CSV & Excel export |
+| **Auth** | JWT access + refresh token rotation, bcrypt password hashing, HTTP-only secure cookies, rate-limited auth routes |
+| **Theming** | Light & dark mode with system preference detection, zero-flash on load |
 
 ---
 
-## Contents
-1. [Prerequisites](#prerequisites)
-2. [Quick start](#quick-start)
-3. [Backend setup](#backend-setup)
-4. [Frontend setup](#frontend-setup)
-5. [Environment variables](#environment-variables)
-6. [Database: migrations, seeding, reset](#database-migrations-seeding-reset)
-7. [Running tests](#running-tests)
-8. [API reference](#api-reference)
-9. [Folder structure](#folder-structure)
-10. [Architecture notes](#architecture-notes)
-11. [Deployment](#deployment)
-12. [Known limitations](#known-limitations)
+## 🏗️ Architecture
+
+```
+rupeeflow/
+├── backend/                 # Express REST API
+│   ├── src/
+│   │   ├── config/          # Environment, database client
+│   │   ├── middleware/       # Auth, validation, rate-limit, error handling, logging
+│   │   ├── modules/         # Feature modules (auth, expenses, budgets, categories, dashboard, reports)
+│   │   │   └── <module>/
+│   │   │       ├── *.routes.ts
+│   │   │       ├── *.controller.ts
+│   │   │       ├── *.service.ts
+│   │   │       ├── *.repository.ts
+│   │   │       └── *.schema.ts      # Zod validation
+│   │   └── utils/
+│   ├── prisma/
+│   │   ├── schema.prisma    # Data model (User, Category, Expense, Budget, RefreshToken)
+│   │   ├── migrations/
+│   │   └── seed.ts          # Demo data (6 months of realistic transactions)
+│   ├── tests/               # Jest integration tests
+│   └── Dockerfile           # Multi-stage production image
+│
+├── frontend/                # React SPA
+│   ├── src/
+│   │   ├── api/             # Axios client with interceptors
+│   │   ├── components/      # Reusable UI (charts, layout, ui primitives)
+│   │   ├── context/         # Auth, Theme, Toast, Period providers
+│   │   ├── features/        # Feature hooks & query keys (react-query)
+│   │   ├── pages/           # Route-level page components
+│   │   └── lib/             # Query client config
+│   ├── e2e/                 # Playwright E2E tests
+│   ├── tailwind.config.js
+│   ├── vercel.json          # Vercel deployment (API proxy rewrite)
+│   └── netlify.toml         # Netlify alternative deployment
+│
+├── .github/workflows/ci.yml # CI: typecheck → lint → test → build → E2E
+├── docker-compose.yml       # PostgreSQL 16 (dev)
+├── render.yaml              # Render Blueprint (API + managed Postgres)
+└── package.json             # Monorepo root convenience scripts
+```
 
 ---
 
-## Prerequisites
+## 🛠️ Tech Stack
 
-- **Node.js 20+** (developed on Node 24) and npm 10+
-- **PostgreSQL 14+**, or **Docker** to run the bundled Postgres container
-- Optional: Google Chrome for the local Playwright run (CI downloads Chromium itself)
+### Backend
+| Layer | Technology |
+|---|---|
+| Runtime | **Node.js ≥ 20** |
+| Framework | **Express 4** |
+| Language | **TypeScript 5.6** |
+| ORM | **Prisma 6** with PostgreSQL 16 |
+| Validation | **Zod** (request schemas) |
+| Auth | **JWT** (access + refresh) · **bcrypt** · HTTP-only cookies |
+| Security | **Helmet** · **CORS** · **express-rate-limit** |
+| Export | **fast-csv** · **ExcelJS** |
+| Testing | **Jest** + **Supertest** |
 
-## Quick start
+### Frontend
+| Layer | Technology |
+|---|---|
+| Framework | **React 18** with **Vite 6** |
+| Language | **TypeScript 5.6** |
+| Styling | **Tailwind CSS 3** |
+| State / Data | **TanStack React Query 5** · **React Context** |
+| Forms | **React Hook Form** + **Zod** resolvers |
+| Routing | **React Router 6** |
+| Charts | **Recharts 2** |
+| Dates | **date-fns 4** |
+| Testing | **Vitest** · **React Testing Library** · **MSW** (mocks) |
+| E2E | **Playwright** |
+
+### Infrastructure
+| Concern | Technology |
+|---|---|
+| Database (Dev) | **Docker Compose** → PostgreSQL 16 Alpine |
+| Backend Deploy | **Render** (Docker web service + managed Postgres) |
+| Frontend Deploy | **Vercel** or **Netlify** (static + API proxy rewrite) |
+| CI/CD | **GitHub Actions** (typecheck → lint → test → build → Playwright E2E) |
+
+---
+
+## 🚀 Quick Start
+
+### Prerequisites
+
+- **Node.js ≥ 20** and **npm**
+- **Docker** & **Docker Compose** (for PostgreSQL)
+
+### 1. Clone & Install
 
 ```bash
-# 1. Start PostgreSQL (container on host port 5433; creates `rupeeflow` and `rupeeflow_test`)
-docker compose up -d
+git clone https://github.com/<your-username>/rupeeflow.git
+cd rupeeflow
 
-# 2. Configure both apps
-cp backend/.env.example backend/.env      # then set JWT_SECRET (see below)
-cp frontend/.env.example frontend/.env
-
-# 3. Install, generate the Prisma client, apply migrations
+# Install all dependencies (backend + frontend) and run Prisma migrations
 npm run setup
+```
 
-# 4. (Optional) load a demo account with 6 months of data
-npm run seed          # → demo@rupeeflow.app / Demo@12345
+### 2. Start the Database
 
-# 5. Run the API (http://localhost:4000) and the web app (http://localhost:5173)
+```bash
+npm run db:up          # Starts PostgreSQL 16 in Docker on port 5433
+```
+
+### 3. Configure Environment
+
+```bash
+# Backend
+cp backend/.env.example backend/.env
+# → Edit backend/.env and set a strong JWT_SECRET
+
+# Frontend
+cp frontend/.env.example frontend/.env
+# → Defaults work out of the box for local dev
+```
+
+### 4. Seed Demo Data (Optional)
+
+```bash
+npm run seed
+# Creates demo user: demo@rupeeflow.app / Demo@12345
+# with 6 months of realistic expense & budget data
+```
+
+### 5. Run Development Servers
+
+```bash
+# Terminal 1 — API server (http://localhost:4000)
 npm run dev:api
+
+# Terminal 2 — Frontend dev server (http://localhost:5173)
 npm run dev:web
 ```
 
-Open **http://localhost:5173** and create an account, or sign in with the demo user. New accounts start with six default categories (Food, Transport, Utilities, Entertainment, Health, Other).
+Open **http://localhost:5173** and sign in with the demo credentials, or create your own account.
 
-> Generate a JWT secret with `node -e "console.log(require('crypto').randomBytes(48).toString('hex'))"`.
-> The API refuses to boot if `JWT_SECRET`/`DATABASE_URL` are missing or invalid, or if production still uses the example secret.
+---
 
-## Backend setup
+## 🗄️ Database Schema
+
+```mermaid
+erDiagram
+    User ||--o{ Category : has
+    User ||--o{ Expense : logs
+    User ||--o{ Budget : sets
+    User ||--o{ RefreshToken : authenticates
+
+    Category ||--o{ Expense : groups
+    Category ||--o{ Budget : limits
+
+    User {
+        uuid id PK
+        varchar name
+        varchar email UK
+        varchar password_hash
+        timestamptz created_at
+        timestamptz updated_at
+    }
+
+    Category {
+        uuid id PK
+        uuid user_id FK
+        varchar name
+        varchar color
+        boolean is_archived
+        timestamptz created_at
+    }
+
+    Expense {
+        uuid id PK
+        uuid user_id FK
+        uuid category_id FK
+        decimal amount
+        varchar description
+        date expense_date
+        timestamptz created_at
+    }
+
+    Budget {
+        uuid id PK
+        uuid user_id FK
+        uuid category_id FK
+        smallint month
+        smallint year
+        decimal limit_amount
+        timestamptz created_at
+    }
+
+    RefreshToken {
+        uuid id PK
+        uuid user_id FK
+        varchar token_hash UK
+        timestamptz expires_at
+        timestamptz revoked_at
+        varchar replaced_by_hash
+    }
+```
+
+---
+
+## 🔌 API Endpoints
+
+All endpoints are prefixed with `/api`. Protected routes require `Authorization: Bearer <token>`.
+
+| Method | Endpoint | Description | Auth |
+|---|---|---|---|
+| `POST` | `/api/auth/register` | Create account (returns tokens) | ✗ |
+| `POST` | `/api/auth/login` | Sign in (returns tokens) | ✗ |
+| `POST` | `/api/auth/refresh` | Rotate refresh token | ✗ |
+| `POST` | `/api/auth/logout` | Revoke refresh token | ✓ |
+| `GET` | `/api/auth/me` | Current user profile | ✓ |
+| `GET` | `/api/categories` | List user categories | ✓ |
+| `POST` | `/api/categories` | Create category | ✓ |
+| `PATCH` | `/api/categories/:id` | Update category | ✓ |
+| `DELETE` | `/api/categories/:id` | Delete category | ✓ |
+| `GET` | `/api/expenses` | List expenses (paginated, filterable) | ✓ |
+| `POST` | `/api/expenses` | Create expense | ✓ |
+| `PATCH` | `/api/expenses/:id` | Update expense | ✓ |
+| `DELETE` | `/api/expenses/:id` | Delete expense | ✓ |
+| `GET` | `/api/budgets` | List budgets for a period | ✓ |
+| `POST` | `/api/budgets` | Create/update budget | ✓ |
+| `DELETE` | `/api/budgets/:id` | Delete budget | ✓ |
+| `GET` | `/api/dashboard` | Dashboard aggregations | ✓ |
+| `GET` | `/api/reports` | Report data (monthly/quarterly/yearly) | ✓ |
+| `GET` | `/api/reports/export` | Export CSV/Excel | ✓ |
+| `GET` | `/health` | Health check | ✗ |
+
+---
+
+## 🧪 Testing
+
+```bash
+# Run all tests (backend + frontend)
+npm test
+
+# Backend only (Jest — integration tests against Postgres)
+npm --prefix backend test
+npm --prefix backend run test:coverage
+
+# Frontend only (Vitest — unit + component tests with MSW mocks)
+npm --prefix frontend test
+npm --prefix frontend run test:coverage
+
+# E2E (Playwright — full browser tests)
+npm run test:e2e
+```
+
+---
+
+## 🧹 Code Quality
+
+```bash
+# Type checking
+npm run typecheck
+
+# Linting (ESLint)
+npm run lint
+
+# Formatting (Prettier)
+npm --prefix backend run format
+npm --prefix frontend run format
+
+# Build production bundles
+npm run build
+```
+
+---
+
+## 🐳 Docker
+
+### Local Development (Database only)
+
+```bash
+npm run db:up         # Start PostgreSQL container
+npm run db:down       # Stop and remove container
+```
+
+### Full Backend Container
 
 ```bash
 cd backend
-npm install
-cp .env.example .env           # fill in values
-npx prisma generate
-npx prisma migrate deploy      # or `npx prisma migrate dev` while changing the schema
-npm run dev                    # ts-node-dev with auto-reload on :4000
+docker build -t rupeeflow-api .
+docker run -p 4000:4000 --env-file .env rupeeflow-api
 ```
 
-`GET /health` returns `{ "status": "ok" }` once the server is up.
+---
 
-| Script | Purpose |
+## ☁️ Deployment
+
+### Backend → Render
+
+The included [`render.yaml`](render.yaml) Blueprint deploys the API as a Docker web service with a managed PostgreSQL instance.
+
+1. Connect your GitHub repo to [Render](https://render.com)
+2. Render auto-detects the Blueprint and provisions the database
+3. Set `FRONTEND_ORIGIN` to your deployed frontend URL
+
+### Frontend → Vercel
+
+The included [`frontend/vercel.json`](frontend/vercel.json) configures:
+- API proxy rewrite (`/api/*` → Render backend) to keep cookies first-party
+- SPA fallback for client-side routing
+- Immutable asset caching
+
+### Frontend → Netlify (Alternative)
+
+The included [`frontend/netlify.toml`](frontend/netlify.toml) provides the same proxy + SPA rewrite setup.
+
+---
+
+## 📂 Monorepo Scripts
+
+All convenience scripts live in the root [`package.json`](package.json):
+
+| Command | Description |
 |---|---|
-| `npm run dev` | Development server with reload |
-| `npm run build` / `npm start` | Compile to `dist/` and run it |
-| `npm run typecheck` / `npm run lint` | `tsc --noEmit` (strict) / ESLint |
-| `npm test` / `npm run test:coverage` | Jest suite against the test database |
-| `npm run db:seed` | Recreate the demo account |
+| `npm run db:up` | Start PostgreSQL via Docker Compose |
+| `npm run db:down` | Stop PostgreSQL |
+| `npm run setup` | Install deps + generate Prisma + run migrations |
+| `npm run seed` | Seed demo user with 6 months of data |
+| `npm run dev:api` | Start backend dev server |
+| `npm run dev:web` | Start frontend dev server |
+| `npm test` | Run all tests |
+| `npm run test:e2e` | Playwright end-to-end tests |
+| `npm run typecheck` | TypeScript check (both packages) |
+| `npm run lint` | ESLint (both packages) |
+| `npm run build` | Production build (both packages) |
 
-## Frontend setup
+---
 
-```bash
-cd frontend
-npm install
-cp .env.example .env
-npm run dev                    # Vite on :5173, proxies /api → :4000
-```
+## 🔒 Security
 
-| Script | Purpose |
-|---|---|
-| `npm run dev` / `npm run build` / `npm run preview` | Dev server / production build / preview the build |
-| `npm run typecheck` / `npm run lint` | TypeScript project build check / ESLint |
-| `npm test` / `npm run test:coverage` | Vitest + React Testing Library + MSW |
-| `npm run e2e` | Playwright end-to-end suite |
+- **Password hashing** — bcrypt with configurable cost factor (default 12)
+- **JWT access tokens** — short-lived (15 min default), stored in memory
+- **Refresh tokens** — hashed in DB, HTTP-only secure cookie, automatic rotation with revocation chain
+- **CORS** — explicit origin whitelist, credentials mode
+- **Helmet** — security headers (CSP, HSTS, X-Frame-Options, etc.)
+- **Rate limiting** — auth routes protected against brute-force (10 attempts / 15 min)
+- **Input validation** — Zod schemas on every endpoint
+- **SQL injection** — Prisma parameterized queries
+- **`trust proxy`** — enabled in production for correct client IP behind load balancers
 
-## Environment variables
+---
 
-### Backend (`backend/.env`)
+## 📄 License
 
-| Variable | Required | Example | Description |
-|---|---|---|---|
-| `DATABASE_URL` | ✅ | `postgresql://rupeeflow:rupeeflow@localhost:5433/rupeeflow?schema=public` | Postgres connection string. Tune the pool with `&connection_limit=10`. |
-| `JWT_SECRET` | ✅ | *(48 random bytes, hex)* | HS256 signing secret for access tokens, at least 32 characters. |
-| `NODE_ENV` | | `development` | `production` enables Secure cookies, trust-proxy and generic 500 messages. |
-| `PORT` | | `4000` | HTTP port. |
-| `JWT_ACCESS_EXPIRY` | | `15m` | Access-token lifetime. |
-| `REFRESH_TOKEN_EXPIRY_DAYS` | | `30` | Refresh-token (session) lifetime. |
-| `BCRYPT_COST` | | `12` | bcrypt work factor. |
-| `FRONTEND_ORIGIN` | | `http://localhost:5173` | Exact origin(s) allowed by CORS (comma-separated). |
-| `COOKIE_DOMAIN` | | *(empty)* | Refresh-cookie domain; leave empty for host-only. |
-| `COOKIE_SAMESITE` | | `strict` | `strict` \| `lax` \| `none`. `none` is only for a cross-site API (forces `Secure`). |
-| `AUTH_RATE_LIMIT_WINDOW_MINUTES` | | `15` | Rate-limit window for auth routes. |
-| `AUTH_RATE_LIMIT_MAX` | | `10` | Login and register attempts per window per IP. Refresh gets 6× this. |
-| `LOG_REQUESTS` | | `true` | Structured JSON access logs, with secrets redacted. |
-| `TEST_DATABASE_URL` | | `…/rupeeflow_test` | Database for the Jest and E2E suites. Its name must end in `_test`. |
+This project is provided as-is for educational and personal use. See the repository for any applicable license terms.
 
-### Frontend (`frontend/.env`)
+---
 
-| Variable | Example | Description |
-|---|---|---|
-| `VITE_API_URL` | `/api` | API base URL. Keep `/api` whenever the host proxies to the backend (dev proxy, Vercel/Netlify rewrites). |
-| `API_PROXY_TARGET` | `http://localhost:4000` | Dev-server only: where Vite forwards `/api`. |
-
-## Database: migrations, seeding, reset
-
-- **Schema:** [`backend/prisma/schema.prisma`](backend/prisma/schema.prisma). It has the five tables from Plan §8: `users`, `categories`, `expenses`, `budgets`, `refresh_tokens`.
-- **Migrations** are committed in `backend/prisma/migrations/`. The initial migration also adds constraints that Prisma's schema language can't express:
-  - the `pgcrypto` extension
-  - CHECK constraints: `amount > 0`, `limit_amount > 0`, `month` 1–12, `year` 2000–2100, and hex colour
-  - case-insensitive unique indexes on `lower(email)` and `(user_id, lower(name))`
-- **Apply:** `npx prisma migrate deploy` in CI and production; `npx prisma migrate dev` locally when changing the schema.
-- **Seeding:** each user's default categories are created **inside the registration transaction**, so no manual step is needed. `npm run db:seed` only adds the optional demo account.
-- **Reset a local database:** `cd backend && npx prisma migrate reset`. This drops all data; use it on development databases only.
-
-## Running tests
-
-```bash
-docker compose up -d                # tests need Postgres (the rupeeflow_test DB)
-
-cd backend && npm test              # 169 Jest tests: unit + API integration against real Postgres
-cd frontend && npm test             # 58 Vitest tests: components, pages, hooks, API client (MSW)
-cd frontend && npm run e2e          # 9 Playwright scenarios (starts its own API :4100 + web :5174)
-
-# Optional visual QA: every page, both themes, desktop + phone → frontend/e2e/screenshots/
-cd frontend && VISUAL=1 npx playwright test --grep @visual
-```
-
-- **Backend:** the suite migrates `rupeeflow_test` with `migrate deploy` and truncates tables between tests. It refuses to run against a database whose name doesn't end in `_test`. Coverage is about 96% of statements.
-- **Frontend:** tests run without a backend, using MSW handlers for every module (`src/test/msw`). Coverage is about 90% of statements.
-- **E2E:** the suite runs against an isolated stack on the test database. Locally it drives the installed Chrome.
-
-## API reference
-
-The full contract is in [Plan §11](docs/PLAN.md#11-complete-api-specification). Base path is `/api`. Authenticated routes need `Authorization: Bearer <accessToken>`. Every error uses the same shape:
-
-```json
-{ "error": { "code": "VALIDATION_ERROR", "message": "amount must be greater than 0",
-             "details": [{ "field": "amount", "message": "amount must be greater than 0" }] } }
-```
-
-| Method & path | Notes |
-|---|---|
-| `POST /auth/register` · `POST /auth/login` | → `{ user, accessToken }` and sets the `refresh_token` cookie (httpOnly, SameSite, `Path=/api/auth`) |
-| `POST /auth/refresh` · `POST /auth/logout` · `GET /auth/me` | Rotation with reuse detection. Logout is idempotent (204). |
-| `GET/POST /categories` · `PATCH/DELETE /categories/:id` | `DELETE` **archives**. `?includeArchived=true` lists archived ones too. |
-| `GET/POST /expenses` · `GET/PATCH/DELETE /expenses/:id` | Filters: `startDate endDate categoryId minAmount maxAmount search`. Sort: `sortBy=expenseDate\|amount`, `sortOrder=asc\|desc`. Paging: `page`, `limit` ≤ 100. |
-| `GET/POST /budgets` · `GET/PATCH/DELETE /budgets/:id` | `?month&year&categoryId`. Rows include live `spent`, `remaining`, `percentUsed`. `PATCH` accepts only `limitAmount`. Duplicates → 409. |
-| `GET /dashboard/summary?month&year` | Totals, remaining budget, per-category summary, 6-month trend |
-| `GET /reports/monthly?month&year` · `GET /reports/yearly?year` | Category breakdown plus a zero-filled per-day or per-month series |
-| `GET /reports/export?format=csv\|xlsx&period=monthly\|yearly&year[&month]` | Streamed download. Figures are identical to the on-screen report. |
-
-Small additions beyond the §11 contract, all backwards-compatible:
-- the `search` expense filter (the design's search box)
-- `categoryColor`, `transactionCount` and `isArchived` fields for UI colour coding
-- `totalBudget` / `remainingBudget` on the monthly report
-- `budget` per month in the yearly report, which powers the budget-vs-actual chart
-
-## Folder structure
-
-```
-.
-├── docker-compose.yml            Postgres 16 (+ test database)
-├── render.yaml                   Render blueprint (API + managed Postgres)
-├── .github/workflows/ci.yml      typecheck · lint · tests · builds · E2E
-├── docs/                         PLAN.md (project plan) · AUDIT.md (traceability + checklist)
-├── ui/                           Original light/dark design references
-├── backend/
-│   ├── prisma/                   schema.prisma · migrations/ · seed.ts
-│   ├── src/
-│   │   ├── config/               env.ts (Zod-validated env) · db.ts (Prisma singleton)
-│   │   ├── middleware/           authenticate · validate · rateLimiter · requestLogger · errorHandler
-│   │   ├── modules/<module>/     *.routes · *.controller · *.service · *.repository · *.validation · *.types · *.test
-│   │   │     auth · categories · expenses · budgets · dashboard · reports
-│   │   ├── utils/                hash · tokens · money · dates · export · validators · logger · errors
-│   │   ├── app.ts                middleware chain + routers
-│   │   └── server.ts             listen + graceful shutdown
-│   └── tests/                    Jest global setup + helpers
-└── frontend/
-    ├── e2e/                      Playwright scenarios + visual capture
-    └── src/
-        ├── api/                  Axios client (silent refresh) · DTO types
-        ├── context/              Auth · Theme · Period · Toast
-        ├── features/<module>/    typed TanStack Query hooks + feature components (forms, filter bar)
-        ├── components/           ui/ (Button, Modal, ConfirmDialog, Pagination, …) · layout/ · charts/
-        ├── pages/                Login · Register · Dashboard · Expenses · Budgets · Categories · Reports
-        ├── lib/                  formatting, dates, budget status, query client
-        └── test/                 Vitest setup · MSW handlers
-```
-
-## Architecture notes
-
-- **Layering (Plan §12):** routes → controller → service → repository → Prisma. Only `*.repository.ts` may import Prisma Client, and an ESLint rule enforces it. Every repository method takes `userId` and scopes its `WHERE` clause with it, so another user's row answers **404, never 403**.
-- **Money math is in SQL (Plan §17/§18):** the dashboard, budgets, reports and exports all use `SUM`/`GROUP BY` queries in `expenses.repository.ts` and `budgets.repository.ts`. The browser never sums raw expense rows. Date filters are sargable ranges (`expense_date >= $start AND < $end`), so the `(user_id, expense_date)` index is used.
-- **Transactions (A7):**
-  - registration and its default categories
-  - refresh-token rotation (a conditional update prevents double rotation)
-  - budget check-and-insert, backed by the `(user_id, category_id, month, year)` unique constraint, which returns 409
-- **Auth (Plan §10):**
-  - Access tokens are 15-minute HS256 JWTs with the algorithm pinned, held only in memory in the SPA.
-  - Refresh tokens are 256-bit opaque values stored as SHA-256 hashes.
-  - Each refresh rotates the token; reusing an old one revokes the whole session family.
-  - The SPA de-duplicates concurrent refreshes, so N parallel 401s trigger one refresh.
-- **Frontend state (Plan §13):** TanStack Query owns server state. Expense mutations invalidate expenses, budgets, dashboard and reports together. Expense deletes are optimistic and roll back on failure. Charts are lazy-loaded behind an error boundary, so they never block the numeric summary.
-- **Design:** light theme = SpendWise identity (`ui/light`), dark theme = RupeeFlow design system (`ui/dark`). Both map to the same semantic Tailwind tokens (`src/index.css`), so every screen works in both themes. The theme toggle is in the top bar.
-
-## Deployment
-
-The recommended setup is Render (API + managed Postgres) with Vercel or Netlify for the SPA. Steps from Plan §28:
-
-1. **Database + API:** push the repo and create a Render Blueprint from [`render.yaml`](render.yaml). It provisions Postgres, builds [`backend/Dockerfile`](backend/Dockerfile), generates `JWT_SECRET`, and the container runs `prisma migrate deploy` before starting. Check `GET /health`.
-2. **Frontend:** deploy `frontend/` to Vercel ([`vercel.json`](frontend/vercel.json)) or Netlify ([`netlify.toml`](frontend/netlify.toml)). First replace `rupeeflow-api.onrender.com` in the rewrite with your API host. Keep `VITE_API_URL=/api`.
-3. **CORS:** set the API's `FRONTEND_ORIGIN` to the deployed frontend URL.
-4. **Smoke test:** register → add an expense → check the dashboard total → export a report.
-
-**Refresh cookie in production:** the frontend host **proxies `/api` to the backend**, so the browser sees the API as first-party and `SameSite=Strict` keeps working. If you instead point `VITE_API_URL` at the API domain directly (a cross-site call), set `COOKIE_SAMESITE=none`. The API then sends `Secure; SameSite=None`, which browsers require for a cross-site cookie. This avoids the classic "login works locally but not in prod" bug.
-
-## Known limitations
-
-- **Single currency (INR), English only**, and no tablet-specific layout; the assignment asks only for mobile and desktop.
-- **Reports are generated synchronously** and streamed. That fits personal-finance data volumes (Plan §18); a job queue would be needed for multi-user analytics.
-- **Deleting a category archives it.** History stays valid, and it can be unarchived.
-- **Budgets don't block spending.** An expense that exceeds a budget is still saved and flagged as over budget.
-- **No stored procedures (optional A10).** The aggregation SQL lives in version-controlled, tested repository code (Plan §21).
-- **Two tabs refreshing at the same moment** can trip refresh-token reuse detection and sign both out. This is a deliberate security trade-off (Plan §10); within one tab, refreshes are de-duplicated.
-- **Not implemented because out of scope (Plan §3):** password reset, OAuth, recurring expenses, notifications.
-
-## License
-
-MIT (assignment submission).
+<p align="center">
+  <img src="ui/light/rupeeflow_brand_logo/screen.png" alt="RupeeFlow" width="40" /><br/>
+  <sub>Built with ☕ and TypeScript</sub>
+</p>
