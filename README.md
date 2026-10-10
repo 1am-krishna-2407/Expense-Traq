@@ -96,7 +96,7 @@
 ## 🏗️ Architecture
 
 ```
-rupeeflow/
+Expense-Traq/
 ├── backend/                 # Express REST API
 │   ├── src/
 │   │   ├── config/          # Environment, database client
@@ -186,8 +186,8 @@ rupeeflow/
 ### 1. Clone & Install
 
 ```bash
-git clone https://github.com/<your-username>/rupeeflow.git
-cd rupeeflow
+git clone https://github.com/1am-krishna-2407/Expense-Traq.git
+cd Expense-Traq
 
 # Install all dependencies (backend + frontend) and run Prisma migrations
 npm run setup
