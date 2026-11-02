@@ -155,6 +155,29 @@ describe('Expenses', () => {
     expect(await screen.findByText('Couldn’t delete expense')).toBeInTheDocument();
     expect(within(screen.getByRole('table')).getByText('Dinner with friends')).toBeInTheDocument();
   });
+
+  it('exports the filtered transactions, not a fixed monthly report', async () => {
+    let params: URLSearchParams | undefined;
+    server.use(
+      http.get('*/api/expenses/export', ({ request }) => {
+        params = new URL(request.url).searchParams;
+        return new HttpResponse('csv', { headers: { 'Content-Type': 'text/csv', 'Content-Disposition': 'attachment; filename="rupeeflow-expenses.csv"' } });
+      }),
+    );
+    renderApp('/expenses');
+    await screen.findByRole('table');
+    const [category] = screen.getAllByLabelText('Category');
+    await userEvent.selectOptions(category, 'c-transport');
+    await waitFor(() => expect(within(screen.getByRole('table')).getAllByRole('row')).toHaveLength(2));
+
+    await userEvent.click(screen.getByRole('button', { name: 'Export CSV' }));
+    expect(await screen.findByText('rupeeflow-expenses.csv downloaded.')).toBeInTheDocument();
+    expect(params?.get('format')).toBe('csv');
+    expect(params?.get('categoryId')).toBe('c-transport');
+    expect(params?.get('startDate')).toMatch(/^\d{4}-\d{2}-01$/);
+    expect(params?.has('page')).toBe(false);
+    expect(params?.has('period')).toBe(false);
+  });
 });
 
 describe('Budgets', () => {

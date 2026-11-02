@@ -1,11 +1,24 @@
 import type { Request, Response } from 'express';
 import { currentUserId } from '../../middleware/authenticate';
+import { streamCsv, streamXlsx } from '../../utils/export';
 import { expensesService } from './expenses.service';
-import type { CreateExpenseInput, ListExpensesQuery, UpdateExpenseInput } from './expenses.validation';
+import type {
+  CreateExpenseInput,
+  ExportExpensesQuery,
+  ListExpensesQuery,
+  UpdateExpenseInput,
+} from './expenses.validation';
 
 export const expensesController = {
   async list(req: Request, res: Response) {
     res.json(await expensesService.list(currentUserId(req), req.query as unknown as ListExpensesQuery));
+  },
+
+  async export(req: Request, res: Response) {
+    const { format, ...filters } = req.query as unknown as ExportExpensesQuery;
+    const { title, fileBase, tables } = await expensesService.exportTable(currentUserId(req), filters);
+    if (format === 'csv') await streamCsv(res, `${fileBase}.csv`, title, tables);
+    else await streamXlsx(res, `${fileBase}.xlsx`, title, tables);
   },
 
   async get(req: Request, res: Response) {

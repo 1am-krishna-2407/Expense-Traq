@@ -17,8 +17,7 @@ import { useCategories } from '../features/categories/hooks';
 import { useDashboardSummary } from '../features/dashboard/hooks';
 import { ExpenseFilterBar } from '../features/expenses/ExpenseFilterBar';
 import { EMPTY_FILTERS, validateFilters, type FilterValues } from '../features/expenses/filters';
-import { useDeleteExpense, useExpenses } from '../features/expenses/hooks';
-import { useExportReport } from '../features/reports/hooks';
+import { useDeleteExpense, useExpenses, useExportExpenses } from '../features/expenses/hooks';
 import { colorOf } from '../lib/categoryIcons';
 import { periodProgress, periodRange } from '../lib/dates';
 import { formatDate, formatINR, formatPercent } from '../lib/format';
@@ -86,7 +85,7 @@ export function ExpensesPage() {
   const { data: categories = [] } = useCategories(true);
   const summary = useDashboardSummary(period.month, period.year);
   const deleteExpense = useDeleteExpense();
-  const exportReport = useExportReport();
+  const exportExpenses = useExportExpenses();
 
   const updateFilters = (next: FilterValues) => {
     setFilters(next);
@@ -194,15 +193,13 @@ export function ExpensesPage() {
             <Button
               variant="secondary"
               icon="download"
-              loading={exportReport.isPending}
+              loading={exportExpenses.isPending}
               onClick={() =>
-                exportReport.mutate(
-                  { format: 'csv', period: 'monthly', month: period.month, year: period.year },
-                  {
-                    onSuccess: (name) => toast.success('Report ready', `${name} downloaded.`),
-                    onError: (err) => toast.error('Export failed', errorMessage(err)),
-                  },
-                )
+                // Exactly the rows the table is filtered to — every page, any date range.
+                exportExpenses.mutate(appliedQuery, {
+                  onSuccess: (name) => toast.success('Export ready', `${name} downloaded.`),
+                  onError: (err) => toast.error('Export failed', errorMessage(err)),
+                })
               }
             >
               Export CSV

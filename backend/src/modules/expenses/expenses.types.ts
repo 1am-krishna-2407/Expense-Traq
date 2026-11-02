@@ -22,15 +22,18 @@ export interface ExpenseListResponse {
   meta: PaginationMeta;
 }
 
-export interface ExpenseListFilters {
+export interface ExpenseFilters {
   startDate?: Date;
   endDate?: Date;
   categoryId?: string;
   minAmount?: number;
   maxAmount?: number;
   search?: string;
-  page: number;
-  limit: number;
   sortBy: 'expenseDate' | 'amount';
   sortOrder: 'asc' | 'desc';
+}
+
+export interface ExpenseListFilters extends ExpenseFilters {
+  page: number;
+  limit: number;
 }

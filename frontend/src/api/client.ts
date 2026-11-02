@@ -78,6 +78,30 @@ api.interceptors.response.use(
   },
 );
 
+// ───────────────────────────── File downloads ─────────────────────────────
+
+const filenameFrom = (disposition: string | undefined, fallback: string) =>
+  /filename="?([^";]+)"?/i.exec(disposition ?? '')?.[1] ?? fallback;
+
+/**
+ * Downloads a streamed export. It goes through the Axios instance (the access token is in
+ * memory, so a bare <a href> couldn't authenticate), then hands the blob to the browser's
+ * native download. Resolves with the filename the server chose.
+ */
+export async function downloadFile(path: string, params: object, fallbackName: string): Promise<string> {
+  const res = await api.get<Blob>(path, { params, responseType: 'blob' });
+  const filename = filenameFrom(res.headers['content-disposition'] as string | undefined, fallbackName);
+  const url = URL.createObjectURL(res.data);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+  return filename;
+}
+
 // ───────────────────────────── Error helpers ─────────────────────────────
 
 export function isApiError(err: unknown): err is AxiosError<ApiErrorBody> {

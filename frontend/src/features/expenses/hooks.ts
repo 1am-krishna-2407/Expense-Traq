@@ -1,5 +1,5 @@
 import { keepPreviousData, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { api } from '../../api/client';
+import { api, downloadFile } from '../../api/client';
 import type { Expense, ExpenseFilters, ExpenseInput, Paginated } from '../../api/types';
 import { queryKeys, SPEND_DEPENDENT_KEYS } from '../queryKeys';
 
@@ -19,6 +19,9 @@ export const expensesApi = {
   remove: async (id: string) => {
     await api.delete(`/expenses/${id}`);
   },
+  /** Every expense matching the filters (pagination is ignored), as a file download. */
+  export: ({ page: _page, limit: _limit, ...filters }: Partial<ExpenseFilters>, format: 'csv' | 'xlsx' = 'csv') =>
+    downloadFile('/expenses/export', { ...cleanFilters(filters), format }, `rupeeflow-expenses.${format}`),
 };
 
 /** Changing any filter changes the key → automatic refetch (Plan §15 "Filter"). */
@@ -74,4 +77,8 @@ export function useDeleteExpense() {
     },
     onSettled: invalidate,
   });
+}
+
+export function useExportExpenses() {
+  return useMutation({ mutationFn: (filters: Partial<ExpenseFilters>) => expensesApi.export(filters) });
 }

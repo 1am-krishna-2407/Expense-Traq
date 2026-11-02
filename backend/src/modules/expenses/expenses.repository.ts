@@ -1,7 +1,7 @@
 import { Prisma } from '@prisma/client';
 import { prisma } from '../../config/db';
 import { formatIsoDate, type DateRange } from '../../utils/dates';
-import type { ExpenseListFilters } from './expenses.types';
+import type { ExpenseFilters, ExpenseListFilters } from './expenses.types';
 
 const expenseInclude = {
   // Joined in the same query — never a per-row follow-up (no N+1, Plan §21).
@@ -50,6 +50,12 @@ function buildWhere(userId: string, f: Partial<ExpenseListFilters>): Prisma.Expe
   return where;
 }
 
+const buildOrderBy = (f: ExpenseFilters): Prisma.ExpenseOrderByWithRelationInput[] => [
+  { [f.sortBy]: f.sortOrder },
+  { createdAt: 'desc' },
+  { id: 'asc' }, // stable pagination for ties
+];
+
 /** Date params are sent as ISO strings and cast to DATE, so the session timezone can't shift them. */
 const sqlDate = (d: Date) => Prisma.sql`${formatIsoDate(d)}::date`;
 
@@ -87,22 +93,26 @@ export const expensesRepository = {
    */
   async list(userId: string, f: ExpenseListFilters): Promise<{ rows: ExpenseRow[]; total: number }> {
     const where = buildWhere(userId, f);
-    const orderBy: Prisma.ExpenseOrderByWithRelationInput[] = [
-      { [f.sortBy]: f.sortOrder },
-      { createdAt: 'desc' },
-      { id: 'asc' }, // stable pagination for ties
-    ];
     const [rows, total] = await prisma.$transaction([
       prisma.expense.findMany({
         where,
         include: expenseInclude,
-        orderBy,
+        orderBy: buildOrderBy(f),
         skip: (f.page - 1) * f.limit,
         take: f.limit,
       }),
       prisma.expense.count({ where }),
     ]);
     return { rows, total };
+  },
+
+  /** Every expense matching the filters, unpaginated — for exports. */
+  listAll(userId: string, f: ExpenseFilters): Promise<ExpenseRow[]> {
+    return prisma.expense.findMany({
+      where: buildWhere(userId, f),
+      include: expenseInclude,
+      orderBy: buildOrderBy(f),
+    });
   },
 
   // ───────────────────────── Aggregations (Plan §17/§18) ─────────────────────────

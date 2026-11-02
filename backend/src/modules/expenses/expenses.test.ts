@@ -238,3 +238,65 @@ describe('GET /api/expenses (filter / sort / paginate)', () => {
     expect(res.body.error.code).toBe('VALIDATION_ERROR');
   });
 });
+
+describe('GET /api/expenses/export', () => {
+  const BOM = '﻿';
+  const exportCsv = (qs = '', user = alice) => api().get(`/api/expenses/export${qs}`).set(user.auth);
+
+  beforeEach(async () => {
+    await addExpense(alice, { categoryId: food, amount: 120.5, expenseDate: '2026-01-15', description: 'Lunch' });
+    await addExpense(alice, { categoryId: transport, amount: 300, expenseDate: '2026-03-02', description: 'Train' });
+    await addExpense(alice, { categoryId: food, amount: 80, expenseDate: '2026-09-10', description: 'Snacks' });
+    await addExpense(bob, { categoryId: await categoryId(bob, 'Food'), amount: 9999, expenseDate: '2026-09-10' });
+  });
+
+  it('exports every matching transaction across months, not just the current one', async () => {
+    const res = await exportCsv();
+    expect(res.status).toBe(200);
+    expect(res.headers['content-type']).toMatch(/^text\/csv/);
+    expect(res.headers['content-disposition']).toBe('attachment; filename="rupeeflow-expenses.csv"');
+
+    const lines = res.text.replace(BOM, '').trim().split(/\r?\n/);
+    expect(lines).toContain('Date,Category,Description,Amount (INR)');
+    expect(lines.slice(lines.indexOf('Date,Category,Description,Amount (INR)') + 1)).toEqual([
+      '2026-09-10,Food,Snacks,80',
+      '2026-03-02,Transport,Train,300',
+      '2026-01-15,Food,Lunch,120.5',
+      'TOTAL,3 transactions,,500.5',
+    ]);
+    expect(res.text).not.toContain('9999');
+  });
+
+  it('applies the same filters and sort as the list', async () => {
+    const res = await exportCsv(`?startDate=2026-01-01&endDate=2026-06-30&categoryId=${food}&sortBy=amount&sortOrder=asc`);
+    expect(res.headers['content-disposition']).toBe(
+      'attachment; filename="rupeeflow-expenses-2026-01-01_to_2026-06-30.csv"',
+    );
+    const lines = res.text.replace(BOM, '').trim().split(/\r?\n/);
+    expect(lines[0]).toContain('2026-01-01 to 2026-06-30');
+    expect(lines).toContain('2026-01-15,Food,Lunch,120.5');
+    expect(lines).toContain('TOTAL,1 transaction,,120.5');
+    expect(res.text).not.toContain('Train');
+    expect(res.text).not.toContain('Snacks');
+  });
+
+  it('streams an XLSX when asked', async () => {
+    const res = await exportCsv('?format=xlsx');
+    expect(res.status).toBe(200);
+    expect(res.headers['content-type']).toBe('application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+    expect(res.headers['content-disposition']).toBe('attachment; filename="rupeeflow-expenses.xlsx"');
+  });
+
+  it.each(['?format=pdf', '?startDate=2026-05-01&endDate=2026-04-01', '?minAmount=10&maxAmount=5'])(
+    'returns 400 for invalid params %s',
+    async (qs) => {
+      const res = await exportCsv(qs);
+      expect(res.status).toBe(400);
+      expect(res.body.error.code).toBe('VALIDATION_ERROR');
+    },
+  );
+
+  it('requires authentication', async () => {
+    expect((await api().get('/api/expenses/export')).status).toBe(401);
+  });
+});

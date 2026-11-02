@@ -27,14 +27,45 @@ export const updateExpenseSchema = z
   .strict()
   .refine((v) => Object.keys(v).length > 0, 'Provide at least one field to update');
 
+/** Filters shared by the paginated list and the export, so both always select the same rows. */
+const filterFields = {
+  startDate: isoDateSchema('startDate').optional(),
+  endDate: isoDateSchema('endDate').optional(),
+  categoryId: uuid('categoryId').optional(),
+  minAmount: moneyFilterSchema('minAmount').optional(),
+  maxAmount: moneyFilterSchema('maxAmount').optional(),
+  search: z.string().trim().max(100).optional(),
+  sortBy: z.enum(['expenseDate', 'amount']).default('expenseDate'),
+  sortOrder: z.enum(['asc', 'desc']).default('desc'),
+};
+
+interface RawFilters {
+  startDate?: string;
+  endDate?: string;
+  minAmount?: number;
+  maxAmount?: number;
+  search?: string;
+}
+
+function checkRanges(q: RawFilters, ctx: z.RefinementCtx) {
+  if (q.minAmount !== undefined && q.maxAmount !== undefined && q.minAmount > q.maxAmount) {
+    ctx.addIssue({ code: 'custom', path: ['minAmount'], message: 'minAmount must be ≤ maxAmount' });
+  }
+  if (q.startDate && q.endDate && q.startDate > q.endDate) {
+    ctx.addIssue({ code: 'custom', path: ['startDate'], message: 'startDate must be on or before endDate' });
+  }
+}
+
+const parseFilters = <T extends RawFilters>(q: T) => ({
+  ...q,
+  startDate: q.startDate ? (parseIsoDate(q.startDate) as Date) : undefined,
+  endDate: q.endDate ? (parseIsoDate(q.endDate) as Date) : undefined,
+  search: q.search || undefined,
+});
+
 export const listExpensesQuerySchema = z
   .object({
-    startDate: isoDateSchema('startDate').optional(),
-    endDate: isoDateSchema('endDate').optional(),
-    categoryId: uuid('categoryId').optional(),
-    minAmount: moneyFilterSchema('minAmount').optional(),
-    maxAmount: moneyFilterSchema('maxAmount').optional(),
-    search: z.string().trim().max(100).optional(),
+    ...filterFields,
     page: z.coerce.number().int().min(1, 'page must be at least 1').default(1),
     limit: z.coerce
       .number()
@@ -42,24 +73,22 @@ export const listExpensesQuerySchema = z
       .min(1, 'limit must be at least 1')
       .max(100, 'limit must be at most 100')
       .default(20),
-    sortBy: z.enum(['expenseDate', 'amount']).default('expenseDate'),
-    sortOrder: z.enum(['asc', 'desc']).default('desc'),
   })
-  .superRefine((q, ctx) => {
-    if (q.minAmount !== undefined && q.maxAmount !== undefined && q.minAmount > q.maxAmount) {
-      ctx.addIssue({ code: 'custom', path: ['minAmount'], message: 'minAmount must be ≤ maxAmount' });
-    }
-    if (q.startDate && q.endDate && q.startDate > q.endDate) {
-      ctx.addIssue({ code: 'custom', path: ['startDate'], message: 'startDate must be on or before endDate' });
-    }
+  .superRefine(checkRanges)
+  .transform(parseFilters);
+
+/** Same filters as the list, without pagination: the export contains every matching expense. */
+export const exportExpensesQuerySchema = z
+  .object({
+    ...filterFields,
+    format: z
+      .enum(['csv', 'xlsx'], { errorMap: () => ({ message: 'format must be csv or xlsx' }) })
+      .default('csv'),
   })
-  .transform((q) => ({
-    ...q,
-    startDate: q.startDate ? (parseIsoDate(q.startDate) as Date) : undefined,
-    endDate: q.endDate ? (parseIsoDate(q.endDate) as Date) : undefined,
-    search: q.search || undefined,
-  }));
+  .superRefine(checkRanges)
+  .transform(parseFilters);
 
 export type CreateExpenseInput = z.infer<typeof createExpenseSchema>;
 export type UpdateExpenseInput = z.infer<typeof updateExpenseSchema>;
 export type ListExpensesQuery = z.infer<typeof listExpensesQuerySchema>;
+export type ExportExpensesQuery = z.infer<typeof exportExpensesQuerySchema>;
