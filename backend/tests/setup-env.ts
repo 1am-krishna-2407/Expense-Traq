@@ -13,5 +13,5 @@ process.env.JWT_ACCESS_EXPIRY = '15m';
 process.env.BCRYPT_COST = '4';
 process.env.AUTH_RATE_LIMIT_MAX = '10000';
 process.env.LOG_REQUESTS = 'false';
-process.env.FRONTEND_ORIGIN = 'http://localhost:5173';
+process.env.FRONTEND_ORIGIN = 'http://localhost:5175';
 process.env.COOKIE_SAMESITE = 'strict';

@@ -27,7 +27,7 @@ export const envSchema = z
     JWT_ACCESS_EXPIRY: z.string().default('15m'),
     REFRESH_TOKEN_EXPIRY_DAYS: z.coerce.number().int().positive().default(30),
     BCRYPT_COST: z.coerce.number().int().min(4).max(15).default(12),
-    FRONTEND_ORIGIN: z.string().default('http://localhost:5173'),
+    FRONTEND_ORIGIN: z.string().default('http://localhost:5175'),
     COOKIE_DOMAIN: z.string().optional(),
     COOKIE_SAMESITE: z.enum(['strict', 'lax', 'none']).default('strict'),
     AUTH_RATE_LIMIT_WINDOW_MINUTES: z.coerce.number().positive().default(15),

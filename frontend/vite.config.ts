@@ -7,7 +7,10 @@ export default defineConfig(({ mode }) => {
   return {
     plugins: [react()],
     server: {
-      port: 5173,
+      // 5173 is taken by another local project's container; fail loudly instead of
+      // silently moving to a port the backend's FRONTEND_ORIGIN doesn't allow.
+      port: 5175,
+      strictPort: true,
       // In development the SPA and API share an origin via this proxy, so the
       // SameSite=Strict refresh cookie works exactly as it will in a same-site deploy.
       proxy: {

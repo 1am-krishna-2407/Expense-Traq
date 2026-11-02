@@ -225,11 +225,11 @@ npm run seed
 # Terminal 1 — API server (http://localhost:4000)
 npm run dev:api
 
-# Terminal 2 — Frontend dev server (http://localhost:5173)
+# Terminal 2 — Frontend dev server (http://localhost:5175)
 npm run dev:web
 ```
 
-Open **http://localhost:5173** and sign in with the demo credentials, or create your own account.
+Open **http://localhost:5175** and sign in with the demo credentials, or create your own account.
 
 ---
 

@@ -13,7 +13,7 @@ describe('loadEnv (ARCH-003: boot fails loudly on bad config)', () => {
     expect(env.REFRESH_TOKEN_EXPIRY_DAYS).toBe(30);
     expect(env.BCRYPT_COST).toBe(12);
     expect(env.COOKIE_SAMESITE).toBe('strict');
-    expect(env.corsOrigins).toEqual(['http://localhost:5173']);
+    expect(env.corsOrigins).toEqual(['http://localhost:5175']);
   });
 
   it('throws naming JWT_SECRET when it is missing', () => {

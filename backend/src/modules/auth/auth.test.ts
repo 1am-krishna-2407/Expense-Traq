@@ -249,9 +249,9 @@ describe('platform', () => {
   });
 
   it('sets security headers (helmet) and whitelists only the configured CORS origin', async () => {
-    const ok = await api().get('/health').set('Origin', 'http://localhost:5173');
+    const ok = await api().get('/health').set('Origin', 'http://localhost:5175');
     expect(ok.headers['x-content-type-options']).toBe('nosniff');
-    expect(ok.headers['access-control-allow-origin']).toBe('http://localhost:5173');
+    expect(ok.headers['access-control-allow-origin']).toBe('http://localhost:5175');
     expect(ok.headers['access-control-allow-credentials']).toBe('true');
 
     const evil = await api().get('/health').set('Origin', 'https://evil.example');
