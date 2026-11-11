@@ -2,6 +2,7 @@ import '@testing-library/jest-dom/vitest';
 import { cleanup } from '@testing-library/react';
 import { afterAll, afterEach, beforeAll, beforeEach } from 'vitest';
 import { tokenStore } from '../api/client';
+import { resetServerWake, wakeTiming } from '../api/serverWake';
 import { resetDb } from './msw/handlers';
 import { server } from './msw/server';
 
@@ -36,9 +37,13 @@ Blob.prototype.stream ??= function stream(this: Blob) {
   });
 } as Blob['stream'];
 
+// Fast wake-up polling so "sleeping server" tests run in milliseconds.
+Object.assign(wakeTiming, { attemptTimeoutMs: 500, retryDelayMs: 10, deadlineMs: 400, noticeDelayMs: 0 });
+
 beforeAll(() => server.listen({ onUnhandledRequest: 'error' }));
 beforeEach(() => {
   resetDb();
+  resetServerWake();
   tokenStore.set(null);
   localStorage.clear();
 });

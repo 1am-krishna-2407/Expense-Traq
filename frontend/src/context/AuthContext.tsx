@@ -1,6 +1,7 @@
 import { useQueryClient } from '@tanstack/react-query';
 import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from 'react';
 import { api, refreshAccessToken, setSessionExpiredHandler, tokenStore } from '../api/client';
+import { wakeServer } from '../api/serverWake';
 import type { AuthResponse, User } from '../api/types';
 
 export interface RegisterInput {
@@ -43,10 +44,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   // Silent refresh on mount: the httpOnly cookie re-establishes the session, which is what
   // makes sessions persist across reloads/tabs without re-login (Plan §13, B3).
+  // It waits for a sleeping API to wake first — a cold start must not look like "logged out",
+  // and a refresh the proxy timed out on must never be replayed (token-reuse detection).
   useEffect(() => {
     let cancelled = false;
     (async () => {
       try {
+        await wakeServer();
         const token = await refreshAccessToken();
         const { data } = await api.get<User>('/auth/me');
         if (!cancelled) {
@@ -72,6 +76,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const login = useCallback(
     async (email: string, password: string) => {
+      await wakeServer();
       const { data } = await api.post<AuthResponse>('/auth/login', { email, password });
       return startSession(data);
     },
@@ -80,6 +85,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const register = useCallback(
     async (input: RegisterInput) => {
+      await wakeServer();
       const { data } = await api.post<AuthResponse>('/auth/register', input);
       return startSession(data);
     },

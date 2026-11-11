@@ -1,4 +1,5 @@
 import axios, { AxiosError, type AxiosRequestConfig, type InternalAxiosRequestConfig } from 'axios';
+import { isServerDownError, markServerAsleep, ServerUnreachableError, wakeServer } from './serverWake';
 import type { ApiErrorBody } from './types';
 
 export const API_URL = import.meta.env.VITE_API_URL ?? '/api';
@@ -55,7 +56,7 @@ export function refreshAccessToken(): Promise<string> {
 
 const AUTH_ENDPOINTS = ['/auth/login', '/auth/register', '/auth/refresh', '/auth/logout'];
 
-type RetriableConfig = InternalAxiosRequestConfig & { _retry?: boolean };
+type RetriableConfig = InternalAxiosRequestConfig & { _retry?: boolean; _wakeRetry?: boolean };
 
 api.interceptors.response.use(
   (res) => res,
@@ -63,15 +64,40 @@ api.interceptors.response.use(
     const original = error.config as RetriableConfig | undefined;
     const isAuthCall = AUTH_ENDPOINTS.some((p) => original?.url?.startsWith(p));
 
+    // The API fell asleep (free hosting) mid-session: wake it, then replay reads once.
+    // Writes are never replayed — the proxy may have given up on a request the server still
+    // processes later, and replaying it could create a duplicate expense or budget.
+    if (isServerDownError(error)) {
+      markServerAsleep();
+      const method = (original?.method ?? 'get').toLowerCase();
+      if (original && !original._wakeRetry && (method === 'get' || method === 'head')) {
+        original._wakeRetry = true;
+        try {
+          await wakeServer();
+          return api(original as AxiosRequestConfig);
+        } catch {
+          /* still down — surface the original error */
+        }
+      } else {
+        void wakeServer().catch(() => undefined);
+      }
+      return Promise.reject(error);
+    }
+
     if (error.response?.status === 401 && original && !original._retry && !isAuthCall) {
       original._retry = true;
       try {
         const token = await refreshAccessToken();
         original.headers.Authorization = `Bearer ${token}`;
         return api(original as AxiosRequestConfig); // replay the original request once
-      } catch {
-        tokenStore.set(null);
-        onSessionExpired?.();
+      } catch (refreshError) {
+        // Only a real rejection ends the session; a sleeping server must not log users out.
+        if (isServerDownError(refreshError)) {
+          markServerAsleep();
+        } else {
+          tokenStore.set(null);
+          onSessionExpired?.();
+        }
       }
     }
     return Promise.reject(error);
@@ -111,7 +137,8 @@ export function isApiError(err: unknown): err is AxiosError<ApiErrorBody> {
 /** Human-readable message for any thrown value. */
 export function errorMessage(err: unknown, fallback = 'Something went wrong. Please try again.'): string {
   if (isApiError(err)) return err.response!.data.error.message;
-  if (axios.isAxiosError(err) && !err.response) return 'Cannot reach the server. Check your connection.';
+  if (err instanceof ServerUnreachableError) return err.message;
+  if (isServerDownError(err)) return 'The server is waking up or unreachable. Please try again in a moment.';
   return fallback;
 }
 

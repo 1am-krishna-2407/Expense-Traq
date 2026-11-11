@@ -5,6 +5,7 @@ import { useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
 import type { z } from 'zod';
 import { errorMessage, errorStatus, fieldErrors } from '../api/client';
+import { useServerStatus } from '../api/serverWake';
 import { Badge } from '../components/ui/Badge';
 import { Button } from '../components/ui/Button';
 import { Input } from '../components/ui/Field';
@@ -21,6 +22,7 @@ export function RegisterPage() {
   const navigate = useNavigate();
   const toast = useToast();
   const [showPassword, setShowPassword] = useState(false);
+  const serverStatus = useServerStatus();
 
   const {
     register,
@@ -127,7 +129,7 @@ export function RegisterPage() {
         </div>
 
         <Button type="submit" size="lg" fullWidth loading={isSubmitting} iconRight="arrow_forward">
-          Create account &amp; continue
+          {isSubmitting && serverStatus === 'waking' ? 'Waking up the server…' : 'Create account & continue'}
         </Button>
       </form>
     </AuthLayout>

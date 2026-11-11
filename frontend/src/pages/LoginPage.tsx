@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { errorMessage, errorStatus } from '../api/client';
+import { useServerStatus } from '../api/serverWake';
 import { Button } from '../components/ui/Button';
 import { Input } from '../components/ui/Field';
 import { Icon } from '../components/ui/Icon';
@@ -20,6 +21,7 @@ export function LoginPage() {
   const location = useLocation();
   const toast = useToast();
   const [showPassword, setShowPassword] = useState(false);
+  const serverStatus = useServerStatus();
   const from = (location.state as { from?: string } | null)?.from ?? '/dashboard';
 
   const {
@@ -85,7 +87,7 @@ export function LoginPage() {
           {...register('password')}
         />
         <Button type="submit" size="lg" fullWidth loading={isSubmitting}>
-          Sign in to Dashboard
+          {isSubmitting && serverStatus === 'waking' ? 'Waking up the server…' : 'Sign in to Dashboard'}
         </Button>
         <p className="flex items-center justify-center gap-1.5 text-body-sm text-subtle">
           <Icon name="verified_user" size={16} className="text-success-fg" />

@@ -3,6 +3,7 @@ import { useState, type ReactNode } from 'react';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import { AppLayout } from './components/layout/AppLayout';
 import { ProtectedRoute, PublicOnlyRoute } from './components/layout/RouteGuards';
+import { ServerStatusNotice } from './components/layout/ServerStatusNotice';
 import { AuthProvider } from './context/AuthContext';
 import { PeriodProvider } from './context/PeriodContext';
 import { ThemeProvider } from './context/ThemeContext';
@@ -47,6 +48,7 @@ export function AppProviders({ children, queryClient }: { children: ReactNode; q
     <QueryClientProvider client={client}>
       <ThemeProvider>
         <ToastProvider>
+          <ServerStatusNotice />
           <AuthProvider>
             <PeriodProvider>{children}</PeriodProvider>
           </AuthProvider>

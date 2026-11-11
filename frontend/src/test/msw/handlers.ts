@@ -21,6 +21,7 @@ export function resetDb() {
 const unauthorized = () => HttpResponse.json({ error: { code: 'UNAUTHORIZED', message: 'Missing access token' } }, { status: 401 });
 
 export const handlers = [
+  http.get('*/api/health', () => HttpResponse.json({ status: 'ok', uptime: 1 })),
   http.post('*/api/auth/refresh', () =>
     db.authenticated ? HttpResponse.json({ accessToken: 'test-token' }) : HttpResponse.json({ error: { code: 'INVALID_REFRESH_TOKEN', message: 'Session expired' } }, { status: 401 }),
   ),
